@@ -1,2 +1,3 @@
-# veta-theme-vara
+# Vara theme for veta
+
 A clean, fast, and responsive all-in-one Veta theme for Varavel projects
