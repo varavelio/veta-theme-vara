@@ -1,0 +1,31 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+
+version: "3"
+
+tasks:
+  default:
+    desc: List all available commands
+    cmd: task --list-all
+
+  ci:
+    desc: Run full CI pipeline (format, lint, build)
+    cmds:
+      - task: format
+      - task: lint
+      - task: build
+
+  dev:
+    desc: Start development server
+    cmd: veta dev --host 0.0.0.0
+
+  build:
+    desc: Build the project locally
+    cmd: veta build
+
+  format:
+    desc: Run formatters
+    cmd: dprint fmt --config ./dprint.json --log-level warn
+
+  lint:
+    desc: Run linters
+    cmd: dprint check --config ./dprint.json --log-level warn
