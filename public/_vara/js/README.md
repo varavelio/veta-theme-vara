@@ -9,7 +9,7 @@ public/_vara/js/
 ├── build/          ← Bundled output (only folders with index.js produce a file here)
 ├── src/
 │   ├── docs/       ← JavaScript for documentation page templates
-│   ├── init/       ← High-priority scripts injected before </head>
+│   ├── head/       ← High-priority scripts injected before </head>
 │   └── theme/      ← Theme logic
 ```
 
@@ -21,7 +21,7 @@ public/_vara/js/
 
 ## Module overview
 
-### `init/`
+### `head/`
 
 Scripts that must run as early as possible, injected via a `<script>` tag just before the closing `</head>`. Their primary purpose is to avoid a flash of unstyled content (FOUC) by applying the correct styles before the page renders.
 
@@ -29,7 +29,7 @@ Scripts that must run as early as possible, injected via a `<script>` tag just b
 
 Theme logic split into two files:
 
-- **`init.js`** — Loaded by the `init/` entry point (runs before render to prevent FOUC).
+- **`head.js`** — Loaded by the `head/` entry point. It exports `headInitTheme()`, which runs before render to prevent FOUC.
 - **`runtime.js`** — Designed to be imported from other JavaScript modules at runtime.
 
 ### `docs/`

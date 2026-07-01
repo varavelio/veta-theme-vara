@@ -10,7 +10,7 @@
  *
  * This should be inlined before closing the head tag.
  */
-export function initTheme() {
+export function headInitTheme() {
   const STORAGE_KEY = "varapress-theme";
   const THEME_CHANGE_EVENT = "varapress-theme-change";
 
