@@ -1,7 +1,5 @@
 # Build directories
-build/
 dist/
-out/
 
 # Temporary files
 tmp/
