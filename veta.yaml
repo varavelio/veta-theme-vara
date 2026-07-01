@@ -1,0 +1,13 @@
+# Veta configuration file.
+# Read more: https://veta.varavel.com/config
+
+build:
+  output: dist
+  clean: true
+
+html:
+  minify: true
+
+tailwindcss:
+  stylesheet: styles.css
+  minify: true
