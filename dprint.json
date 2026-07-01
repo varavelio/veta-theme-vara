@@ -13,6 +13,7 @@
   },
   "excludes": [
     "**/dist",
+    "**/node_modules",
   ],
   "plugins": [
     "https://plugins.dprint.dev/typescript-0.96.1.wasm",
