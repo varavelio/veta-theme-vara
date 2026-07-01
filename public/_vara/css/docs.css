@@ -1,0 +1,66 @@
+/* Vertical dashed line for sidebar */
+@utility tree-line-v {
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: calc(100% - 1rem);
+    border-left-style: dashed;
+    border-left-width: 2px;
+  }
+}
+
+/* Horizontal dashed line for sidebar */
+@utility tree-line-h {
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: -0.875rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0.625rem;
+    border-top-style: dashed;
+    border-top-width: 2px;
+  }
+}
+
+/* Anchor link on prose headings */
+.prose :is(h1, h2, h3, h4, h5, h6) > a.anchor-link {
+  display: inline;
+  opacity: 0;
+  transition: opacity 0.15s ease-in-out;
+  pointer-events: none;
+  text-decoration: none;
+  margin-left: 0.20em;
+  vertical-align: baseline;
+}
+
+.prose :is(h1, h2, h3, h4, h5, h6):hover > a.anchor-link,
+.prose :is(h1, h2, h3, h4, h5, h6) > a.anchor-link:focus-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.prose :is(h1, h2, h3, h4, h5, h6) > a.anchor-link:focus-visible {
+  outline: 2px solid var(--color-info);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+.prose :is(h1, h2, h3, h4, h5, h6) > a.anchor-link svg {
+  width: 0.85em;
+  height: 0.85em;
+  display: inline-block;
+  vertical-align: baseline;
+  color: var(--color-content-muted);
+  transition: color 0.15s ease-in-out;
+}
+
+.prose :is(h1, h2, h3, h4, h5, h6) > a.anchor-link:hover svg {
+  color: var(--color-info);
+}

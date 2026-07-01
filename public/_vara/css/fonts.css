@@ -1,0 +1,18 @@
+/* Bundled Geist fonts (self-hosted inside this package). */
+@font-face {
+  font-family: "Geist Sans";
+  /* The src is relative to the dist directory */
+  src: url("./_vara/fonts/Geist-Variable.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist Mono";
+  /* The src is relative to the dist directory */
+  src: url("./_vara/fonts/GeistMono-Variable.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
