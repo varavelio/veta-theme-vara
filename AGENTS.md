@@ -23,6 +23,20 @@ You MUST follow the following instructions:
 ## Formatting & Quality
 
 - Veta allows template and component files to have any extension, but this project always uses the `.j2` extension because that way the `task format` command will automatically detect and format the pongo syntax using dprint (pongo syntax is the same as jinja syntax, that's why we do this).
+- When injecting string values into Alpine attributes, avoid raw JSON double-quoted strings inside double-quoted HTML attributes. Prefer a single-quoted JavaScript string literal inside the attribute so dprint formatting and HTML minification do not split the expression.
+
+## Theme Structure
+
+- `templates/` contains Pongo page templates. `landing.j2` are for landing pages, `docs.j2` are for docs pages, `blog.j2`/`post.j2` are for blog pages, and `404.j2` is rendered only when a page generator explicitly creates that page.
+- `components/` contains Veta components. Component tag names use kebab-case because Veta component names cannot use underscores.
+- `templates/macros/` contains shared Pongo macros used internally by templates and components. Public component APIs still use `class`; macro internals use `extra_class` because Pongo rejects `class=` as a macro call keyword.
+- `filters/` contains veta JS filters.
+- `data/site_default.js`/`data/site.yaml` contains theme defaults. Templates read site/theme metadata from `data.site or data.site_default` so the user can override only some parts of the data.
+- All theme-owned public assets must stay under `public/_vara/` to avoid collisions with consuming projects.
+
+## Working with JavaScript
+
+- Before modifying or adding any JavaScript in this project, read `public/_vara/js/README.md` first. It explains the directory layout, bundling rules, and the role of each module.
 
 ## Operational Commands
 
