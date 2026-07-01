@@ -18,6 +18,7 @@ You MUST follow the following instructions:
 - Whenever a new task or request is assigned, keep working without stopping until the task is fully completed.
 - All written code must be professional, idiomatic, readable, and maintainable. Maintainability and readability are the top priority.
 - Note that the command `task dev` will lock the terminal; use the command `task build` instead.
+- You are inside a development container running debian, you can install anything you want to help with your work.
 
 ## Formatting & Quality
 
