@@ -1,0 +1,13 @@
+{
+  "name": "veta-theme-vara",
+  "version": "0.0.0",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "-": "Run commands using the Taskfile.yml file"
+  },
+  "devDependencies": {
+    "alpinejs": "3.15.12",
+    "esbuild": "0.28.1"
+  }
+}
