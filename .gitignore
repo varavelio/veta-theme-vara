@@ -1,6 +1,11 @@
+# Build directories
 build/
 dist/
 out/
 
+# Temporary files
 tmp/
 temp/
+
+# Node.js
+node_modules/
