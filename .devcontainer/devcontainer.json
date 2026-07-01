@@ -14,17 +14,21 @@
     "vscode": {
       "extensions": [
         "dprint.dprint",
-        "bradlc.vscode-tailwindcss"
+        "bradlc.vscode-tailwindcss",
+        "samuelcolvin.jinjahtml"
       ],
       "settings": {
         "editor.formatOnSave": true,
         "editor.defaultFormatter": "dprint.dprint",
 
-        "css.validate": false,
-        "tailwindCSS.lint.suggestCanonicalClasses": "ignore",
         "files.associations": {
+          "*.j2": "jinja-html",
+          "*.html.j2": "jinja-html",
           "*.css": "tailwindcss"
-        }
+        },
+
+        "css.validate": false,
+        "tailwindCSS.lint.suggestCanonicalClasses": "ignore"
       }
     }
   }
