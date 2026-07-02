@@ -23,7 +23,6 @@
 
         "files.associations": {
           "*.j2": "jinja-html",
-          "*.html.j2": "jinja-html",
           "*.css": "tailwindcss"
         },
 
