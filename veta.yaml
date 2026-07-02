@@ -9,5 +9,6 @@ html:
   minify: true
 
 tailwindcss:
-  stylesheet: styles.css
+  stylesheets:
+    - styles.css
   minify: true
