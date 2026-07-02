@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=https://taskfile.dev/schema.json
 
+#####################################################################
+# Docs: https://taskfile.dev                                        #
+#                                                                   #
+# Use npx with the "--no" argument to ensure that dependencies with #
+# versions different from those in package.json are not downloaded. #
+#####################################################################
+
 version: "3"
 
 tasks:
@@ -8,10 +15,11 @@ tasks:
     cmd: task --list-all
 
   ci:
-    desc: Run full CI pipeline (format, lint, build)
+    desc: Run full CI pipeline (format, lint, test, build)
     cmds:
       - task: format
       - task: lint
+      - task: test
       - task: build
 
   dev:
@@ -20,7 +28,16 @@ tasks:
 
   build:
     desc: Build the project locally
-    cmd: veta build
+    cmds:
+      - task: build:js
+      - veta build
+
+  build:js:
+    desc: Build javascript of the project
+    cmds:
+      - rm -rf ./public/_vara/js/build
+      - npx --no esbuild ./public/_vara/js/src/docs/index.js --bundle --minify --outfile=./public/_vara/js/build/docs.js
+      - npx --no esbuild ./public/_vara/js/src/head/index.js --bundle --minify --outfile=./public/_vara/js/build/head.js
 
   format:
     desc: Run formatters
@@ -29,3 +46,7 @@ tasks:
   lint:
     desc: Run linters
     cmd: dprint check --config ./dprint.json --log-level warn
+
+  test:
+    desc: Run tests
+    cmd: node --test
