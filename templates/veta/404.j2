@@ -1,0 +1,47 @@
+{% extends "./base/main.j2" %}
+
+{% block title %}
+  <title>Page not found - {{ data.site.title|default:"VaraPress" }}</title>
+{% endblock %}
+
+{% block seo %}
+  <meta name="description" content="The requested page could not be found.">
+  <meta name="robots" content="noindex">
+  <meta
+    property="og:title"
+    content='Page not found - {{ data.site.title|default:"VaraPress" }}'
+  >
+  <meta
+    property="og:description"
+    content="The requested page could not be found."
+  >
+  <meta property="og:type" content="website">
+{% endblock %}
+
+{% block body %}
+  <main class="flex flex-1 items-center justify-center bg-base-100 px-4 py-16">
+    <section class="w-full max-w-xl rounded-lg border border-base-400 bg-base-100 p-6 desk:p-8">
+      <p class="font-mono text-sm font-medium text-content-muted">
+        404
+      </p>
+
+      <div class="mt-4 space-y-3">
+        <h1 class="text-3xl font-semibold tracking-tight text-content desk:text-4xl">
+          Page not found
+        </h1>
+        <p class="text-base leading-7 text-content-muted">
+          The page you requested does not exist or may have moved.
+        </p>
+      </div>
+
+      <div class="mt-8 flex flex-col gap-3 desk:flex-row">
+        <a
+          href="{{ url('/') }}"
+          class="inline-flex items-center justify-center rounded-md border border-content bg-content px-4 py-2 text-sm font-medium text-base-100 transition-colors hover:bg-content-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-content"
+        >
+          Go home
+        </a>
+      </div>
+    </section>
+  </main>
+{% endblock %}
