@@ -12,8 +12,9 @@
   "yaml": {
   },
   "excludes": [
-    "**/dist",
-    "**/node_modules",
+    "./dist/**/*",
+    "./node_modules/**/*",
+    "./public/_vara/js/build/**/*",
     "./public/_vara/icons/*.svg"
   ],
   "plugins": [
