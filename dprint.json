@@ -14,6 +14,7 @@
   "excludes": [
     "**/dist",
     "**/node_modules",
+    "./public/_vara/icons/*.svg"
   ],
   "plugins": [
     "https://plugins.dprint.dev/typescript-0.96.1.wasm",
