@@ -18,6 +18,7 @@ RUN set -e && \
   # Install tools from npm
   npm install --global @go-task/cli@3.51.1 && \
   npm install --global dprint@0.55.1 && \
+  npm install --global svgo@4.0.1 && \
   # Git config
   git config --global --add safe.directory '*' && \
   # Cleanup
