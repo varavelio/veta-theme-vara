@@ -1,0 +1,43 @@
+{% set site_title = data.site.title %}
+{% set site_description = data.site.description %}
+{% set site_favicon = data.site.favicon %}
+
+<!DOCTYPE html>
+<html lang='{{ page.lang | default:"en" }}'>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% block title %}
+      {% if page.title and page.title != site_title %}
+        <title>{{ page.title }} - {{ site_title }}</title>
+      {% else %}
+        <title>{{ site_title }}</title>
+      {% endif %}
+    {% endblock %}
+
+    {% block seo %}
+      {% set description = page.description | default:site_description %}
+      <meta name="description" content="{{ description }}">
+      {% if page.keywords %}
+        <meta name="keywords" content="{{ page.keywords }}">
+      {% endif %}
+      <meta property="og:title" content="{{ page.title }}">
+      {% if description %}
+        <meta property="og:description" content="{{ description }}">
+      {% endif %}
+      <meta property="og:type" content='{{ page.og_type | default:"website" }}'>
+    {% endblock %}
+
+    <link rel="shortcut icon" href="{{ url(site_favicon) }}">
+    <link rel="stylesheet" href="{{ url('/styles.css') }}">
+
+    <!-- markup-fmt-ignore -->
+    <script>{{ load_data("/public/_vara/js/build/head.js") }}</script>
+
+    {% block head_extra %}{% endblock %}
+  </head>
+  <body class="w-dvh h-dvh overflow-hidden">
+    {% block body %}{% endblock %}
+  </body>
+</html>
