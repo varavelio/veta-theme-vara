@@ -1,5 +1,5 @@
 /**
- * Fetches public GitHub repository metadata for a `owner/name` repository string.
+ * Fetches public GitHub repository metadata for an `owner/name` repository string.
  *
  * Returns an object with `{ ok, stars, forks, tag }`. Repository stats come from
  * the GitHub repository endpoint, and `tag` comes from the latest release when
@@ -8,24 +8,28 @@
  * build.
  *
  * Usage:
- *   {% set repo = "varavelio/veta"|vara_github %}
- *   {{ repo.stars|vara_number }}
+ *   {% set repo = github_repo("varavelio/veta") %}
+ *   {{ repo.stars | compact_number }}
  */
 
 const cache = {};
+
+function emptyResult() {
+  return { ok: false, stars: 0, forks: 0, tag: "" };
+}
 
 export default function({ httpClient }, input) {
   const repo = String(input || "").trim();
 
   if (!repo || !repo.includes("/")) {
-    return { ok: false, stars: 0, forks: 0, tag: "" };
+    return emptyResult();
   }
 
   if (cache[repo]) {
     return cache[repo];
   }
 
-  const result = { ok: false, stars: 0, forks: 0, tag: "" };
+  const result = emptyResult();
 
   try {
     const repoResponse = httpClient.get(`https://api.github.com/repos/${repo}`, {

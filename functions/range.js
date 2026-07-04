@@ -5,7 +5,7 @@
  * an array containing indexes from `0` through `count - 1`.
  *
  * Usage:
- *   {% for index in 5|vara_range %}
+ *   {% for index in range(5) %}
  *     {{ index }}
  *   {% endfor %}
  */

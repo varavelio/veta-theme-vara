@@ -7,7 +7,7 @@
  * decimal place only when needed.
  *
  * Usage:
- *   {{ repo.stars|vara_number }}
+ *   {{ repo.stars | compact_number }}
  */
 
 export default function(_runtime, input) {

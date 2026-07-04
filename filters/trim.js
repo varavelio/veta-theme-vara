@@ -5,7 +5,7 @@
  * trimming, matching the project's template usage for optional values.
  *
  * Usage:
- *   {{ props.title|trim }}
+ *   {{ props.title | trim }}
  */
 
 export default function(_runtime, input) {
