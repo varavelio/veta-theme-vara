@@ -1,8 +1,15 @@
 /**
- * Vara Theme Icon Filter
+ * Renders an optimized SVG icon from `public/_vara/icons`.
  *
- * Usage: "icon-name" | vara_icon
- * Usage: "icon-name" | vara_icon:"extra-classes"
+ * Input is the icon file name without the `.svg` extension. The optional
+ * parameter appends extra CSS classes after the default `varapress-icon` class.
+ * Invalid or missing icons render a red alert fallback instead of failing the
+ * build. Existing SVG attributes are preserved; only `class` is injected on the
+ * opening `<svg>` tag.
+ *
+ * Usage:
+ *   {{ "check"|vara_icon|safe }}
+ *   {{ "github"|vara_icon:"size-4 text-content"|safe }}
  */
 
 const ICON_NAME_RE = /^[a-z0-9][a-z0-9-]*$/;
