@@ -3,7 +3,7 @@
  *
  * Arguments:
  * - `name`: icon file name without the `.svg` extension.
- * - `className`: optional CSS classes appended after `varapress-icon`.
+ * - `className`: optional CSS classes appended after `vara-icon`.
  *
  * Invalid or missing icons render a red alert fallback instead of failing the
  * build. Existing SVG attributes are preserved; only `class` is injected on the
@@ -45,7 +45,7 @@ function fallback(className) {
 export default function({ files }, name, className) {
   const iconName = String(name || "").trim();
   const extraClass = String(className || "").trim();
-  const resolvedClassName = ["varapress-icon", extraClass].filter(Boolean).join(" ");
+  const resolvedClassName = ["vara-icon", extraClass].filter(Boolean).join(" ");
 
   if (!ICON_NAME_RE.test(iconName)) {
     return fallback(resolvedClassName);

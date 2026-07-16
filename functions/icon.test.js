@@ -17,7 +17,7 @@ test("icon injects classes while preserving optimized SVG attributes", () => {
     "size-4 text-content",
   );
 
-  assert.match(output, /^<svg class="varapress-icon size-4 text-content" /);
+  assert.match(output, /^<svg class="vara-icon size-4 text-content" /);
   assert.match(output, /fill="none"/);
   assert.match(output, /stroke="currentColor"/);
 });
