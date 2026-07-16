@@ -1,0 +1,362 @@
+{% extends "../base/main.j2" %}
+
+{% set site = data.site %}
+{% set site_def = data.site_default %}
+
+{%
+  set docs_logo_light = site.docs_logo_light | default:site_def.docs_logo_light | default:""
+%}
+{%
+  set docs_logo_dark = site.docs_logo_dark | default:site_def.docs_logo_dark | default:""
+%}
+{%
+  set docs_show_title = site.docs_show_title | default:site_def.docs_show_title | default:true
+%}
+{%
+  set docs_github_repo = site.docs_github_repo | default:site_def.docs_github_repo | default:""
+%}
+{%
+  set docs_sidebar_links = site.docs_sidebar_links | default:site_def.docs_sidebar_links | default:[]
+%}
+
+{% block head_extra %}
+  <script src="{{ url('_vara/js/build/docs.js') }}" defer></script>
+{% endblock %}
+
+{% block body %}
+  <div class="flex flex-1 min-h-0 flex-col" x-data="varaDocs" x-cloak>
+    {# ─── Header ─── #}
+    <header class="flex h-14 shrink-0 items-center justify-between gap-3 border-b border-base-400 bg-base-100 px-4">
+      <div class="flex min-w-0 flex-auto items-center">
+        <button
+          class="-ml-2 mr-2 flex-none cursor-pointer rounded-md p-2 transition-colors hover:bg-base-300 desk:hidden"
+          x-on:click="toggleSidebar()"
+          aria-label="Toggle navigation"
+        >
+          {{ "menu"|icon|safe }}
+        </button>
+        <div class="min-w-0 overflow-x-auto overflow-y-hidden">
+          <a
+            href="{{ url('/') }}"
+            class="group flex items-center justify-start whitespace-nowrap"
+          >
+            {%
+              if docs_logo_light and docs_logo_dark and docs_logo_light == docs_logo_dark
+            %}
+              <span class="mr-2 flex-none h-6">
+                <img
+                  src="{{ url(docs_logo_light) }}"
+                  class="h-6 w-auto"
+                  alt="{{ site.title | default:site_def.title }}"
+                >
+              </span>
+            {% elif docs_logo_light or docs_logo_dark %}
+              {%
+                set logo_light_src = docs_logo_light | default:docs_logo_dark
+              %}
+              {% set logo_dark_src = docs_logo_dark | default:docs_logo_light %}
+              <span class="mr-2 flex-none h-6">
+                <img
+                  x-show="resolvedTheme === 'light'"
+                  src="{{ url(logo_light_src) }}"
+                  class="h-6 w-auto"
+                  alt="{{ site.title | default:site_def.title }}"
+                >
+                <img
+                  x-show="resolvedTheme === 'dark'"
+                  src="{{ url(logo_dark_src) }}"
+                  class="h-6 w-auto"
+                  alt="{{ site.title | default:site_def.title }}"
+                >
+              </span>
+            {% endif %}
+            {% if docs_show_title %}
+              <span
+                class="font-semibold text-content transition-colors group-hover:text-info"
+              >{{ site.title | default:site_def.title }}</span>
+            {% endif %}
+          </a>
+        </div>
+      </div>
+      <div class="flex flex-none items-center">
+        {% if docs_github_repo %}
+          <a
+            href="https://github.com/{{ docs_github_repo }}"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="mr-2 hidden items-center gap-2 rounded-md border border-base-400 px-3 py-1.5 text-sm font-medium text-content transition-colors hover:bg-base-300 desk:flex"
+          >
+            {{ "github"|icon:"size-4"|safe }}
+            <span>GitHub</span>
+          </a>
+        {% endif %}
+        <button
+          class="-mr-4 flex cursor-pointer items-center gap-2 rounded-md px-4 py-2 transition-colors hover:bg-base-300"
+          x-data="theme"
+          x-on:click="cycleTheme()"
+          aria-label="Toggle theme"
+        >
+          <span x-show="theme === 'system'">{{
+            "laptop-minimal"|icon:"size-4"|safe
+          }}</span>
+          <span x-show="theme === 'light'">{{
+            "sun-medium"|icon:"size-4"|safe
+          }}</span>
+          <span x-show="theme === 'dark'">{{
+            "moon-star"|icon:"size-4"|safe
+          }}</span>
+          <span>Theme</span>
+        </button>
+      </div>
+    </header>
+
+    {# ─── Body: sidebar + content + toc ─── #}
+    <div class="flex min-h-0 flex-1">
+      {# ── Desktop sidebar ── #}
+      <aside class="hidden w-64 shrink-0 flex-col border-r border-base-400 desk:flex">
+        <nav
+          class="flex-1 min-h-0 space-y-1 overflow-y-auto p-4 pb-12"
+          aria-label="Documentation"
+          x-init='$nextTick(() => initSidebarScroll($el, "{{ page.permalink }}"))'
+        >
+          {% include "./docs/sidebar.j2" %}
+        </nav>
+      </aside>
+
+      {# ── Mobile sidebar drawer ── #}
+      <div class="desk:hidden">
+        <div
+          class="fixed inset-0 z-30 isolate bg-black/50"
+          x-show="sidebarOpen"
+          x-transition.opacity.duration.200
+          x-on:click="toggleSidebar()"
+          aria-hidden="true"
+        >
+        </div>
+        <aside
+          class="fixed inset-y-0 left-0 z-40 flex w-64 max-w-[80vw] isolate flex-col border-r border-base-400 bg-base-200"
+          x-show="sidebarOpen"
+          x-transition:enter="-translate-x-full"
+          x-transition:enter-end="translate-x-0"
+          x-transition:leave="translate-x-0"
+          x-transition:leave-end="-translate-x-full"
+          aria-label="Documentation navigation"
+        >
+          <div class="flex items-center justify-between border-b border-base-400 p-4">
+            <span class="text-sm font-semibold text-content">Navigation</span>
+            <button
+              class="cursor-pointer rounded-md p-1.5 transition-colors hover:bg-base-300"
+              x-on:click="toggleSidebar()"
+              aria-label="Close navigation"
+            >
+              {{ "x"|icon:"size-5"|safe }}
+            </button>
+          </div>
+          <nav
+            class="flex-1 min-h-0 space-y-1 overflow-y-auto p-4 pb-12"
+            x-effect='sidebarOpen && $nextTick(() => initSidebarScroll($el, "{{ page.permalink }}"))'
+          >
+            {% include "./docs/sidebar.j2" %}
+          </nav>
+        </aside>
+      </div>
+
+      {# ── Main content + TOC ── #}
+      <div class="flex min-w-0 min-h-0 flex-1">
+        {# ─── Main scrollable area ─── #}
+        <main class="flex-1 min-w-0 min-h-0 overflow-y-auto bg-base-100 p-4 scroll-p-4 not-desk:pb-20">
+          {# Breadcrumbs #}
+          {% if page.breadcrumbs and page.breadcrumbs|length > 1 %}
+            <nav
+              class="flex flex-nowrap items-center gap-1.5 overflow-x-auto pb-6 text-sm whitespace-nowrap text-content-muted"
+              aria-label="Breadcrumb"
+            >
+              {% for crumb in page.breadcrumbs %}
+                {% if not loop.last %}
+                  {% if crumb.permalink %}
+                    <a
+                      href="{{ url(crumb.permalink) }}"
+                      class="transition-colors hover:text-content"
+                    >{{ crumb.title }}</a>
+                  {% else %}
+                    <span>{{ crumb.title }}</span>
+                  {% endif %}
+                  {{
+                    "chevron-right"|icon:"size-4 shrink-0 text-content-muted"|safe
+                  }}
+                {% else %}
+                  <span
+                    class="inline-flex items-center gap-1.5 font-medium text-content"
+                    x-data
+                    x-init="$el.scrollIntoView({ block: 'nearest', inline: 'center' })"
+                  >{{ crumb.title }}</span>
+                {% endif %}
+              {% endfor %}
+            </nav>
+          {% endif %}
+
+          {# Article #}
+          <article class="prose dark:prose-invert max-w-none">
+            <h1>{{ page.title }}</h1>
+            {{ page.content|safe }}
+
+            {# Section index: list child pages #}
+            {%
+              if page.isSectionIndex and page.sectionPages and page.sectionPages|length > 0
+            %}
+              <h2>Pages</h2>
+              <ul>
+                {% for child in page.sectionPages %}
+                  <li>
+                    <a href="{{ url(child.permalink) }}">{{ child.title }}</a>
+                  </li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </article>
+
+          {# Previous / next navigation #}
+          {% if page.previousPage or page.nextPage %}
+            <nav
+              class="mt-12 border-t border-base-400 pt-6"
+              aria-label="Previous and next navigation"
+            >
+              <div class="grid grid-cols-1 gap-3 desk:grid-cols-2 desk:gap-4">
+                {% if page.previousPage %}
+                  <a
+                    href="{{ url(page.previousPage.permalink) }}"
+                    class="group flex min-h-16 min-w-0 flex-col items-start justify-center rounded-lg border border-base-400 p-3 transition-colors hover:border-base-300 hover:bg-base-200"
+                  >
+                    <span class="text-xs text-content-muted">Previous</span>
+                    <span
+                      class="block w-full truncate text-sm font-medium text-content transition-colors group-hover:text-info"
+                    >{{ page.previousPage.title }}</span>
+                  </a>
+                {% endif %}
+                {% if page.nextPage %}
+                  <a
+                    href="{{ url(page.nextPage.permalink) }}"
+                    class="group flex min-h-16 min-w-0 flex-col items-end justify-center rounded-lg border border-base-400 p-3 text-right transition-colors hover:border-base-300 hover:bg-base-200{% if not page.previousPage %} desk:col-start-2{% endif %}"
+                  >
+                    <span class="text-xs text-content-muted">Next</span>
+                    <span
+                      class="block w-full truncate text-sm font-medium text-content transition-colors group-hover:text-info"
+                    >{{ page.nextPage.title }}</span>
+                  </a>
+                {% endif %}
+              </div>
+            </nav>
+          {% endif %}
+
+          {# Back to top #}
+          <button
+            type="button"
+            x-cloak
+            x-show="showBackToTop"
+            x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="opacity-0 translate-y-2 scale-95"
+            x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+            x-transition:leave="transition ease-in duration-150"
+            x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+            x-transition:leave-end="opacity-0 translate-y-2 scale-95"
+            x-on:click="scrollMainToTop()"
+            class="fixed bottom-4 left-1/2 z-30 inline-flex -translate-x-1/2 cursor-pointer items-center gap-2 rounded-full border border-base-400 bg-content px-3.5 py-2 text-sm font-medium text-base-100 shadow-sm transition hover:bg-content/90 desk:bottom-6"
+            aria-label="Back to top"
+          >
+            {{ "arrow-up-to-line"|icon:"size-4"|safe }}
+            <span>Back to top</span>
+          </button>
+        </main>
+
+        {# ─── Table of contents ─── #}
+        {% if page.tableOfContents and page.tableOfContents|length > 0 %}
+          {# Mobile TOC trigger #}
+          <div class="fixed bottom-4 right-4 z-30 desk:hidden">
+            <button
+              class="flex size-12 cursor-pointer items-center justify-center rounded-full border border-base-400 bg-base-200 shadow-sm transition-colors hover:bg-base-300"
+              x-on:click="toggleToc()"
+              aria-label="Table of contents"
+            >
+              {{ "list"|icon:"size-5"|safe }}
+            </button>
+          </div>
+
+          {# Mobile TOC panel #}
+          <div class="desk:hidden">
+            <div
+              class="fixed inset-0 z-40 isolate bg-black/50"
+              x-show="tocOpen"
+              x-transition.opacity.duration.200
+              x-on:click="tocOpen = false"
+              aria-hidden="true"
+            >
+            </div>
+            <aside
+              class="fixed inset-y-0 right-0 z-50 flex w-72 max-w-[80vw] isolate flex-col border-l border-base-400 bg-base-100"
+              x-show="tocOpen"
+              x-transition:enter="translate-x-full"
+              x-transition:enter-end="translate-x-0"
+              x-transition:leave="translate-x-0"
+              x-transition:leave-end="translate-x-full"
+              aria-label="Table of contents"
+            >
+              <div class="flex items-center justify-between border-b border-base-400 p-4">
+                <span class="text-sm font-semibold text-content"
+                >On this page</span>
+                <button
+                  class="cursor-pointer rounded-md p-1.5 transition-colors hover:bg-base-300"
+                  x-on:click="tocOpen = false"
+                  aria-label="Close table of contents"
+                >
+                  {{ "x"|icon:"size-5"|safe }}
+                </button>
+              </div>
+              <nav
+                class="flex-1 min-h-0 space-y-1 overflow-y-auto p-4"
+                aria-label="Page table of contents"
+              >
+                {% for h2 in page.tableOfContents %}
+                  <a
+                    href="#{{ h2.slug }}"
+                    class="block py-0.5 text-sm text-content-muted transition-colors hover:text-content toc-link"
+                    x-on:click="tocOpen = false"
+                  >{{ h2.title }}</a>
+                  {% for h3 in h2.children %}
+                    <a
+                      href="#{{ h3.slug }}"
+                      class="block py-0.5 pl-3 text-sm text-content-muted transition-colors hover:text-content toc-link"
+                      x-on:click="tocOpen = false"
+                    >{{ h3.title }}</a>
+                  {% endfor %}
+                {% endfor %}
+              </nav>
+            </aside>
+          </div>
+
+          {# Desktop TOC #}
+          <aside class="hidden w-48 shrink-0 border-l border-base-400 bg-base-100 desk:block">
+            <div class="p-4">
+              <span
+                class="text-xs font-semibold uppercase tracking-wide text-content-muted"
+              >On this page</span>
+              <nav class="mt-3 space-y-1" aria-label="Page table of contents">
+                {% for h2 in page.tableOfContents %}
+                  <a
+                    href="#{{ h2.slug }}"
+                    class="block py-0.5 text-sm text-content-muted transition-colors hover:text-content toc-link"
+                  >{{ h2.title }}</a>
+                  {% for h3 in h2.children %}
+                    <a
+                      href="#{{ h3.slug }}"
+                      class="block py-0.5 pl-3 text-sm text-content-muted transition-colors hover:text-content toc-link"
+                    >{{ h3.title }}</a>
+                  {% endfor %}
+                {% endfor %}
+              </nav>
+            </div>
+          </aside>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

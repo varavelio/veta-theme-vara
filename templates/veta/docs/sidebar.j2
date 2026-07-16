@@ -1,0 +1,98 @@
+{# Docs sidebar navigation: iterates page.docsNavigation #}
+{% for item in page.docsNavigation %}
+  {% if item.pages %}
+    {# Section with child pages #}
+    <div
+      x-data='varaSidebarGroup("{{ item.permalink }}", true)'
+      class="flex flex-col space-y-1{% if loop.first %}-mt-1.5{% endif %}"
+    >
+      <button
+        type="button"
+        x-on:click="toggle()"
+        class="flex w-full cursor-pointer items-center gap-2 rounded-md border border-transparent p-2 text-left text-sm font-medium transition-colors{% if page.permalink == item.permalink %} bg-info/10 text-info{% else %} text-content/70 hover:bg-base-300 hover:text-content{% endif %}"
+        :aria-expanded="open.toString()"
+      >
+        {% if item.icon %}{{ item.icon|icon:"size-4 shrink-0"|safe }}{% endif %}
+        <span class="flex-1 truncate">{{ item.title }}</span>
+        <span
+          class="flex-none transition-transform duration-200"
+          x-bind:class="open && 'rotate-90'"
+        >{{ "chevron-right"|icon:"size-4 shrink-0"|safe }}</span>
+      </button>
+      <div
+        x-show="open"
+        x-transition
+        class="mt-1 ml-4 flex flex-col space-y-1 border-l border-dashed border-base-400 pl-3.5"
+      >
+        {% for child in item.pages %}
+          <a
+            href="{{ url(child.permalink) }}"
+            class="flex items-center gap-2 rounded-md border border-transparent p-2 text-sm font-medium transition-colors{% if page.permalink == child.permalink %} bg-info/10 text-info{% else %} text-content/70 hover:bg-base-300 hover:text-content{% endif %}"
+            {% if page.permalink == child.permalink %}
+              aria-current="page"
+            {% endif %}
+          >
+            {% if child.icon %}{{ child.icon|icon:"size-4 shrink-0"|safe }}{%
+              endif
+            %}
+            <span class="truncate">{{ child.title }}</span>
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+  {% else %}
+    {# Standalone page #}
+    <div class="{% if loop.first %}-mt-1.5{% endif %}">
+      <a
+        href="{{ url(item.permalink) }}"
+        class="flex items-center gap-2 rounded-md border border-transparent p-2 text-sm font-medium transition-colors{% if page.permalink == item.permalink %} bg-info/10 text-info{% else %} text-content/70 hover:bg-base-300 hover:text-content{% endif %}"
+        {% if page.permalink == item.permalink %}
+          aria-current="page"
+        {% endif %}
+      >
+        {% if item.icon %}{{ item.icon|icon:"size-4 shrink-0"|safe }}{% endif %}
+        <span class="truncate">{{ item.title }}</span>
+      </a>
+    </div>
+  {% endif %}
+{% endfor %}
+
+{# External links #}
+{% if docs_sidebar_links and docs_sidebar_links|length > 0 %}
+  <div x-data='varaSidebarGroup("links", true)' class="flex flex-col space-y-1">
+    <button
+      type="button"
+      x-on:click="toggle()"
+      class="flex w-full cursor-pointer items-center gap-2 rounded-md border border-transparent p-2 text-left text-sm font-medium text-content/70 transition-colors hover:bg-base-300 hover:text-content"
+      :aria-expanded="open.toString()"
+    >
+      {{ "link"|icon:"size-4 shrink-0"|safe }}
+      <span class="flex-1 truncate">Links</span>
+      <span
+        class="flex-none transition-transform duration-200"
+        x-bind:class="open && 'rotate-90'"
+      >{{ "chevron-right"|icon:"size-4 shrink-0"|safe }}</span>
+    </button>
+    <div
+      x-show="open"
+      x-transition
+      class="mt-1 ml-4 flex flex-col space-y-1 border-l border-dashed border-base-400 pl-3.5"
+    >
+      {% for link in docs_sidebar_links %}
+        <a
+          href="{{ link.link }}"
+          {% if link.new_tab %}
+            target="_blank"
+            rel="noopener noreferrer"
+          {% endif %}
+          class="flex items-center gap-2 rounded-md border border-transparent p-2 text-sm font-medium text-content/70 transition-colors hover:bg-base-300 hover:text-content"
+        >
+          <span class="flex-1 truncate">{{ link.text }}</span>
+          {% if link.new_tab %}{{
+              "external-link"|icon:"size-3.5 shrink-0 text-content-muted"|safe
+            }}{% endif %}
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}
