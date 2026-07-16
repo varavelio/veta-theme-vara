@@ -12,7 +12,7 @@
  * Registers the Alpine.js `theme` component used by theme toggle controls.
  *
  * The component delegates all persistence and DOM mutation to
- * `window.__varapressTheme`, which is created by the synchronous theme
+ * `window.__varaTheme`, which is created by the synchronous theme
  * bootstrapper before Alpine starts. This keeps UI controls reactive without
  * duplicating FOUC-prevention logic.
  *
@@ -33,12 +33,12 @@ function registerAlpineTheme() {
      * @returns {void}
      */
     init() {
-      if (window.__varapressTheme) {
-        const state = window.__varapressTheme.get();
+      if (window.__varaTheme) {
+        const state = window.__varaTheme.get();
         this.theme = state.theme;
         this.resolvedTheme = state.resolved;
       }
-      window.addEventListener("varapress-theme-change", (e) => {
+      window.addEventListener("vara-theme-change", (e) => {
         this.theme = e.detail.theme;
         this.resolvedTheme = e.detail.resolved;
       });
@@ -55,10 +55,10 @@ function registerAlpineTheme() {
     cycleTheme() {
       const cycle = { light: "dark", dark: "system", system: "light" };
       const next = cycle[this.theme] || "system";
-      if (window.__varapressTheme) window.__varapressTheme.set(next);
+      if (window.__varaTheme) window.__varaTheme.set(next);
     },
 
-    // TODO: Add setLightTheme, setDarkTheme and setSystemTheme
+    // TODO: Add setLightTheme, setDarkTheme, setSystemTheme
 
     /**
      * Human-readable label for the current theme preference.

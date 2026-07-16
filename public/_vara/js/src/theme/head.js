@@ -1,18 +1,18 @@
 /**
- * VaraPress theme initializer.
+ * Vara theme initializer.
  *
  * Resolves and applies the user's saved theme preference before the first paint
  * to prevent a flash of unstyled content (FOUC).
  *
- * The initializer also exposes a small runtime bridge on `window.__varapressTheme`
+ * The initializer also exposes a small runtime bridge on `window.__varaTheme`
  * so any runtime code can read and update the same source of truth without
  * duplicating browser logic.
  *
  * This should be inlined before closing the head tag.
  */
 export function headInitTheme() {
-  const STORAGE_KEY = "varapress-theme";
-  const THEME_CHANGE_EVENT = "varapress-theme-change";
+  const STORAGE_KEY = "vara-theme";
+  const THEME_CHANGE_EVENT = "vara-theme-change";
 
   /** @typedef {"light" | "dark" | "system"} ThemePreference */
   /** @typedef {"light" | "dark"} ResolvedTheme */
@@ -117,7 +117,7 @@ export function headInitTheme() {
   applyDOM(initialState.theme);
 
   /** @type {ThemeRuntimeApi} */
-  window.__varapressTheme = {
+  window.__varaTheme = {
     /**
      * Persists and applies a theme preference immediately.
      *
