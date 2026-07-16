@@ -5,8 +5,8 @@ export default function({ data, files, parse }) {
   pages.push({
     permalink: "/",
     template: "veta/landing",
-    title: home.frontmatter.title || site.title,
-    description: home.frontmatter.description || site.description,
+    title: home.frontmatter.title || data.site.title,
+    description: home.frontmatter.description || data.site.description,
     content: home.content,
   });
 
