@@ -12,12 +12,12 @@
         class="flex w-full cursor-pointer items-center gap-2 rounded-md border border-transparent p-2 text-left text-sm font-medium transition-colors{% if page.permalink == item.permalink %} bg-info/10 text-info{% else %} text-content/70 hover:bg-base-300 hover:text-content{% endif %}"
         :aria-expanded="open.toString()"
       >
-        {% if item.icon %}{{ item.icon|icon:"size-4 shrink-0"|safe }}{% endif %}
+        {% if item.icon %}{{ icon(item.icon, "size-4 shrink-0")|safe }}{% endif %}
         <span class="flex-1 truncate">{{ item.title }}</span>
         <span
           class="flex-none transition-transform duration-200"
           x-bind:class="open && 'rotate-90'"
-        >{{ "chevron-right"|icon:"size-4 shrink-0"|safe }}</span>
+        >{{ icon("chevron-right", "size-4 shrink-0")|safe }}</span>
       </button>
       <div
         x-show="open"
@@ -32,9 +32,7 @@
               aria-current="page"
             {% endif %}
           >
-            {% if child.icon %}{{ child.icon|icon:"size-4 shrink-0"|safe }}{%
-              endif
-            %}
+            {% if child.icon %}{{ icon(child.icon, "size-4 shrink-0")|safe }}{%           endif %}
             <span class="truncate">{{ child.title }}</span>
           </a>
         {% endfor %}
@@ -50,7 +48,7 @@
           aria-current="page"
         {% endif %}
       >
-        {% if item.icon %}{{ item.icon|icon:"size-4 shrink-0"|safe }}{% endif %}
+        {% if item.icon %}{{ icon(item.icon, "size-4 shrink-0")|safe }}{% endif %}
         <span class="truncate">{{ item.title }}</span>
       </a>
     </div>
@@ -66,12 +64,12 @@
       class="flex w-full cursor-pointer items-center gap-2 rounded-md border border-transparent p-2 text-left text-sm font-medium text-content/70 transition-colors hover:bg-base-300 hover:text-content"
       :aria-expanded="open.toString()"
     >
-      {{ "link"|icon:"size-4 shrink-0"|safe }}
+      {{ icon("link", "size-4 shrink-0")|safe }}
       <span class="flex-1 truncate">Links</span>
       <span
         class="flex-none transition-transform duration-200"
         x-bind:class="open && 'rotate-90'"
-      >{{ "chevron-right"|icon:"size-4 shrink-0"|safe }}</span>
+      >{{ icon("chevron-right", "size-4 shrink-0")|safe }}</span>
     </button>
     <div
       x-show="open"
@@ -88,9 +86,7 @@
           class="flex items-center gap-2 rounded-md border border-transparent p-2 text-sm font-medium text-content/70 transition-colors hover:bg-base-300 hover:text-content"
         >
           <span class="flex-1 truncate">{{ link.text }}</span>
-          {% if link.new_tab %}{{
-              "external-link"|icon:"size-3.5 shrink-0 text-content-muted"|safe
-            }}{% endif %}
+          {% if link.new_tab %}{{ icon("external-link", "size-3.5 shrink-0 text-content-muted")|safe }}{% endif %}
         </a>
       {% endfor %}
     </div>

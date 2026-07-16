@@ -3,21 +3,11 @@
 {% set site = data.site %}
 {% set site_def = data.site_default %}
 
-{%
-  set docs_logo_light = site.docs_logo_light | default:site_def.docs_logo_light | default:""
-%}
-{%
-  set docs_logo_dark = site.docs_logo_dark | default:site_def.docs_logo_dark | default:""
-%}
-{%
-  set docs_show_title = site.docs_show_title | default:site_def.docs_show_title | default:true
-%}
-{%
-  set docs_github_repo = site.docs_github_repo | default:site_def.docs_github_repo | default:""
-%}
-{%
-  set docs_sidebar_links = site.docs_sidebar_links | default:site_def.docs_sidebar_links | default:[]
-%}
+{%  set docs_logo_light = site.docs_logo_light | default:site_def.docs_logo_light | default:"" %}
+{%  set docs_logo_dark = site.docs_logo_dark | default:site_def.docs_logo_dark | default:"" %}
+{%  set docs_show_title = site.docs_show_title | default:site_def.docs_show_title | default:true %}
+{%  set docs_github_repo = site.docs_github_repo | default:site_def.docs_github_repo | default:"" %}
+{%  set docs_sidebar_links = site.docs_sidebar_links | default:site_def.docs_sidebar_links | default:[] %}
 
 {% block head_extra %}
   <script src="{{ url('_vara/js/build/docs.js') }}" defer></script>
@@ -33,16 +23,14 @@
           x-on:click="toggleSidebar()"
           aria-label="Toggle navigation"
         >
-          {{ "menu"|icon|safe }}
+          {{ icon("menu")|safe }}
         </button>
         <div class="min-w-0 overflow-x-auto overflow-y-hidden">
           <a
             href="{{ url('/') }}"
             class="group flex items-center justify-start whitespace-nowrap"
           >
-            {%
-              if docs_logo_light and docs_logo_dark and docs_logo_light == docs_logo_dark
-            %}
+            {%           if docs_logo_light and docs_logo_dark and docs_logo_light == docs_logo_dark %}
               <span class="mr-2 flex-none h-6">
                 <img
                   src="{{ url(docs_logo_light) }}"
@@ -51,9 +39,7 @@
                 >
               </span>
             {% elif docs_logo_light or docs_logo_dark %}
-              {%
-                set logo_light_src = docs_logo_light | default:docs_logo_dark
-              %}
+              {%             set logo_light_src = docs_logo_light | default:docs_logo_dark %}
               {% set logo_dark_src = docs_logo_dark | default:docs_logo_light %}
               <span class="mr-2 flex-none h-6">
                 <img
@@ -86,7 +72,7 @@
             rel="noopener noreferrer"
             class="mr-2 hidden items-center gap-2 rounded-md border border-base-400 px-3 py-1.5 text-sm font-medium text-content transition-colors hover:bg-base-300 desk:flex"
           >
-            {{ "github"|icon:"size-4"|safe }}
+            {{ icon("github", "size-4")|safe }}
             <span>GitHub</span>
           </a>
         {% endif %}
@@ -96,15 +82,9 @@
           x-on:click="cycleTheme()"
           aria-label="Toggle theme"
         >
-          <span x-show="theme === 'system'">{{
-            "laptop-minimal"|icon:"size-4"|safe
-          }}</span>
-          <span x-show="theme === 'light'">{{
-            "sun-medium"|icon:"size-4"|safe
-          }}</span>
-          <span x-show="theme === 'dark'">{{
-            "moon-star"|icon:"size-4"|safe
-          }}</span>
+          <span x-show="theme === 'system'">{{ icon("laptop-minimal", "size-4")|safe }}</span>
+          <span x-show="theme === 'light'">{{ icon("sun-medium", "size-4")|safe }}</span>
+          <span x-show="theme === 'dark'">{{ icon("moon-star", "size-4")|safe }}</span>
           <span>Theme</span>
         </button>
       </div>
@@ -149,7 +129,7 @@
               x-on:click="toggleSidebar()"
               aria-label="Close navigation"
             >
-              {{ "x"|icon:"size-5"|safe }}
+              {{ icon("x", "size-5")|safe }}
             </button>
           </div>
           <nav
@@ -181,9 +161,7 @@
                   {% else %}
                     <span>{{ crumb.title }}</span>
                   {% endif %}
-                  {{
-                    "chevron-right"|icon:"size-4 shrink-0 text-content-muted"|safe
-                  }}
+                  {{ icon("chevron-right", "size-4 shrink-0 text-content-muted")|safe }}
                 {% else %}
                   <span
                     class="inline-flex items-center gap-1.5 font-medium text-content"
@@ -201,9 +179,7 @@
             {{ page.content|safe }}
 
             {# Section index: list child pages #}
-            {%
-              if page.isSectionIndex and page.sectionPages and page.sectionPages|length > 0
-            %}
+            {%           if page.isSectionIndex and page.sectionPages and page.sectionPages|length > 0 %}
               <h2>Pages</h2>
               <ul>
                 {% for child in page.sectionPages %}
@@ -263,7 +239,7 @@
             class="fixed bottom-4 left-1/2 z-30 inline-flex -translate-x-1/2 cursor-pointer items-center gap-2 rounded-full border border-base-400 bg-content px-3.5 py-2 text-sm font-medium text-base-100 shadow-sm transition hover:bg-content/90 desk:bottom-6"
             aria-label="Back to top"
           >
-            {{ "arrow-up-to-line"|icon:"size-4"|safe }}
+            {{ icon("arrow-up-to-line", "size-4")|safe }}
             <span>Back to top</span>
           </button>
         </main>
@@ -277,7 +253,7 @@
               x-on:click="toggleToc()"
               aria-label="Table of contents"
             >
-              {{ "list"|icon:"size-5"|safe }}
+              {{ icon("list", "size-5")|safe }}
             </button>
           </div>
 
@@ -308,7 +284,7 @@
                   x-on:click="tocOpen = false"
                   aria-label="Close table of contents"
                 >
-                  {{ "x"|icon:"size-5"|safe }}
+                  {{ icon("x", "size-5")|safe }}
                 </button>
               </div>
               <nav
