@@ -58,7 +58,32 @@ function registerAlpineTheme() {
       if (window.__varaTheme) window.__varaTheme.set(next);
     },
 
-    // TODO: Add setLightTheme, setDarkTheme, setSystemTheme
+    /**
+     * Sets the user preference to follow the operating system color scheme.
+     *
+     * @returns {void}
+     */
+    setSystemTheme() {
+      if (window.__varaTheme) window.__varaTheme.set("system");
+    },
+
+    /**
+     * Sets the user preference to light mode.
+     *
+     * @returns {void}
+     */
+    setLightTheme() {
+      if (window.__varaTheme) window.__varaTheme.set("light");
+    },
+
+    /**
+     * Sets the user preference to dark mode.
+     *
+     * @returns {void}
+     */
+    setDarkTheme() {
+      if (window.__varaTheme) window.__varaTheme.set("dark");
+    },
 
     /**
      * Human-readable label for the current theme preference.
