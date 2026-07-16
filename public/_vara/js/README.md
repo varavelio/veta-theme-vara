@@ -8,9 +8,9 @@ All theme-owned JavaScript lives here (`public/_vara/js/`) so it never collides 
 public/_vara/js/
 ├── build/          ← Bundled output (only folders with index.js produce a file here)
 ├── src/
-│   ├── docs/       ← JavaScript for documentation page templates
-│   ├── head/       ← High-priority scripts injected before </head>
-│   └── theme/      ← Theme logic
+│   ├── head/       ← High-priority scripts injected before </head> on every page
+│   ├── theme/      ← Theme logic
+│   └── docs/       ← JavaScript for documentation page templates
 ```
 
 ## How bundling works
@@ -34,4 +34,4 @@ Theme logic split into two files:
 
 ### `docs/`
 
-JavaScript specific to the documentation page templates (`landing.j2`, `docs.j2`, `blog.j2`). This is currently the only template category with its own JavaScript.
+JavaScript specific to the documentation page templates (`docs.j2`).
