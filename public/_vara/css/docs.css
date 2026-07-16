@@ -1,4 +1,4 @@
-/* Vertical dashed line for sidebar */
+/* Vertical dashed line for sidebar tree */
 @utility tree-line-v {
   position: relative;
 
@@ -13,7 +13,7 @@
   }
 }
 
-/* Horizontal dashed line for sidebar */
+/* Horizontal dashed line for sidebar tree */
 @utility tree-line-h {
   position: relative;
 

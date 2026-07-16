@@ -14,22 +14,8 @@
   --breakpoint-desk: 64rem;
 
   /* Typography families. */
-  --font-sans:
-    "Geist Sans",
-    ui-sans-serif,
-    system-ui,
-    -apple-system,
-    "Segoe UI",
-    sans-serif;
-  --font-mono:
-    "Geist Mono",
-    ui-monospace,
-    "SFMono-Regular",
-    Menlo,
-    Monaco,
-    Consolas,
-    "Liberation Mono",
-    monospace;
+  --font-sans: "Geist Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
 
   /* Restrict font utilities to approved weights only. */
   --font-weight-*: initial;
@@ -132,7 +118,7 @@
   }
 
   /* Default icons style */
-  .varapress-icon {
+  .vara-icon {
     @apply size-6 text-current;
   }
 }
