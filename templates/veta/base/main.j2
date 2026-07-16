@@ -1,6 +1,9 @@
-{% set site_title = data.site.title %}
-{% set site_description = data.site.description %}
-{% set site_favicon = data.site.favicon %}
+{% set site = data.site %}
+{% set site_def = data.site_default %}
+
+{% set site_title = site.title | default:site_def.title %}
+{% set site_description = site.description | default:site_def.description %}
+{% set site_favicon = site.favicon | default:site_def.favicon %}
 
 <!DOCTYPE html>
 <html lang='{{ page.lang | default:"en" }}'>
@@ -18,26 +21,38 @@
 
     {% block seo %}
       {% set description = page.description | default:site_description %}
-      <meta name="description" content="{{ description }}">
+      {% if description %}
+        <meta name="description" content="{{ description }}">
+      {% endif %}
       {% if page.keywords %}
         <meta name="keywords" content="{{ page.keywords }}">
       {% endif %}
-      <meta property="og:title" content="{{ page.title }}">
+      {% if page.title %}
+        <meta property="og:title" content="{{ page.title }}">
+      {% endif %}
       {% if description %}
         <meta property="og:description" content="{{ description }}">
+      {% endif %}
+      {% if page.permalink %}
+        <link rel="canonical" href="{{ page.permalink }}">
       {% endif %}
       <meta property="og:type" content='{{ page.og_type | default:"website" }}'>
     {% endblock %}
 
-    <link rel="shortcut icon" href="{{ url(site_favicon) }}">
+    {% block favicon %}
+      {% if site_favicon %}
+        <link rel="shortcut icon" href="{{ url(site_favicon) }}">
+      {% endif %}
+    {% endblock %}
+
     <link rel="stylesheet" href="{{ url('/styles.css') }}">
 
     <!-- markup-fmt-ignore -->
-    <script>{{ load_data("/public/_vara/js/build/head.js") }}</script>
+    <script>{{ load_data("public/_vara/js/build/head.js") | safe }}</script>
 
     {% block head_extra %}{% endblock %}
   </head>
-  <body class="w-dvh h-dvh overflow-hidden">
+  <body class="w-dvh h-dvh overflow-hidden bg-base-100 text-content">
     {% block body %}{% endblock %}
   </body>
 </html>
