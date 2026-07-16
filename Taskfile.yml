@@ -24,7 +24,7 @@ tasks:
 
   dev:
     desc: Start development server
-    cmd: veta dev --host 0.0.0.0
+    cmd: veta dev
 
   build:
     desc: Build the project locally
@@ -36,8 +36,8 @@ tasks:
     desc: Build javascript of the project
     cmds:
       - rm -rf ./public/_vara/js/build
-      - npx --no esbuild ./public/_vara/js/src/docs/index.js --bundle --minify --outfile=./public/_vara/js/build/docs.js
       - npx --no esbuild ./public/_vara/js/src/head/index.js --bundle --minify --outfile=./public/_vara/js/build/head.js
+      - npx --no esbuild ./public/_vara/js/src/docs/index.js --bundle --minify --outfile=./public/_vara/js/build/docs.js
 
   format:
     desc: Run formatters
@@ -49,4 +49,4 @@ tasks:
 
   test:
     desc: Run tests
-    cmd: node --test
+    cmd: node --test filters/*.test.js functions/*.test.js
