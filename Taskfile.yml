@@ -49,4 +49,4 @@ tasks:
 
   test:
     desc: Run tests
-    cmd: node --test filters/*.test.js functions/*.test.js
+    cmd: node --test filters/*.test.js functions/*.test.js public/_vara/js/src/**/*.test.js
