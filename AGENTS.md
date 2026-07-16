@@ -27,16 +27,19 @@ You MUST follow the following instructions:
 
 ## Theme Structure
 
-- `templates/` contains Pongo page templates. `landing.j2` are for landing pages, `docs.j2` are for docs pages, `blog.j2`/`post.j2` are for blog pages, and `404.j2` is rendered only when a page generator explicitly creates that page.
+- `templates/` contains Pongo page templates. The supported page templates are `templates/veta/landing.j2`, `templates/veta/docs.j2`, and `templates/veta/404.j2`.
 - `components/` contains Veta components. Component tag names use kebab-case because Veta component names cannot use underscores.
-- `templates/macros/` contains shared Pongo macros used internally by templates and components. Public component APIs still use `class`; macro internals use `extra_class` because Pongo rejects `class=` as a macro call keyword.
-- `filters/` contains veta JS filters.
-- `data/site_default.js`/`data/site.yaml` contains theme defaults. Templates read site/theme metadata from `data.site or data.site_default` so the user can override only some parts of the data.
+- `filters/` contains distributable JS filters. These ARE part of the theme overlay and ship to consuming projects.
+- `functions/` contains JS template functions. These ARE part of the theme overlay and ship to consuming projects.
+- `data/site_default.js` contains theme defaults. `data/site.yaml` is the showcase override. Templates resolve each field independently (`data.site.X | default:data.site_default.X`) so users can override individual fields.
 - All theme-owned public assets must stay under `public/_vara/` to avoid collisions with consuming projects.
+- `pages/` and `content/` belong to the showcase, not the distributable theme.
 
 ## Working with JavaScript
 
-- Before modifying or adding any JavaScript in this project, read `public/_vara/js/README.md` first. It explains the directory layout, bundling rules, and the role of each module.
+- Before modifying or adding any JavaScript under `public/_vara/js/`, read `public/_vara/js/README.md` first. It explains the directory layout, bundling rules, and the role of each module.
+- JS source modules under `public/_vara/js/src/` use modern ES syntax (esbuild handles transpilation).
+- JS source inside `pages/*.js`, `data/*.js`, `filters/*.js`, `functions/*.js` are constrained by Goja and are synchronous only.
 
 ## Operational Commands
 
