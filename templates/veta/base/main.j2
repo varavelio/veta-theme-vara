@@ -46,9 +46,7 @@
     {% endblock %}
 
     <link rel="stylesheet" href="{{ url('/styles.css') }}">
-
-    <!-- markup-fmt-ignore -->
-    <script>{{ load_data("public/_vara/js/build/head.js") | safe }}</script>
+    <script src="{{ url('/_vara/js/build/head.js') }}"></script>
 
     {% block head_extra %}
     {% endblock %}
