@@ -5,6 +5,10 @@ build:
   output: dist
   clean: true
 
+dev:
+  watch:
+    - content
+
 html:
   minify: true
 
