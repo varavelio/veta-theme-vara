@@ -10,7 +10,7 @@
 {%  set docs_sidebar_links = site.docs_sidebar_links | default:site_def.docs_sidebar_links | default:[] %}
 
 {% block head_extra %}
-  <script src="{{ url('_vara/js/build/docs.js') }}" defer></script>
+  <script src="{{ url('/_vara/js/build/docs.js') }}" defer></script>
 {% endblock %}
 
 {% block body %}
@@ -33,7 +33,7 @@
             {%           if docs_logo_light and docs_logo_dark and docs_logo_light == docs_logo_dark %}
               <span class="mr-2 flex-none h-6">
                 <img
-                  src="{{ url(docs_logo_light) }}"
+                  src="{{ docs_logo_light }}"
                   class="h-6 w-auto"
                   alt="{{ site.title | default:site_def.title }}"
                 >
@@ -44,13 +44,13 @@
               <span class="mr-2 flex-none h-6">
                 <img
                   x-show="resolvedTheme === 'light'"
-                  src="{{ url(logo_light_src) }}"
+                  src="{{ logo_light_src }}"
                   class="h-6 w-auto"
                   alt="{{ site.title | default:site_def.title }}"
                 >
                 <img
                   x-show="resolvedTheme === 'dark'"
-                  src="{{ url(logo_dark_src) }}"
+                  src="{{ logo_dark_src }}"
                   class="h-6 w-auto"
                   alt="{{ site.title | default:site_def.title }}"
                 >
