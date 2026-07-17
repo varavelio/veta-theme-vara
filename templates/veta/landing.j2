@@ -1,9 +1,7 @@
 {% extends "./base/main.j2" %}
 
 {% block body %}
-  <div class="flex flex-1 flex-col min-h-0 bg-base-100">
-    <div class="flex-1 min-w-0">
-      {{ page.content | safe }}
-    </div>
+  <div class="size-full overflow-y-auto">
+    {{ page.content | safe }}
   </div>
 {% endblock %}
