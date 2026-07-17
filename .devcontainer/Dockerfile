@@ -2,7 +2,7 @@
 FROM node:24-trixie
 
 # Install veta
-COPY --from=varavel/veta:0.1.0-alpha.4 /usr/local/bin/veta /usr/local/bin/veta
+COPY --from=varavel/veta:0.1.0-alpha.5 /usr/local/bin/veta /usr/local/bin/veta
 
 # Set environment variables
 ENV \
