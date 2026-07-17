@@ -1,13 +1,16 @@
 export default function({ data, files, parse }) {
   let pages = [];
 
-  let home = parse.markdown(files.readFile("content/index.md"));
+  const homePageRaw = files.readFile("content/index.md");
+  // homeRaw = parse.renderComponents(home.html);
+  const homePage = parse.markdown(homePageRaw);
+
   pages.push({
     permalink: "/",
     template: "veta/landing",
-    title: home.frontmatter.title || data.site.title,
-    description: home.frontmatter.description || data.site.description,
-    content: home.content,
+    title: homePage.frontmatter.title || data.site.title,
+    description: homePage.frontmatter.description || data.site.description,
+    content: homePage.html,
   });
 
   pages.push({
