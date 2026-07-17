@@ -5,17 +5,18 @@ export default function({ files, parse }) {
   let pages = paths.map(function(path) {
     const permalink = files.toPermalink(path, { stripPrefix: "content/" });
     const pageRaw = files.readFile(path);
-    const page = parse.markdown(pageRaw);
+    const pageMd = parse.markdown(pageRaw);
+    const pageContent = parse.renderComponents(pageMd.html);
 
     return {
       permalink,
       template: "veta/docs",
-      title: String(page.frontmatter.title || "Untitled"),
-      description: String(page.frontmatter.description || ""),
-      weight: Number(page.frontmatter.weight) || 999999,
-      icon: String(page.frontmatter.icon || ""),
-      draft: Boolean(page.frontmatter.draft),
-      content: page.html,
+      title: String(pageMd.frontmatter.title || "Untitled"),
+      description: String(pageMd.frontmatter.description || ""),
+      weight: Number(pageMd.frontmatter.weight) || 999999,
+      icon: String(pageMd.frontmatter.icon || ""),
+      draft: Boolean(pageMd.frontmatter.draft),
+      content: pageContent,
     };
   })
     .filter(doc => !doc.draft)
