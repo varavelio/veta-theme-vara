@@ -18,6 +18,8 @@
 {% endblock %}
 
 {% block body %}
+  {% import "./macros/button.j2" button %}
+
   <main class="size-full flex items-center justify-center bg-base-100 px-4 py-16">
     <section class="w-full max-w-xl rounded-lg border border-base-400 bg-base-100 p-6 desk:p-8">
       <p class="font-mono text-sm font-medium text-content-muted">
@@ -33,13 +35,8 @@
         </p>
       </div>
 
-      <div class="mt-8 flex flex-col gap-3 desk:flex-row">
-        <a
-          href="{{ url('/') }}"
-          class="inline-flex items-center justify-center rounded-md border border-content bg-content px-4 py-2 text-sm font-medium text-base-100 transition-colors hover:bg-content-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-content"
-        >
-          Go home
-        </a>
+      <div class="mt-8 flex">
+        {{ button("Go home", url("/")) }}
       </div>
     </section>
   </main>
