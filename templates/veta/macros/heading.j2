@@ -1,0 +1,68 @@
+{% comment %}
+  Semantic heading with visual size presets independent of HTML level.
+
+  Parameters:
+    text  - Heading content (required)
+    level - HTML heading level: "1" | "2" (default) | "3" | "4" | "5" | "6"
+    size  - Visual size: "xs" | "sm" | "md" | "lg" | "xl" (default) | "2xl" | "3xl"
+    muted - "true" to apply muted text color
+    class - Additional CSS classes
+{% endcomment %}
+
+{% macro heading(text, level="2", size="xl", muted="false", class="") export %}
+  {% set base_classes = "font-sans font-semibold text-balance" %}
+
+  {% if muted == "true" %}
+    {% set color_classes = "text-content-muted" %}
+  {% else %}
+    {% set color_classes = "text-content" %}
+  {% endif %}
+
+  {# Size #}
+  {% if size == "3xl" %}
+    {% set size_classes = "text-4xl desk:text-5xl tracking-tighter" %}
+  {% elif size == "2xl" %}
+    {% set size_classes = "text-3xl desk:text-4xl tracking-tighter" %}
+  {% elif size == "xl" %}
+    {% set size_classes = "text-2xl desk:text-3xl tracking-tight" %}
+  {% elif size == "lg" %}
+    {% set size_classes = "text-xl desk:text-2xl tracking-tight" %}
+  {% elif size == "md" %}
+    {% set size_classes = "text-lg desk:text-xl tracking-tight" %}
+  {% elif size == "sm" %}
+    {% set size_classes = "text-base desk:text-lg tracking-normal" %}
+  {% else %}
+    {% set size_classes = "text-sm desk:text-base tracking-normal" %}
+  {% endif %}
+
+  {% set all_classes = base_classes + " " + color_classes + " " + size_classes %}
+  {% if class %}
+    {% set all_classes = all_classes + " " + class %}
+  {% endif %}
+
+  {% if level == "1" %}
+    <h1 class="{{ all_classes }}">
+      {{ text }}
+    </h1>
+  {% elif level == "3" %}
+    <h3 class="{{ all_classes }}">
+      {{ text }}
+    </h3>
+  {% elif level == "4" %}
+    <h4 class="{{ all_classes }}">
+      {{ text }}
+    </h4>
+  {% elif level == "5" %}
+    <h5 class="{{ all_classes }}">
+      {{ text }}
+    </h5>
+  {% elif level == "6" %}
+    <h6 class="{{ all_classes }}">
+      {{ text }}
+    </h6>
+  {% else %}
+    <h2 class="{{ all_classes }}">
+      {{ text }}
+    </h2>
+  {% endif %}
+{% endmacro %}
