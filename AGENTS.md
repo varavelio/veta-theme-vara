@@ -22,7 +22,8 @@ You MUST follow the following instructions:
 
 ## Formatting & Quality
 
-- Veta allows template and component files to have any extension, but this project always uses the `.j2` extension because that way the `task format` command will automatically detect and format the pongo syntax using dprint (pongo syntax is the same as jinja syntax, that's why we do this).
+- Veta templates and components use the `.j2` extension, but `dprint.json` explicitly excludes `.j2`; format Pongo/Jinja files manually rather than relying on `task format`.
+- Veta's Pongo lexer does not allow newlines within a single `{% ... %}` tag or `{{ ... }}` expression. Keep every tag or expression—including long macro calls—on one physical line while formatting the surrounding HTML readably.
 - When injecting string values into Alpine attributes, avoid raw JSON double-quoted strings inside double-quoted HTML attributes. Prefer a single-quoted JavaScript string literal inside the attribute so dprint formatting and HTML minification do not split the expression.
 
 ## Theme Structure
