@@ -32,7 +32,7 @@ You MUST follow the following instructions:
 - `components/` contains Veta components. Component tag names use kebab-case because Veta component names cannot use underscores.
 - `filters/` contains distributable JS filters. These ARE part of the theme overlay and ship to consuming projects.
 - `functions/` contains JS template functions. These ARE part of the theme overlay and ship to consuming projects.
-- `data/site_default.js` contains theme defaults. `data/site.yaml` is the showcase override. Templates resolve each field independently (`data.site.X | default:data.site_default.X`) so users can override individual fields.
+- `data/site_default.js` contains theme defaults. `data/site.yaml` is the showcase override. In Pongo templates and components, resolve these values with `site_setting("specific_key", "fallback_key")`; it checks each key in `data.site` and then `data.site_default`. Keep literal defaults in the template with the `default` filter.
 - All theme-owned public assets must stay under `public/_vara/` to avoid collisions with consuming projects.
 - `pages/` and `content/` belong to the showcase, not the distributable theme.
 
