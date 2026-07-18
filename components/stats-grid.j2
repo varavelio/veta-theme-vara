@@ -1,0 +1,156 @@
+{% set container = props.container |default:"lg" %}
+{% set eyebrow = props.eyebrow %}
+{% set title = props.title %}
+{% set description = props.description %}
+{% set columns = props.columns %}
+{% set bg = props.bg |default:"base-100" %}
+{% set stat_1_value = props.stat_1_value %}
+{% set stat_1_label = props.stat_1_label %}
+{% set stat_1_desc = props.stat_1_desc %}
+{% set stat_2_value = props.stat_2_value %}
+{% set stat_2_label = props.stat_2_label %}
+{% set stat_2_desc = props.stat_2_desc %}
+{% set stat_3_value = props.stat_3_value %}
+{% set stat_3_label = props.stat_3_label %}
+{% set stat_3_desc = props.stat_3_desc %}
+{% set stat_4_value = props.stat_4_value %}
+{% set stat_4_label = props.stat_4_label %}
+{% set stat_4_desc = props.stat_4_desc %}
+{% set stat_5_value = props.stat_5_value %}
+{% set stat_5_label = props.stat_5_label %}
+{% set stat_5_desc = props.stat_5_desc %}
+{% set stat_6_value = props.stat_6_value %}
+{% set stat_6_label = props.stat_6_label %}
+{% set stat_6_desc = props.stat_6_desc %}
+{% set stat_7_value = props.stat_7_value %}
+{% set stat_7_label = props.stat_7_label %}
+{% set stat_7_desc = props.stat_7_desc %}
+{% set stat_8_value = props.stat_8_value %}
+{% set stat_8_label = props.stat_8_label %}
+{% set stat_8_desc = props.stat_8_desc %}
+{% set class = props.class %}
+
+{% if container == "xs" %}
+  {% set container_cls = "max-w-md" %}
+{% elif container == "sm" %}
+  {% set container_cls = "max-w-3xl" %}
+{% elif container == "md" %}
+  {% set container_cls = "max-w-6xl" %}
+{% elif container == "xl" %}
+  {% set container_cls = "max-w-[120rem]" %}
+{% elif container == "full" %}
+  {% set container_cls = "max-w-full" %}
+{% else %}
+  {% set container_cls = "max-w-7xl" %}
+{% endif %}
+{% set cols = columns |default:"4" %}
+
+<section class="bg-{{ bg }} py-10 desk:py-20{% if class %} {{ class }}{% endif %}">
+  <div class="mx-auto w-full {{ container_cls }} px-4">
+    <div class="space-y-8 desk:space-y-10">
+      {% if eyebrow or title or description %}
+        <div class="mx-auto flex max-w-3xl flex-col gap-3 text-center">
+          {% if eyebrow %}
+            <p class="text-xs font-medium uppercase tracking-[0.24em] text-content-muted">{{ eyebrow }}</p>
+          {% endif %}
+          {% if title %}
+            <h2 class="text-3xl font-semibold tracking-tight text-content desk:text-4xl">{{ title }}</h2>
+          {% endif %}
+          {% if description %}
+            <p class="text-base leading-7 text-content-muted desk:text-lg">{{ description }}</p>
+          {% endif %}
+        </div>
+      {% endif %}
+      <div class="grid grid-cols-1 gap-4 desk:gap-5{% if cols == '2' %} desk:grid-cols-2{% elif cols == '3' %} desk:grid-cols-3{% else %} desk:grid-cols-4{% endif %}">
+        {% if stat_1_value %}
+          <div class="rounded-lg border border-base-400 bg-base-200 p-4 desk:p-6">
+            <p class="font-mono text-4xl font-semibold tracking-tight text-content desk:text-5xl">{{ stat_1_value }}</p>
+            <div class="mt-3 space-y-1">
+              <p class="font-medium text-content">{{ stat_1_label }}</p>
+              {% if stat_1_desc %}
+                <p class="text-sm leading-6 text-content-muted">{{ stat_1_desc }}</p>
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
+        {% if stat_2_value %}
+          <div class="rounded-lg border border-base-400 bg-base-200 p-4 desk:p-6">
+            <p class="font-mono text-4xl font-semibold tracking-tight text-content desk:text-5xl">{{ stat_2_value }}</p>
+            <div class="mt-3 space-y-1">
+              <p class="font-medium text-content">{{ stat_2_label }}</p>
+              {% if stat_2_desc %}
+                <p class="text-sm leading-6 text-content-muted">{{ stat_2_desc }}</p>
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
+        {% if stat_3_value %}
+          <div class="rounded-lg border border-base-400 bg-base-200 p-4 desk:p-6">
+            <p class="font-mono text-4xl font-semibold tracking-tight text-content desk:text-5xl">{{ stat_3_value }}</p>
+            <div class="mt-3 space-y-1">
+              <p class="font-medium text-content">{{ stat_3_label }}</p>
+              {% if stat_3_desc %}
+                <p class="text-sm leading-6 text-content-muted">{{ stat_3_desc }}</p>
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
+        {% if stat_4_value %}
+          <div class="rounded-lg border border-base-400 bg-base-200 p-4 desk:p-6">
+            <p class="font-mono text-4xl font-semibold tracking-tight text-content desk:text-5xl">{{ stat_4_value }}</p>
+            <div class="mt-3 space-y-1">
+              <p class="font-medium text-content">{{ stat_4_label }}</p>
+              {% if stat_4_desc %}
+                <p class="text-sm leading-6 text-content-muted">{{ stat_4_desc }}</p>
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
+        {% if stat_5_value %}
+          <div class="rounded-lg border border-base-400 bg-base-200 p-4 desk:p-6">
+            <p class="font-mono text-4xl font-semibold tracking-tight text-content desk:text-5xl">{{ stat_5_value }}</p>
+            <div class="mt-3 space-y-1">
+              <p class="font-medium text-content">{{ stat_5_label }}</p>
+              {% if stat_5_desc %}
+                <p class="text-sm leading-6 text-content-muted">{{ stat_5_desc }}</p>
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
+        {% if stat_6_value %}
+          <div class="rounded-lg border border-base-400 bg-base-200 p-4 desk:p-6">
+            <p class="font-mono text-4xl font-semibold tracking-tight text-content desk:text-5xl">{{ stat_6_value }}</p>
+            <div class="mt-3 space-y-1">
+              <p class="font-medium text-content">{{ stat_6_label }}</p>
+              {% if stat_6_desc %}
+                <p class="text-sm leading-6 text-content-muted">{{ stat_6_desc }}</p>
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
+        {% if stat_7_value %}
+          <div class="rounded-lg border border-base-400 bg-base-200 p-4 desk:p-6">
+            <p class="font-mono text-4xl font-semibold tracking-tight text-content desk:text-5xl">{{ stat_7_value }}</p>
+            <div class="mt-3 space-y-1">
+              <p class="font-medium text-content">{{ stat_7_label }}</p>
+              {% if stat_7_desc %}
+                <p class="text-sm leading-6 text-content-muted">{{ stat_7_desc }}</p>
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
+        {% if stat_8_value %}
+          <div class="rounded-lg border border-base-400 bg-base-200 p-4 desk:p-6">
+            <p class="font-mono text-4xl font-semibold tracking-tight text-content desk:text-5xl">{{ stat_8_value }}</p>
+            <div class="mt-3 space-y-1">
+              <p class="font-medium text-content">{{ stat_8_label }}</p>
+              {% if stat_8_desc %}
+                <p class="text-sm leading-6 text-content-muted">{{ stat_8_desc }}</p>
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,133 @@
+{% set container = props.container |default:"lg" %}
+{% set eyebrow = props.eyebrow %}
+{% set title = props.title %}
+{% set description = props.description %}
+{% set panel_label = props.panel_label %}
+{% set panel_title = props.panel_title %}
+{% set panel_metric = props.panel_metric %}
+{% set item_1_icon = props.item_1_icon %}
+{% set item_1_title = props.item_1_title %}
+{% set item_1_desc = props.item_1_desc %}
+{% set item_2_icon = props.item_2_icon %}
+{% set item_2_title = props.item_2_title %}
+{% set item_2_desc = props.item_2_desc %}
+{% set item_3_icon = props.item_3_icon %}
+{% set item_3_title = props.item_3_title %}
+{% set item_3_desc = props.item_3_desc %}
+{% set bg = props.bg |default:"base-100" %}
+{% set reverse = props.reverse |default:"false" %}
+{% set class = props.class %}
+
+{% if container == "xs" %}
+  {% set container_cls = "max-w-md" %}
+{% elif container == "sm" %}
+  {% set container_cls = "max-w-3xl" %}
+{% elif container == "md" %}
+  {% set container_cls = "max-w-6xl" %}
+{% elif container == "xl" %}
+  {% set container_cls = "max-w-[120rem]" %}
+{% elif container == "full" %}
+  {% set container_cls = "max-w-full" %}
+{% else %}
+  {% set container_cls = "max-w-7xl" %}
+{% endif %}
+
+<section class="bg-{{ bg }} py-10 desk:py-20{% if class %} {{ class }}{% endif %}">
+  <div class="mx-auto w-full {{ container_cls }} px-4">
+    <div class="grid gap-6 desk:grid-cols-[0.9fr_1.1fr] desk:items-center desk:gap-8">
+      <div class="{% if reverse == 'true' %}desk:order-2{% endif %}">
+        {% if eyebrow or title or description %}
+          <div class="flex max-w-3xl flex-col gap-3 text-left">
+            {% if eyebrow %}
+              <p class="text-xs font-medium uppercase tracking-[0.24em] text-content-muted">
+                {{ eyebrow }}
+              </p>
+            {% endif %}
+            {% if title %}
+              <h2 class="text-3xl font-semibold tracking-tight text-content desk:text-4xl">
+                {{ title }}
+              </h2>
+            {% endif %}
+            {% if description %}
+              <p class="text-base leading-7 text-content-muted desk:text-lg">
+                {{ description }}
+              </p>
+            {% endif %}
+          </div>
+        {% endif %}
+        <div class="mt-6 grid gap-4">
+          {% if item_1_title %}
+            <div class="flex gap-4 rounded-lg border border-base-400 bg-base-200 p-4">
+              {% if item_1_icon %}
+                <div class="flex size-10 shrink-0 items-center justify-center rounded-md border border-base-400 bg-base-100">
+                  {{ icon(item_1_icon, "size-5 text-content")|safe }}
+                </div>
+              {% endif %}
+              <div>
+                <h3 class="font-medium text-content">{{ item_1_title }}</h3>
+                {% if item_1_desc %}
+                  <p class="mt-2 text-sm leading-6 text-content-muted">{{ item_1_desc }}</p>
+                {% endif %}
+              </div>
+            </div>
+          {% endif %}
+          {% if item_2_title %}
+            <div class="flex gap-4 rounded-lg border border-base-400 bg-base-200 p-4">
+              {% if item_2_icon %}
+                <div class="flex size-10 shrink-0 items-center justify-center rounded-md border border-base-400 bg-base-100">
+                  {{ icon(item_2_icon, "size-5 text-content")|safe }}
+                </div>
+              {% endif %}
+              <div>
+                <h3 class="font-medium text-content">{{ item_2_title }}</h3>
+                {% if item_2_desc %}
+                  <p class="mt-2 text-sm leading-6 text-content-muted">{{ item_2_desc }}</p>
+                {% endif %}
+              </div>
+            </div>
+          {% endif %}
+          {% if item_3_title %}
+            <div class="flex gap-4 rounded-lg border border-base-400 bg-base-200 p-4">
+              {% if item_3_icon %}
+                <div class="flex size-10 shrink-0 items-center justify-center rounded-md border border-base-400 bg-base-100">
+                  {{ icon(item_3_icon, "size-5 text-content")|safe }}
+                </div>
+              {% endif %}
+              <div>
+                <h3 class="font-medium text-content">{{ item_3_title }}</h3>
+                {% if item_3_desc %}
+                  <p class="mt-2 text-sm leading-6 text-content-muted">{{ item_3_desc }}</p>
+                {% endif %}
+              </div>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+      <div class="rounded-lg border border-base-400 bg-base-200 p-4 desk:p-6{% if reverse == 'true' %} desk:order-1{% endif %}">
+        <div class="rounded-md border border-base-400 bg-base-100 p-4">
+          <div class="flex items-center justify-between gap-4 border-b border-base-400 pb-4">
+            <div>
+              {% if panel_label %}
+                <p class="text-xs font-medium uppercase tracking-[0.24em] text-content-muted">{{ panel_label }}</p>
+              {% endif %}
+              {% if panel_title %}
+                <h3 class="mt-1 text-xl font-medium tracking-tight text-content">{{ panel_title }}</h3>
+              {% endif %}
+            </div>
+            <div class="flex size-10 items-center justify-center rounded-md border border-base-400 bg-base-200">
+              {{ icon("monitor", "size-5 text-content")|safe }}
+            </div>
+          </div>
+          {% if panel_metric %}
+            <p class="mt-5 font-mono text-5xl font-semibold tracking-tight text-content">{{ panel_metric }}</p>
+          {% endif %}
+          <div class="mt-5 grid gap-3">
+            <div class="h-10 rounded-md border border-base-400 bg-base-200"></div>
+            <div class="h-10 rounded-md border border-base-400 bg-base-200"></div>
+            <div class="h-24 rounded-md border border-base-400 bg-base-200"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

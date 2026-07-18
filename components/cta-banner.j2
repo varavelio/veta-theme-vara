@@ -1,0 +1,58 @@
+{% import "../templates/veta/macros/button.j2" button %}
+
+{% set container = props.container|default:"lg" %}
+{% set bg = props.bg|default:"base-100" %}
+
+{% if container == "xs" %}
+  {% set container_cls = "max-w-md" %}
+{% elif container == "sm" %}
+  {% set container_cls = "max-w-3xl" %}
+{% elif container == "md" %}
+  {% set container_cls = "max-w-6xl" %}
+{% elif container == "xl" %}
+  {% set container_cls = "max-w-[120rem]" %}
+{% elif container == "full" %}
+  {% set container_cls = "max-w-full" %}
+{% else %}
+  {% set container_cls = "max-w-7xl" %}
+{% endif %}
+
+<section class="bg-{{ bg }} py-10 desk:py-20{% if props.class %} {{ props.class }}{% endif %}">
+  <div class="mx-auto w-full {{ container_cls }} px-4">
+    <div class="rounded-lg border border-base-400 bg-base-200 p-4 text-center desk:p-8">
+      <div class="mx-auto flex max-w-3xl flex-col items-center gap-5">
+        {% if props.eyebrow %}
+          <p class="text-xs font-medium uppercase tracking-[0.24em] text-content-muted">
+            {{ props.eyebrow }}
+          </p>
+        {% endif %}
+        {% if props.title %}
+          <h2 class="text-3xl font-semibold tracking-tight text-content desk:text-4xl">
+            {{ props.title }}
+          </h2>
+        {% endif %}
+        {% if props.description %}
+          <p class="text-base leading-7 text-content-muted desk:text-lg">
+            {{ props.description }}
+          </p>
+        {% endif %}
+
+        {% if props.action_1_text %}
+          <div class="flex w-full flex-col justify-center gap-3 desk:w-auto desk:flex-row">
+            {{ button(props.action_1_text, props.action_1_url|default:"#", "", "", "", "lg", "md", props.action_1_variant|default:"solid", props.action_1_color|default:"neutral", "true", "false", "button", "desk:w-auto") }}
+
+            {% if props.action_2_text %}
+              {{ button(props.action_2_text, props.action_2_url|default:"#", "", "", "", "lg", "md", props.action_2_variant|default:"outline", props.action_2_color|default:"neutral", "true", "false", "button", "desk:w-auto") }}
+            {% endif %}
+          </div>
+        {% endif %}
+
+        {% if props.caption %}
+          <p class="text-sm leading-6 text-content-muted">
+            {{ props.caption }}
+          </p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>

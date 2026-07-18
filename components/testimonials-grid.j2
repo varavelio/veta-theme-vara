@@ -1,0 +1,254 @@
+{% set container = props.container |default:"lg" %}
+{% set eyebrow = props.eyebrow %}
+{% set title = props.title %}
+{% set description = props.description %}
+{% set columns = props.columns %}
+{% set bg = props.bg |default:"base-100" %}
+{% set item_1_quote = props.item_1_quote %}
+{% set item_1_name = props.item_1_name %}
+{% set item_1_role = props.item_1_role %}
+{% set item_1_company = props.item_1_company %}
+{% set item_1_avatar = props.item_1_avatar %}
+{% set item_1_rating = props.item_1_rating %}
+{% set item_2_quote = props.item_2_quote %}
+{% set item_2_name = props.item_2_name %}
+{% set item_2_role = props.item_2_role %}
+{% set item_2_company = props.item_2_company %}
+{% set item_2_avatar = props.item_2_avatar %}
+{% set item_2_rating = props.item_2_rating %}
+{% set item_3_quote = props.item_3_quote %}
+{% set item_3_name = props.item_3_name %}
+{% set item_3_role = props.item_3_role %}
+{% set item_3_company = props.item_3_company %}
+{% set item_3_avatar = props.item_3_avatar %}
+{% set item_3_rating = props.item_3_rating %}
+{% set item_4_quote = props.item_4_quote %}
+{% set item_4_name = props.item_4_name %}
+{% set item_4_role = props.item_4_role %}
+{% set item_4_company = props.item_4_company %}
+{% set item_4_avatar = props.item_4_avatar %}
+{% set item_4_rating = props.item_4_rating %}
+{% set item_5_quote = props.item_5_quote %}
+{% set item_5_name = props.item_5_name %}
+{% set item_5_role = props.item_5_role %}
+{% set item_5_company = props.item_5_company %}
+{% set item_5_avatar = props.item_5_avatar %}
+{% set item_5_rating = props.item_5_rating %}
+{% set item_6_quote = props.item_6_quote %}
+{% set item_6_name = props.item_6_name %}
+{% set item_6_role = props.item_6_role %}
+{% set item_6_company = props.item_6_company %}
+{% set item_6_avatar = props.item_6_avatar %}
+{% set item_6_rating = props.item_6_rating %}
+{% set class = props.class %}
+
+{% if container == "xs" %}
+  {% set container_cls = "max-w-md" %}
+{% elif container == "sm" %}
+  {% set container_cls = "max-w-3xl" %}
+{% elif container == "md" %}
+  {% set container_cls = "max-w-6xl" %}
+{% elif container == "xl" %}
+  {% set container_cls = "max-w-[120rem]" %}
+{% elif container == "full" %}
+  {% set container_cls = "max-w-full" %}
+{% else %}
+  {% set container_cls = "max-w-7xl" %}
+{% endif %}
+{% set cols = columns |default:"3" %}
+
+<section class="bg-{{ bg }} py-10 desk:py-20{% if class %} {{ class }}{% endif %}">
+  <div class="mx-auto w-full {{ container_cls }} px-4">
+    <div class="space-y-8 desk:space-y-10">
+      {% if eyebrow or title or description %}
+        <div class="mx-auto flex max-w-3xl flex-col gap-3 text-center">
+          {% if eyebrow %}
+            <p class="text-xs font-medium uppercase tracking-[0.24em] text-content-muted">{{ eyebrow }}</p>
+          {% endif %}
+          {% if title %}
+            <h2 class="text-3xl font-semibold tracking-tight text-content desk:text-4xl">{{ title }}</h2>
+          {% endif %}
+          {% if description %}
+            <p class="text-base leading-7 text-content-muted desk:text-lg">{{ description }}</p>
+          {% endif %}
+        </div>
+      {% endif %}
+      <div class="grid grid-cols-1 gap-4 desk:gap-5{% if cols == '2' %} desk:grid-cols-2{% else %} desk:grid-cols-3{% endif %}">
+        {% if item_1_quote %}
+          <div class="flex h-full flex-col gap-5 rounded-lg border border-base-400 bg-base-200 p-4 desk:p-6">
+            {% if item_1_rating %}
+              <div class="flex gap-1">
+                {% for i in range(item_1_rating) %}
+                  <svg class="size-4 text-content" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                {% endfor %}
+              </div>
+            {% endif %}
+            <blockquote class="text-base leading-7 text-content desk:text-lg">&ldquo;{{ item_1_quote }}&rdquo;</blockquote>
+            <div class="mt-auto flex items-center gap-3 border-t border-base-400 pt-4">
+              {% if item_1_avatar %}
+                <img src="{{ item_1_avatar }}" alt="{{ item_1_name }}" class="size-10 rounded-full border border-base-400 object-cover" />
+              {% else %}
+                <div class="flex size-10 items-center justify-center rounded-full border border-base-400 bg-base-300 text-sm font-medium text-content">
+                  {{ item_1_name |first }}
+                </div>
+              {% endif %}
+              <div class="min-w-0">
+                <p class="font-medium text-content">{{ item_1_name }}</p>
+                <p class="text-sm text-content-muted">
+                  {{ item_1_role }}{% if item_1_company %}, {{ item_1_company }}{% endif %}
+                </p>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+        {% if item_2_quote %}
+          <div class="flex h-full flex-col gap-5 rounded-lg border border-base-400 bg-base-200 p-4 desk:p-6">
+            {% if item_2_rating %}
+              <div class="flex gap-1">
+                {% for i in range(item_2_rating) %}
+                  <svg class="size-4 text-content" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                {% endfor %}
+              </div>
+            {% endif %}
+            <blockquote class="text-base leading-7 text-content desk:text-lg">&ldquo;{{ item_2_quote }}&rdquo;</blockquote>
+            <div class="mt-auto flex items-center gap-3 border-t border-base-400 pt-4">
+              {% if item_2_avatar %}
+                <img src="{{ item_2_avatar }}" alt="{{ item_2_name }}" class="size-10 rounded-full border border-base-400 object-cover" />
+              {% else %}
+                <div class="flex size-10 items-center justify-center rounded-full border border-base-400 bg-base-300 text-sm font-medium text-content">
+                  {{ item_2_name |first }}
+                </div>
+              {% endif %}
+              <div class="min-w-0">
+                <p class="font-medium text-content">{{ item_2_name }}</p>
+                <p class="text-sm text-content-muted">
+                  {{ item_2_role }}{% if item_2_company %}, {{ item_2_company }}{% endif %}
+                </p>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+        {% if item_3_quote %}
+          <div class="flex h-full flex-col gap-5 rounded-lg border border-base-400 bg-base-200 p-4 desk:p-6">
+            {% if item_3_rating %}
+              <div class="flex gap-1">
+                {% for i in range(item_3_rating) %}
+                  <svg class="size-4 text-content" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                {% endfor %}
+              </div>
+            {% endif %}
+            <blockquote class="text-base leading-7 text-content desk:text-lg">&ldquo;{{ item_3_quote }}&rdquo;</blockquote>
+            <div class="mt-auto flex items-center gap-3 border-t border-base-400 pt-4">
+              {% if item_3_avatar %}
+                <img src="{{ item_3_avatar }}" alt="{{ item_3_name }}" class="size-10 rounded-full border border-base-400 object-cover" />
+              {% else %}
+                <div class="flex size-10 items-center justify-center rounded-full border border-base-400 bg-base-300 text-sm font-medium text-content">
+                  {{ item_3_name |first }}
+                </div>
+              {% endif %}
+              <div class="min-w-0">
+                <p class="font-medium text-content">{{ item_3_name }}</p>
+                <p class="text-sm text-content-muted">
+                  {{ item_3_role }}{% if item_3_company %}, {{ item_3_company }}{% endif %}
+                </p>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+        {% if item_4_quote %}
+          <div class="flex h-full flex-col gap-5 rounded-lg border border-base-400 bg-base-200 p-4 desk:p-6">
+            {% if item_4_rating %}
+              <div class="flex gap-1">
+                {% for i in range(item_4_rating) %}
+                  <svg class="size-4 text-content" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                {% endfor %}
+              </div>
+            {% endif %}
+            <blockquote class="text-base leading-7 text-content desk:text-lg">&ldquo;{{ item_4_quote }}&rdquo;</blockquote>
+            <div class="mt-auto flex items-center gap-3 border-t border-base-400 pt-4">
+              {% if item_4_avatar %}
+                <img src="{{ item_4_avatar }}" alt="{{ item_4_name }}" class="size-10 rounded-full border border-base-400 object-cover" />
+              {% else %}
+                <div class="flex size-10 items-center justify-center rounded-full border border-base-400 bg-base-300 text-sm font-medium text-content">
+                  {{ item_4_name |first }}
+                </div>
+              {% endif %}
+              <div class="min-w-0">
+                <p class="font-medium text-content">{{ item_4_name }}</p>
+                <p class="text-sm text-content-muted">
+                  {{ item_4_role }}{% if item_4_company %}, {{ item_4_company }}{% endif %}
+                </p>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+        {% if item_5_quote %}
+          <div class="flex h-full flex-col gap-5 rounded-lg border border-base-400 bg-base-200 p-4 desk:p-6">
+            {% if item_5_rating %}
+              <div class="flex gap-1">
+                {% for i in range(item_5_rating) %}
+                  <svg class="size-4 text-content" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                {% endfor %}
+              </div>
+            {% endif %}
+            <blockquote class="text-base leading-7 text-content desk:text-lg">&ldquo;{{ item_5_quote }}&rdquo;</blockquote>
+            <div class="mt-auto flex items-center gap-3 border-t border-base-400 pt-4">
+              {% if item_5_avatar %}
+                <img src="{{ item_5_avatar }}" alt="{{ item_5_name }}" class="size-10 rounded-full border border-base-400 object-cover" />
+              {% else %}
+                <div class="flex size-10 items-center justify-center rounded-full border border-base-400 bg-base-300 text-sm font-medium text-content">
+                  {{ item_5_name |first }}
+                </div>
+              {% endif %}
+              <div class="min-w-0">
+                <p class="font-medium text-content">{{ item_5_name }}</p>
+                <p class="text-sm text-content-muted">
+                  {{ item_5_role }}{% if item_5_company %}, {{ item_5_company }}{% endif %}
+                </p>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+        {% if item_6_quote %}
+          <div class="flex h-full flex-col gap-5 rounded-lg border border-base-400 bg-base-200 p-4 desk:p-6">
+            {% if item_6_rating %}
+              <div class="flex gap-1">
+                {% for i in range(item_6_rating) %}
+                  <svg class="size-4 text-content" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                {% endfor %}
+              </div>
+            {% endif %}
+            <blockquote class="text-base leading-7 text-content desk:text-lg">&ldquo;{{ item_6_quote }}&rdquo;</blockquote>
+            <div class="mt-auto flex items-center gap-3 border-t border-base-400 pt-4">
+              {% if item_6_avatar %}
+                <img src="{{ item_6_avatar }}" alt="{{ item_6_name }}" class="size-10 rounded-full border border-base-400 object-cover" />
+              {% else %}
+                <div class="flex size-10 items-center justify-center rounded-full border border-base-400 bg-base-300 text-sm font-medium text-content">
+                  {{ item_6_name |first }}
+                </div>
+              {% endif %}
+              <div class="min-w-0">
+                <p class="font-medium text-content">{{ item_6_name }}</p>
+                <p class="text-sm text-content-muted">
+                  {{ item_6_role }}{% if item_6_company %}, {{ item_6_company }}{% endif %}
+                </p>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>

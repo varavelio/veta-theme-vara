@@ -1,0 +1,130 @@
+{% set container = props.container |default:"lg" %}
+{% set eyebrow = props.eyebrow %}
+{% set title = props.title %}
+{% set description = props.description %}
+{% set problem_title = props.problem_title %}
+{% set problem_desc = props.problem_desc %}
+{% set problem_1 = props.problem_1 %}
+{% set problem_2 = props.problem_2 %}
+{% set problem_3 = props.problem_3 %}
+{% set problem_4 = props.problem_4 %}
+{% set solution_title = props.solution_title %}
+{% set solution_desc = props.solution_desc %}
+{% set solution_1 = props.solution_1 %}
+{% set solution_2 = props.solution_2 %}
+{% set solution_3 = props.solution_3 %}
+{% set solution_4 = props.solution_4 %}
+{% set bg = props.bg |default:"base-100" %}
+{% set class = props.class %}
+
+{% if container == "xs" %}
+  {% set container_cls = "max-w-md" %}
+{% elif container == "sm" %}
+  {% set container_cls = "max-w-3xl" %}
+{% elif container == "md" %}
+  {% set container_cls = "max-w-6xl" %}
+{% elif container == "xl" %}
+  {% set container_cls = "max-w-[120rem]" %}
+{% elif container == "full" %}
+  {% set container_cls = "max-w-full" %}
+{% else %}
+  {% set container_cls = "max-w-7xl" %}
+{% endif %}
+
+<section class="bg-{{ bg }} py-10 desk:py-20{% if class %} {{ class }}{% endif %}">
+  <div class="mx-auto w-full {{ container_cls }} px-4">
+    <div class="space-y-8 desk:space-y-10">
+      {% if eyebrow or title or description %}
+        <div class="mx-auto flex max-w-3xl flex-col gap-3 text-center">
+          {% if eyebrow %}
+            <p class="text-xs font-medium uppercase tracking-[0.24em] text-content-muted">
+              {{ eyebrow }}
+            </p>
+          {% endif %}
+          {% if title %}
+            <h2 class="text-3xl font-semibold tracking-tight text-content desk:text-4xl">
+              {{ title }}
+            </h2>
+          {% endif %}
+          {% if description %}
+            <p class="text-base leading-7 text-content-muted desk:text-lg">
+              {{ description }}
+            </p>
+          {% endif %}
+        </div>
+      {% endif %}
+      <div class="grid gap-4 desk:grid-cols-2 desk:gap-5">
+        <div class="rounded-lg border border-base-400 bg-base-200 p-4 desk:p-6">
+          <div class="flex size-10 items-center justify-center rounded-md border border-base-400 bg-base-100">
+            {{ icon("x", "size-5 text-content-muted")|safe }}
+          </div>
+          {% if problem_title %}
+            <h3 class="mt-5 text-2xl font-semibold tracking-tight text-content">
+              {{ problem_title }}
+            </h3>
+          {% endif %}
+          {% if problem_desc %}
+            <p class="mt-3 text-sm leading-6 text-content-muted desk:text-base">
+              {{ problem_desc }}
+            </p>
+          {% endif %}
+          <div class="mt-6 space-y-3 border-t border-base-400 pt-5 text-sm leading-6 text-content-muted">
+            {% if problem_1 %}
+              <p>{{ problem_1 }}</p>
+            {% endif %}
+            {% if problem_2 %}
+              <p>{{ problem_2 }}</p>
+            {% endif %}
+            {% if problem_3 %}
+              <p>{{ problem_3 }}</p>
+            {% endif %}
+            {% if problem_4 %}
+              <p>{{ problem_4 }}</p>
+            {% endif %}
+          </div>
+        </div>
+        <div class="rounded-lg border border-content bg-base-100 p-4 desk:p-6">
+          <div class="flex size-10 items-center justify-center rounded-md border border-base-400 bg-base-200">
+            {{ icon("check", "size-5 text-content")|safe }}
+          </div>
+          {% if solution_title %}
+            <h3 class="mt-5 text-2xl font-semibold tracking-tight text-content">
+              {{ solution_title }}
+            </h3>
+          {% endif %}
+          {% if solution_desc %}
+            <p class="mt-3 text-sm leading-6 text-content-muted desk:text-base">
+              {{ solution_desc }}
+            </p>
+          {% endif %}
+          <div class="mt-6 space-y-3 border-t border-base-400 pt-5 text-sm leading-6 text-content-muted">
+            {% if solution_1 %}
+              <p class="flex gap-3">
+                {{ icon("check", "mt-1 size-4 shrink-0 text-content")|safe }}
+                <span>{{ solution_1 }}</span>
+              </p>
+            {% endif %}
+            {% if solution_2 %}
+              <p class="flex gap-3">
+                {{ icon("check", "mt-1 size-4 shrink-0 text-content")|safe }}
+                <span>{{ solution_2 }}</span>
+              </p>
+            {% endif %}
+            {% if solution_3 %}
+              <p class="flex gap-3">
+                {{ icon("check", "mt-1 size-4 shrink-0 text-content")|safe }}
+                <span>{{ solution_3 }}</span>
+              </p>
+            {% endif %}
+            {% if solution_4 %}
+              <p class="flex gap-3">
+                {{ icon("check", "mt-1 size-4 shrink-0 text-content")|safe }}
+                <span>{{ solution_4 }}</span>
+              </p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

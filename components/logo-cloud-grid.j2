@@ -1,0 +1,113 @@
+{% set container = props.container | default:"lg" %}
+{% set eyebrow = props.eyebrow %}
+{% set title = props.title %}
+{% set description = props.description %}
+{% set cols = props.columns | default:"5" %}
+{% set bg = props.bg | default:"base-100" %}
+{% set class = props.class %}
+
+{% if container == "xs" %}
+  {% set container_cls = "max-w-md" %}
+{% elif container == "sm" %}
+  {% set container_cls = "max-w-3xl" %}
+{% elif container == "md" %}
+  {% set container_cls = "max-w-6xl" %}
+{% elif container == "xl" %}
+  {% set container_cls = "max-w-[120rem]" %}
+{% elif container == "full" %}
+  {% set container_cls = "max-w-full" %}
+{% else %}
+  {% set container_cls = "max-w-7xl" %}
+{% endif %}
+
+{% macro logo_item(name, src, alt, href) %}
+  <div class="flex min-h-20 items-center justify-center border-r border-b border-base-400 bg-base-200 p-4 last:border-r-0 [&:nth-child(2n)]:border-r-0 desk:[&:nth-child(2n)]:border-r">
+    {% if href %}
+      <a
+        href="{{ href }}"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="flex items-center justify-center"
+      >
+    {% endif %}
+    {% if src %}
+      <img
+        src="{{ src }}"
+        alt="{{ alt | default:name }}"
+        class="max-h-8 w-auto opacity-70 grayscale"
+      />
+    {% else %}
+      <span class="text-sm font-medium uppercase tracking-[0.18em] text-content-muted">
+        {{ name }}
+      </span>
+    {% endif %}
+    {% if href %}
+      </a>
+    {% endif %}
+  </div>
+{% endmacro %}
+
+<section class="bg-{{ bg }} py-10 desk:py-20{% if class %} {{ class }}{% endif %}">
+  <div class="mx-auto w-full {{ container_cls }} px-4">
+    <div class="space-y-8 desk:space-y-10">
+      {% if eyebrow or title or description %}
+        <div class="mx-auto flex max-w-3xl flex-col gap-3 text-center">
+          {% if eyebrow %}
+            <p class="text-xs font-medium uppercase tracking-[0.24em] text-content-muted">
+              {{ eyebrow }}
+            </p>
+          {% endif %}
+          {% if title %}
+            <h2 class="text-3xl font-semibold tracking-tight text-content desk:text-4xl">
+              {{ title }}
+            </h2>
+          {% endif %}
+          {% if description %}
+            <p class="text-base leading-7 text-content-muted desk:text-lg">
+              {{ description }}
+            </p>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      <div class="grid grid-cols-2 overflow-hidden rounded-lg border border-base-400{% if cols == '2' %} desk:grid-cols-2{% elif cols == '3' %} desk:grid-cols-3{% elif cols == '4' %} desk:grid-cols-4{% elif cols == '6' %} desk:grid-cols-6{% else %} desk:grid-cols-5{% endif %}">
+        {% if props.logo_1_name %}
+          {{ logo_item(props.logo_1_name, props.logo_1_src, props.logo_1_alt, props.logo_1_href) }}
+        {% endif %}
+        {% if props.logo_2_name %}
+          {{ logo_item(props.logo_2_name, props.logo_2_src, props.logo_2_alt, props.logo_2_href) }}
+        {% endif %}
+        {% if props.logo_3_name %}
+          {{ logo_item(props.logo_3_name, props.logo_3_src, props.logo_3_alt, props.logo_3_href) }}
+        {% endif %}
+        {% if props.logo_4_name %}
+          {{ logo_item(props.logo_4_name, props.logo_4_src, props.logo_4_alt, props.logo_4_href) }}
+        {% endif %}
+        {% if props.logo_5_name %}
+          {{ logo_item(props.logo_5_name, props.logo_5_src, props.logo_5_alt, props.logo_5_href) }}
+        {% endif %}
+        {% if props.logo_6_name %}
+          {{ logo_item(props.logo_6_name, props.logo_6_src, props.logo_6_alt, props.logo_6_href) }}
+        {% endif %}
+        {% if props.logo_7_name %}
+          {{ logo_item(props.logo_7_name, props.logo_7_src, props.logo_7_alt, props.logo_7_href) }}
+        {% endif %}
+        {% if props.logo_8_name %}
+          {{ logo_item(props.logo_8_name, props.logo_8_src, props.logo_8_alt, props.logo_8_href) }}
+        {% endif %}
+        {% if props.logo_9_name %}
+          {{ logo_item(props.logo_9_name, props.logo_9_src, props.logo_9_alt, props.logo_9_href) }}
+        {% endif %}
+        {% if props.logo_10_name %}
+          {{ logo_item(props.logo_10_name, props.logo_10_src, props.logo_10_alt, props.logo_10_href) }}
+        {% endif %}
+        {% if props.logo_11_name %}
+          {{ logo_item(props.logo_11_name, props.logo_11_src, props.logo_11_alt, props.logo_11_href) }}
+        {% endif %}
+        {% if props.logo_12_name %}
+          {{ logo_item(props.logo_12_name, props.logo_12_src, props.logo_12_alt, props.logo_12_href) }}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>

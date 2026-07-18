@@ -1,0 +1,153 @@
+{% import "../templates/veta/macros/button.j2" button %}
+
+{% set container = props.container | default:"lg" %}
+{% set eyebrow = props.eyebrow %}
+{% set title = props.title %}
+{% set description = props.description %}
+{% set action_1_text = props.action_1_text %}
+{% set action_1_url = props.action_1_url | default:"#" %}
+{% set action_1_variant = props.action_1_variant | default:"solid" %}
+{% set action_1_color = props.action_1_color | default:"neutral" %}
+{% set action_2_text = props.action_2_text %}
+{% set action_2_url = props.action_2_url | default:"#" %}
+{% set action_2_variant = props.action_2_variant | default:"outline" %}
+{% set action_2_color = props.action_2_color | default:"neutral" %}
+{% set caption = props.caption %}
+{% set image_src = props.image_src %}
+{% set image_alt = props.image_alt | default:title %}
+{% set panel_label = props.panel_label %}
+{% set panel_title = props.panel_title %}
+{% set panel_desc = props.panel_desc %}
+{% set metric_1_value = props.metric_1_value %}
+{% set metric_1_label = props.metric_1_label %}
+{% set metric_2_value = props.metric_2_value %}
+{% set metric_2_label = props.metric_2_label %}
+{% set metric_3_value = props.metric_3_value %}
+{% set metric_3_label = props.metric_3_label %}
+{% set check_1 = props.check_1 %}
+{% set check_2 = props.check_2 %}
+{% set check_3 = props.check_3 %}
+{% set bg = props.bg | default:"base-100" %}
+{% set reverse = props.reverse | default:"false" %}
+{% set class = props.class %}
+
+{% if container == "xs" %}
+  {% set container_cls = "max-w-md" %}
+{% elif container == "sm" %}
+  {% set container_cls = "max-w-3xl" %}
+{% elif container == "md" %}
+  {% set container_cls = "max-w-6xl" %}
+{% elif container == "xl" %}
+  {% set container_cls = "max-w-[120rem]" %}
+{% elif container == "full" %}
+  {% set container_cls = "max-w-full" %}
+{% else %}
+  {% set container_cls = "max-w-7xl" %}
+{% endif %}
+
+{% macro metric(value, label) %}
+  <div class="rounded-md border border-base-400 bg-base-100 p-3">
+    <p class="font-mono text-2xl font-semibold text-content">
+      {{ value }}
+    </p>
+    <p class="mt-1 text-xs text-content-muted">
+      {{ label }}
+    </p>
+  </div>
+{% endmacro %}
+
+{% macro check_item(text) %}
+  <div class="flex items-start gap-3 text-sm leading-6 text-content-muted">
+    {{ icon("check", "mt-1 size-4 shrink-0 text-content") | safe }}<span>{{ text }}</span>
+  </div>
+{% endmacro %}
+
+<section class="bg-{{ bg }} py-12 desk:py-24{% if class %} {{ class }}{% endif %}">
+  <div class="mx-auto w-full {{ container_cls }} px-4">
+    <div class="grid items-center gap-8 desk:grid-cols-2 desk:gap-10">
+      <div class="flex flex-col items-start{% if reverse == 'true' %} desk:order-2{% endif %}">
+        {% if eyebrow %}
+          <p class="mb-4 inline-flex rounded-full border border-base-400 bg-base-200 px-3 py-1.5 text-xs font-medium uppercase tracking-[0.18em] text-content-muted">
+            {{ eyebrow }}
+          </p>
+        {% endif %}
+        <h1 class="max-w-3xl text-4xl font-semibold tracking-tight text-content desk:text-6xl">
+          {{ title | safe }}
+        </h1>
+        {% if description %}
+          <p class="mt-5 max-w-2xl text-base leading-7 text-content-muted desk:text-xl desk:leading-8">
+            {{ description | safe }}
+          </p>
+        {% endif %}
+        {% if action_1_text %}
+          <div class="mt-8 flex w-full flex-col gap-3 desk:w-auto desk:flex-row">
+            {{ button(action_1_text, action_1_url, "", "", "", "lg", "md", action_1_variant, action_1_color, "true", "false", "button", "desk:w-auto") }}
+            {% if action_2_text %}
+              {{ button(action_2_text, action_2_url, "", "", "", "lg", "md", action_2_variant, action_2_color, "true", "false", "button", "desk:w-auto") }}
+            {% endif %}
+          </div>
+        {% endif %}
+        {% if caption %}
+          <p class="mt-4 text-sm leading-6 text-content-muted">
+            {{ caption }}
+          </p>
+        {% endif %}
+      </div>
+
+      <div class="rounded-lg border border-base-400 bg-base-100 p-4 desk:p-6{% if reverse == 'true' %} desk:order-1{% endif %}">
+        {% if image_src %}
+          <img
+            src="{{ image_src }}"
+            alt="{{ image_alt }}"
+            class="aspect-[4/3] w-full rounded-md border border-base-400 object-cover"
+          />
+        {% else %}
+          <div class="mb-4 flex items-center justify-between gap-3 border-b border-base-400 pb-3">
+            <div>
+              {% if panel_label %}
+                <p class="text-xs font-medium uppercase tracking-[0.18em] text-content-muted">
+                  {{ panel_label }}
+                </p>
+              {% endif %}
+              {% if panel_title %}
+                <h2 class="mt-1 text-xl font-medium tracking-tight text-content">
+                  {{ panel_title }}
+                </h2>
+              {% endif %}
+            </div>
+            <div class="flex size-10 items-center justify-center rounded-md border border-base-400 bg-base-100">
+              {{ icon("chart-no-axes-column-increasing", "size-5 text-content") | safe }}
+            </div>
+          </div>
+          {% if panel_desc %}
+            <p class="text-sm leading-6 text-content-muted">
+              {{ panel_desc }}
+            </p>
+          {% endif %}
+          <div class="mt-5 grid grid-cols-1 gap-3 desk:grid-cols-3">
+            {% if metric_1_value %}
+              {{ metric(metric_1_value, metric_1_label) }}
+            {% endif %}
+            {% if metric_2_value %}
+              {{ metric(metric_2_value, metric_2_label) }}
+            {% endif %}
+            {% if metric_3_value %}
+              {{ metric(metric_3_value, metric_3_label) }}
+            {% endif %}
+          </div>
+          <div class="mt-5 space-y-3">
+            {% if check_1 %}
+              {{ check_item(check_1) }}
+            {% endif %}
+            {% if check_2 %}
+              {{ check_item(check_2) }}
+            {% endif %}
+            {% if check_3 %}
+              {{ check_item(check_3) }}
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,168 @@
+{% set container = props.container %}
+{% set logo_light = props.logo_light %}
+{% set logo_dark = props.logo_dark %}
+{% set title = props.title %}
+{% set show_title = props.show_title %}
+{% set menu = props.menu %}
+{% set cta_text = props.cta_text %}
+{% set cta_url = props.cta_url %}
+{% set cta_variant = props.cta_variant %}
+{% set cta_color = props.cta_color %}
+{% set show_theme = props.show_theme %}
+{% set sticky = props.sticky %}
+{% set class = props.class %}
+
+{% import "../templates/veta/macros/button.j2" button %}
+
+{% set container = container|default:"lg" %}
+{% if container == "xs" %}
+  {% set container_cls = "max-w-md" %}
+{% elif container == "sm" %}
+  {% set container_cls = "max-w-3xl" %}
+{% elif container == "md" %}
+  {% set container_cls = "max-w-6xl" %}
+{% elif container == "xl" %}
+  {% set container_cls = "max-w-[120rem]" %}
+{% elif container == "full" %}
+  {% set container_cls = "max-w-full" %}
+{% else %}
+  {% set container_cls = "max-w-7xl" %}
+{% endif %}
+
+{% set show_title = show_title|default:data.site.docs_show_title|default:data.site_default.docs_show_title|default:true %}
+{% set show_theme = show_theme|default:"true" %}
+{% set sticky = sticky|default:"false" %}
+{% set title = title|default:data.site.title|default:data.site_default.title|default:"VaraPress" %}
+{% set logo_light = logo_light|default:data.site.docs_logo_light|default:data.site_default.docs_logo_light %}
+{% set logo_dark = logo_dark|default:data.site.docs_logo_dark|default:data.site_default.docs_logo_dark %}
+{% set menu = menu|default:"" %}
+{% set menu_items = menu|split:"," %}
+{% set cta_variant = cta_variant|default:"solid" %}
+{% set cta_color = cta_color|default:"neutral" %}
+
+<header
+  class="z-30 shrink-0 border-b border-base-400 bg-base-100/95 backdrop-blur{% if sticky == 'true' %} sticky top-0{% endif %}{% if class %} {{ class }}{% endif %}"
+  x-data="{ open: false }"
+>
+  <div class="mx-auto w-full {{ container_cls }} px-4">
+    <div class="flex h-14 items-center justify-between gap-3 desk:grid desk:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
+      <div class="flex min-w-0 items-center justify-start">
+        <a
+          href="/"
+          class="group flex min-w-0 items-center gap-2 whitespace-nowrap no-underline"
+        >
+          {% if logo_light and logo_dark and logo_light == logo_dark %}
+            <span class="flex h-6 shrink-0 items-center">
+              <img src="{{ logo_light }}" class="h-6 w-auto" alt="{{ title }}">
+            </span>
+          {% elif logo_light or logo_dark %}
+            {% set logo_light_src = logo_light|default:logo_dark %}
+            {% set logo_dark_src = logo_dark|default:logo_light %}
+            <span class="flex h-6 shrink-0 items-center">
+              <img
+                src="{{ logo_light_src }}"
+                class="h-6 w-auto dark:hidden"
+                alt="{{ title }}"
+              >
+              <img
+                src="{{ logo_dark_src }}"
+                class="hidden h-6 w-auto dark:block"
+                alt="{{ title }}"
+              >
+            </span>
+          {% endif %}
+          {% if show_title != false and show_title != "false" %}
+            <span class="truncate text-sm font-semibold text-content transition-colors group-hover:text-info desk:text-base">
+              {{ title }}
+            </span>
+          {% endif %}
+        </a>
+      </div>
+
+      <nav
+        class="hidden items-center justify-center gap-1 desk:flex"
+        aria-label="Primary navigation"
+      >
+        {% for link in menu_items %}
+          {% set parts = link|trim|split:"|" %}
+          {% if parts|length == 2 %}
+            <a
+              href="{{ parts[1]|trim }}"
+              class="inline-flex h-8 items-center rounded-md px-3 text-sm font-medium text-content-muted no-underline transition-colors hover:bg-base-200 hover:text-content focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-content"
+            >
+              {{ parts[0]|trim }}
+            </a>
+          {% endif %}
+        {% endfor %}
+      </nav>
+
+      <div class="flex shrink-0 items-center justify-end gap-1">
+        {% if cta_text %}
+          <div class="hidden desk:block">
+            {{ button(cta_text, cta_url|default:"#", "", "", "", "sm", "md", cta_variant, cta_color) }}
+          </div>
+        {% endif %}
+        {% if show_theme != false and show_theme != "false" %}
+          <button
+            class="inline-flex size-9 cursor-pointer items-center justify-center rounded-md border border-transparent text-content-muted transition-colors hover:bg-base-200 hover:text-content focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-content"
+            x-data="theme"
+            x-on:click="cycleTheme()"
+            aria-label="Toggle theme"
+          >
+            <span x-show="theme === 'system'" x-cloak>
+              {{ icon("laptop-minimal", "size-4")|safe }}
+            </span>
+            <span x-show="theme === 'light'" x-cloak>
+              {{ icon("sun-medium", "size-4")|safe }}
+            </span>
+            <span x-show="theme === 'dark'" x-cloak>
+              {{ icon("moon-star", "size-4")|safe }}
+            </span>
+          </button>
+        {% endif %}
+        {% if menu %}
+          <button
+            class="inline-flex size-9 cursor-pointer items-center justify-center rounded-md border border-transparent text-content-muted transition-colors hover:bg-base-200 hover:text-content focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-content desk:hidden"
+            x-on:click="open = !open"
+            x-bind:aria-expanded="open"
+            aria-label="Toggle navigation"
+          >
+            <span x-show="!open">
+              {{ icon("menu", "size-5")|safe }}
+            </span>
+            <span x-show="open" x-cloak>
+              {{ icon("x", "size-5")|safe }}
+            </span>
+          </button>
+        {% endif %}
+      </div>
+    </div>
+
+    {% if menu %}
+      <div
+        class="border-t border-base-400 py-3 desk:hidden"
+        x-show="open"
+        x-cloak
+      >
+        <nav class="grid gap-1" aria-label="Mobile navigation">
+          {% for link in menu_items %}
+            {% set parts = link|trim|split:"|" %}
+            {% if parts|length == 2 %}
+              <a
+                href="{{ parts[1]|trim }}"
+                class="rounded-md px-3 py-2 text-sm font-medium text-content-muted no-underline transition-colors hover:bg-base-200 hover:text-content focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-content"
+              >
+                {{ parts[0]|trim }}
+              </a>
+            {% endif %}
+          {% endfor %}
+          {% if cta_text %}
+            <div class="pt-2">
+              {{ button(cta_text, cta_url|default:"#", "", "", "", "sm", "md", cta_variant, cta_color, "true") }}
+            </div>
+          {% endif %}
+        </nav>
+      </div>
+    {% endif %}
+  </div>
+</header>

@@ -1,0 +1,117 @@
+{% import "../templates/veta/macros/button.j2" button %}
+
+{% set container = props.container|default:"lg" %}
+{% set bg = props.bg|default:"base-100" %}
+{% set method = props.method|default:"post" %}
+{% set form_action = props.form_action|default:"" %}
+{% set success_message = props.success_message|default:"Message received. We will reply soon." %}
+
+{% if container == "xs" %}
+  {% set container_cls = "max-w-md" %}
+{% elif container == "sm" %}
+  {% set container_cls = "max-w-3xl" %}
+{% elif container == "md" %}
+  {% set container_cls = "max-w-6xl" %}
+{% elif container == "xl" %}
+  {% set container_cls = "max-w-[120rem]" %}
+{% elif container == "full" %}
+  {% set container_cls = "max-w-full" %}
+{% else %}
+  {% set container_cls = "max-w-7xl" %}
+{% endif %}
+
+<section class="bg-{{ bg }} py-10 desk:py-20{% if props.class %} {{ props.class }}{% endif %}">
+  <div class="mx-auto w-full {{ container_cls }} px-4">
+    <div class="grid gap-6 desk:grid-cols-[0.85fr_1.15fr] desk:gap-8">
+      <div class="rounded-lg border border-base-400 bg-base-200 p-4 desk:p-6">
+        {% if props.eyebrow or props.title or props.description %}
+          <div class="flex max-w-3xl flex-col gap-3 text-left">
+            {% if props.eyebrow %}
+              <p class="text-xs font-medium uppercase tracking-[0.24em] text-content-muted">
+                {{ props.eyebrow }}
+              </p>
+            {% endif %}
+            {% if props.title %}
+              <h2 class="text-3xl font-semibold tracking-tight text-content desk:text-4xl">
+                {{ props.title }}
+              </h2>
+            {% endif %}
+            {% if props.description %}
+              <p class="text-base leading-7 text-content-muted desk:text-lg">
+                {{ props.description }}
+              </p>
+            {% endif %}
+          </div>
+        {% endif %}
+        <div class="mt-8 grid gap-3 text-sm text-content-muted">
+          {% if props.email %}
+            <p class="flex gap-3">
+              {{ icon("mail", "size-4 shrink-0 text-content")|safe }}
+              <span>{{ props.email }}</span>
+            </p>
+          {% endif %}
+          {% if props.location %}
+            <p class="flex gap-3">
+              {{ icon("map-pin", "size-4 shrink-0 text-content")|safe }}
+              <span>{{ props.location }}</span>
+            </p>
+          {% endif %}
+          {% if props.response_time %}
+            <p class="flex gap-3">
+              {{ icon("clock", "size-4 shrink-0 text-content")|safe }}
+              <span>{{ props.response_time }}</span>
+            </p>
+          {% endif %}
+        </div>
+      </div>
+
+      <form
+        {% if form_action %}
+          action="{{ form_action }}"
+        {% endif %}
+        method="{{ method }}"
+        class="rounded-lg border border-base-400 bg-base-200 p-4 desk:p-6"
+        x-data="{ submitted: false }"
+        {% if not form_action %}
+          x-on:submit.prevent="submitted = true"
+        {% endif %}
+      >
+        <div class="grid gap-4 rounded-md border border-base-400 bg-base-100 p-4">
+          <label class="grid gap-2 text-sm font-medium text-content">
+            Name
+            <input
+              name="name"
+              type="text"
+              class="h-10 rounded-md border border-base-400 bg-base-100 px-3 text-sm text-content outline-content placeholder:text-content-muted focus-visible:outline-2 focus-visible:outline-offset-2"
+            />
+          </label>
+          <label class="grid gap-2 text-sm font-medium text-content">
+            Email
+            <input
+              name="email"
+              type="email"
+              required
+              class="h-10 rounded-md border border-base-400 bg-base-100 px-3 text-sm text-content outline-content placeholder:text-content-muted focus-visible:outline-2 focus-visible:outline-offset-2"
+            />
+          </label>
+          <label class="grid gap-2 text-sm font-medium text-content">
+            Message
+            <textarea
+              name="message"
+              rows="5"
+              class="rounded-md border border-base-400 bg-base-100 px-3 py-2 text-sm text-content outline-content placeholder:text-content-muted focus-visible:outline-2 focus-visible:outline-offset-2"
+            ></textarea>
+          </label>
+          {{ button(props.button_text|default:"Send message", "", "", "", "", "md", "md", "solid", "neutral", "true", "false", "submit") }}
+          <p
+            class="text-sm font-medium text-content"
+            x-show="submitted"
+            x-cloak
+          >
+            {{ success_message }}
+          </p>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

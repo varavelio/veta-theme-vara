@@ -1,0 +1,38 @@
+{% set repo = props.repo|default:"" %}
+{% set href = props.href|default:"" %}
+{% set size = props.size|default:"md" %}
+{% set variant = props.variant|default:"outline" %}
+{% set show_stars = props.show_stars|default:"true" %}
+{% set repo_data = repo|github_repo %}
+{% if href %}
+{% set resolved_href = href %}
+{% else %}
+{% set resolved_href = "https://github.com/" + repo %}
+{% endif %}
+{%  set btn = "relative inline-flex items-center border font-medium transition-all duration-75 cursor-pointer select-none no-underline focus-visible:outline-2 active:translate-y-px" %}
+{% if size == "sm" %}
+{% set size_cls = "h-8 px-3 text-xs" %}
+{%   elif size == "lg" %}
+{% set size_cls = "h-12 px-6 text-base" %}
+{% else %}
+{% set size_cls = "h-10 px-4 text-sm" %}
+{% endif %}
+{% if variant == "solid" %}
+{% set variant_cls = "border-content bg-content text-base-100 outline-content hover:bg-content/80 focus-visible:outline-offset-2" %}
+{% elif variant == "ghost" %}
+{% set variant_cls = "border-transparent bg-transparent text-content hover:bg-base-300 focus-visible:outline-base-400" %}
+{% else %}
+{% set variant_cls = "border-base-400 bg-base-100 text-content hover:bg-base-300 focus-visible:outline-base-400" %}
+{% endif %}
+{% set all = btn + " " + size_cls + " " + variant_cls %}
+{%   if props.class %}
+{% set all = all + " " + props.class %}
+{% endif %}
+<a
+  href="{{ resolved_href }}"
+  target="_blank"
+  rel="noopener noreferrer"
+  class="{{ all }}"
+>{{ icon("github", "size-4")|safe }}<span>GitHub</span>{% if show_stars == "true" and repo_data.ok %}<span
+      class="ml-1 inline-flex items-center gap-1 border-l border-base-400 pl-2 text-content-muted"
+    >{{ icon("star", "size-3.5")|safe }}<span>{{ repo_data.stars|compact_number }}</span></span>{% endif %}</a>

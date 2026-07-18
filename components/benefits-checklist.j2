@@ -1,0 +1,115 @@
+{% import "../templates/veta/macros/button.j2" button %}
+
+{% set container = props.container|default:"lg" %}
+{% set bg = props.bg|default:"base-100" %}
+{% set reverse = props.reverse|default:"false" %}
+
+{% if container == "xs" %}
+  {% set container_cls = "max-w-md" %}
+{% elif container == "sm" %}
+  {% set container_cls = "max-w-3xl" %}
+{% elif container == "md" %}
+  {% set container_cls = "max-w-6xl" %}
+{% elif container == "xl" %}
+  {% set container_cls = "max-w-[120rem]" %}
+{% elif container == "full" %}
+  {% set container_cls = "max-w-full" %}
+{% else %}
+  {% set container_cls = "max-w-7xl" %}
+{% endif %}
+
+<section class="bg-{{ bg }} py-10 desk:py-20{% if props.class %} {{ props.class }}{% endif %}">
+  <div class="mx-auto w-full {{ container_cls }} px-4">
+    <div class="grid gap-6 desk:grid-cols-[0.95fr_1.05fr] desk:items-center desk:gap-8">
+      <div class="{% if reverse == 'true' %}desk:order-2{% endif %}">
+        {% if props.eyebrow or props.title or props.description %}
+          <div class="flex max-w-3xl flex-col gap-3 text-left">
+            {% if props.eyebrow %}
+              <p class="text-xs font-medium uppercase tracking-[0.24em] text-content-muted">
+                {{ props.eyebrow }}
+              </p>
+            {% endif %}
+            {% if props.title %}
+              <h2 class="text-3xl font-semibold tracking-tight text-content desk:text-4xl">
+                {{ props.title }}
+              </h2>
+            {% endif %}
+            {% if props.description %}
+              <p class="text-base leading-7 text-content-muted desk:text-lg">
+                {{ props.description }}
+              </p>
+            {% endif %}
+          </div>
+        {% endif %}
+        {% if props.action_1_text %}
+          <div class="mt-8 flex flex-col gap-3 desk:flex-row">
+            {{ button(props.action_1_text, props.action_1_url|default:"#", "", "", "", "lg", "md", "solid", "neutral", "true", "false", "button", "desk:w-auto") }}
+            {% if props.action_2_text %}
+              {{ button(props.action_2_text, props.action_2_url|default:"#", "", "", "", "lg", "md", "outline", "neutral", "true", "false", "button", "desk:w-auto") }}
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="rounded-lg border border-base-400 bg-base-200 p-4 desk:p-6{% if reverse == 'true' %} desk:order-1{% endif %}">
+        <div class="rounded-md border border-base-400 bg-base-100 p-4">
+          {% if props.panel_title %}
+            <h3 class="text-xl font-medium tracking-tight text-content">
+              {{ props.panel_title }}
+            </h3>
+          {% endif %}
+          <div class="mt-5 grid gap-3 desk:grid-cols-2">
+            {% if props.check_1 %}
+              <div class="flex gap-3 text-sm leading-6 text-content-muted">
+                {{ icon("check", "mt-1 size-4 shrink-0 text-content")|safe }}
+                <span>{{ props.check_1 }}</span>
+              </div>
+            {% endif %}
+            {% if props.check_2 %}
+              <div class="flex gap-3 text-sm leading-6 text-content-muted">
+                {{ icon("check", "mt-1 size-4 shrink-0 text-content")|safe }}
+                <span>{{ props.check_2 }}</span>
+              </div>
+            {% endif %}
+            {% if props.check_3 %}
+              <div class="flex gap-3 text-sm leading-6 text-content-muted">
+                {{ icon("check", "mt-1 size-4 shrink-0 text-content")|safe }}
+                <span>{{ props.check_3 }}</span>
+              </div>
+            {% endif %}
+            {% if props.check_4 %}
+              <div class="flex gap-3 text-sm leading-6 text-content-muted">
+                {{ icon("check", "mt-1 size-4 shrink-0 text-content")|safe }}
+                <span>{{ props.check_4 }}</span>
+              </div>
+            {% endif %}
+            {% if props.check_5 %}
+              <div class="flex gap-3 text-sm leading-6 text-content-muted">
+                {{ icon("check", "mt-1 size-4 shrink-0 text-content")|safe }}
+                <span>{{ props.check_5 }}</span>
+              </div>
+            {% endif %}
+            {% if props.check_6 %}
+              <div class="flex gap-3 text-sm leading-6 text-content-muted">
+                {{ icon("check", "mt-1 size-4 shrink-0 text-content")|safe }}
+                <span>{{ props.check_6 }}</span>
+              </div>
+            {% endif %}
+            {% if props.check_7 %}
+              <div class="flex gap-3 text-sm leading-6 text-content-muted">
+                {{ icon("check", "mt-1 size-4 shrink-0 text-content")|safe }}
+                <span>{{ props.check_7 }}</span>
+              </div>
+            {% endif %}
+            {% if props.check_8 %}
+              <div class="flex gap-3 text-sm leading-6 text-content-muted">
+                {{ icon("check", "mt-1 size-4 shrink-0 text-content")|safe }}
+                <span>{{ props.check_8 }}</span>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

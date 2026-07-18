@@ -1,0 +1,213 @@
+{% set container = props.container %}
+{% set eyebrow = props.eyebrow %}
+{% set title = props.title %}
+{% set description = props.description %}
+{% set columns = props.columns %}
+{% set item_1_icon = props.item_1_icon %}
+{% set item_1_title = props.item_1_title %}
+{% set item_1_desc = props.item_1_desc %}
+{% set item_2_icon = props.item_2_icon %}
+{% set item_2_title = props.item_2_title %}
+{% set item_2_desc = props.item_2_desc %}
+{% set item_3_icon = props.item_3_icon %}
+{% set item_3_title = props.item_3_title %}
+{% set item_3_desc = props.item_3_desc %}
+{% set item_4_icon = props.item_4_icon %}
+{% set item_4_title = props.item_4_title %}
+{% set item_4_desc = props.item_4_desc %}
+{% set item_5_icon = props.item_5_icon %}
+{% set item_5_title = props.item_5_title %}
+{% set item_5_desc = props.item_5_desc %}
+{% set item_6_icon = props.item_6_icon %}
+{% set item_6_title = props.item_6_title %}
+{% set item_6_desc = props.item_6_desc %}
+{% set item_7_icon = props.item_7_icon %}
+{% set item_7_title = props.item_7_title %}
+{% set item_7_desc = props.item_7_desc %}
+{% set item_8_icon = props.item_8_icon %}
+{% set item_8_title = props.item_8_title %}
+{% set item_8_desc = props.item_8_desc %}
+{% set bg = props.bg %}
+{% set class = props.class %}
+
+{% set container = container|default:"lg" %}
+{% if container == "xs" %}
+  {% set container_cls = "max-w-md" %}
+{% elif container == "sm" %}
+  {% set container_cls = "max-w-3xl" %}
+{% elif container == "md" %}
+  {% set container_cls = "max-w-6xl" %}
+{% elif container == "xl" %}
+  {% set container_cls = "max-w-[120rem]" %}
+{% elif container == "full" %}
+  {% set container_cls = "max-w-full" %}
+{% else %}
+  {% set container_cls = "max-w-7xl" %}
+{% endif %}
+
+{% set bg = bg|default:"base-100" %}
+{% set cols = columns|default:"4" %}
+
+<section class="bg-{{ bg }} py-10 desk:py-20{% if class %} {{ class }}{% endif %}">
+  <div class="mx-auto w-full {{ container_cls }} px-4">
+    <div class="space-y-8 desk:space-y-10">
+      {% if eyebrow or title or description %}
+        <div class="mx-auto flex max-w-3xl flex-col gap-3 text-center">
+          {% if eyebrow %}
+            <p class="text-xs font-medium uppercase tracking-[0.24em] text-content-muted">
+              {{ eyebrow }}
+            </p>
+          {% endif %}
+          {% if title %}
+            <h2 class="text-3xl font-semibold tracking-tight text-content desk:text-4xl">
+              {{ title }}
+            </h2>
+          {% endif %}
+          {% if description %}
+            <p class="text-base leading-7 text-content-muted desk:text-lg">
+              {{ description }}
+            </p>
+          {% endif %}
+        </div>
+      {% endif %}
+      <div class="grid gap-3 desk:gap-4{% if cols == '2' %} desk:grid-cols-2{% elif cols == '3' %} desk:grid-cols-3{% else %} desk:grid-cols-4{% endif %}">
+        {% if item_1_title %}
+          <div class="rounded-lg border border-base-400 bg-base-200 p-4">
+            {% if item_1_icon %}
+              <div class="mb-4 flex size-9 items-center justify-center rounded-md border border-base-400 bg-base-100">
+                {{ icon(item_1_icon, "size-4 text-content")|safe }}
+              </div>
+            {% endif %}
+            <h3 class="font-medium text-content">
+              {{ item_1_title }}
+            </h3>
+            {% if item_1_desc %}
+              <p class="mt-2 text-sm leading-6 text-content-muted">
+                {{ item_1_desc }}
+              </p>
+            {% endif %}
+          </div>
+        {% endif %}
+        {% if item_2_title %}
+          <div class="rounded-lg border border-base-400 bg-base-200 p-4">
+            {% if item_2_icon %}
+              <div class="mb-4 flex size-9 items-center justify-center rounded-md border border-base-400 bg-base-100">
+                {{ icon(item_2_icon, "size-4 text-content")|safe }}
+              </div>
+            {% endif %}
+            <h3 class="font-medium text-content">
+              {{ item_2_title }}
+            </h3>
+            {% if item_2_desc %}
+              <p class="mt-2 text-sm leading-6 text-content-muted">
+                {{ item_2_desc }}
+              </p>
+            {% endif %}
+          </div>
+        {% endif %}
+        {% if item_3_title %}
+          <div class="rounded-lg border border-base-400 bg-base-200 p-4">
+            {% if item_3_icon %}
+              <div class="mb-4 flex size-9 items-center justify-center rounded-md border border-base-400 bg-base-100">
+                {{ icon(item_3_icon, "size-4 text-content")|safe }}
+              </div>
+            {% endif %}
+            <h3 class="font-medium text-content">
+              {{ item_3_title }}
+            </h3>
+            {% if item_3_desc %}
+              <p class="mt-2 text-sm leading-6 text-content-muted">
+                {{ item_3_desc }}
+              </p>
+            {% endif %}
+          </div>
+        {% endif %}
+        {% if item_4_title %}
+          <div class="rounded-lg border border-base-400 bg-base-200 p-4">
+            {% if item_4_icon %}
+              <div class="mb-4 flex size-9 items-center justify-center rounded-md border border-base-400 bg-base-100">
+                {{ icon(item_4_icon, "size-4 text-content")|safe }}
+              </div>
+            {% endif %}
+            <h3 class="font-medium text-content">
+              {{ item_4_title }}
+            </h3>
+            {% if item_4_desc %}
+              <p class="mt-2 text-sm leading-6 text-content-muted">
+                {{ item_4_desc }}
+              </p>
+            {% endif %}
+          </div>
+        {% endif %}
+        {% if item_5_title %}
+          <div class="rounded-lg border border-base-400 bg-base-200 p-4">
+            {% if item_5_icon %}
+              <div class="mb-4 flex size-9 items-center justify-center rounded-md border border-base-400 bg-base-100">
+                {{ icon(item_5_icon, "size-4 text-content")|safe }}
+              </div>
+            {% endif %}
+            <h3 class="font-medium text-content">
+              {{ item_5_title }}
+            </h3>
+            {% if item_5_desc %}
+              <p class="mt-2 text-sm leading-6 text-content-muted">
+                {{ item_5_desc }}
+              </p>
+            {% endif %}
+          </div>
+        {% endif %}
+        {% if item_6_title %}
+          <div class="rounded-lg border border-base-400 bg-base-200 p-4">
+            {% if item_6_icon %}
+              <div class="mb-4 flex size-9 items-center justify-center rounded-md border border-base-400 bg-base-100">
+                {{ icon(item_6_icon, "size-4 text-content")|safe }}
+              </div>
+            {% endif %}
+            <h3 class="font-medium text-content">
+              {{ item_6_title }}
+            </h3>
+            {% if item_6_desc %}
+              <p class="mt-2 text-sm leading-6 text-content-muted">
+                {{ item_6_desc }}
+              </p>
+            {% endif %}
+          </div>
+        {% endif %}
+        {% if item_7_title %}
+          <div class="rounded-lg border border-base-400 bg-base-200 p-4">
+            {% if item_7_icon %}
+              <div class="mb-4 flex size-9 items-center justify-center rounded-md border border-base-400 bg-base-100">
+                {{ icon(item_7_icon, "size-4 text-content")|safe }}
+              </div>
+            {% endif %}
+            <h3 class="font-medium text-content">
+              {{ item_7_title }}
+            </h3>
+            {% if item_7_desc %}
+              <p class="mt-2 text-sm leading-6 text-content-muted">
+                {{ item_7_desc }}
+              </p>
+            {% endif %}
+          </div>
+        {% endif %}
+        {% if item_8_title %}
+          <div class="rounded-lg border border-base-400 bg-base-200 p-4">
+            {% if item_8_icon %}
+              <div class="mb-4 flex size-9 items-center justify-center rounded-md border border-base-400 bg-base-100">
+                {{ icon(item_8_icon, "size-4 text-content")|safe }}
+              </div>
+            {% endif %}
+            <h3 class="font-medium text-content">
+              {{ item_8_title }}
+            </h3>
+            {% if item_8_desc %}
+              <p class="mt-2 text-sm leading-6 text-content-muted">
+                {{ item_8_desc }}
+              </p>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>

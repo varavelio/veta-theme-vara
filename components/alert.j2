@@ -1,0 +1,50 @@
+{% set color = props.color|default:"neutral" %}
+{% set icon_name = props.icon_name|default:"" %}
+{% set title = props.title|default:"" %}
+{% set description = props.description|default:props.content|default:"" %}
+{% set base = "relative rounded-lg border p-4" %}
+{% if color == "info" %}
+  {% set color_cls = "border-info/40 bg-info/2 text-info" %}
+  {% set default_icon = "info" %}
+{% elif color == "success" %}
+  {% set color_cls = "border-success/40 bg-success/2 text-success" %}
+  {% set default_icon = "circle-check" %}
+{% elif color == "warning" %}
+  {% set color_cls = "border-warning/40 bg-warning/2 text-warning" %}
+  {% set default_icon = "triangle-alert" %}
+{% elif color == "error" %}
+  {% set color_cls = "border-error/40 bg-error/2 text-error" %}
+  {% set default_icon = "circle-x" %}
+{% else %}
+  {% set color_cls = "border-base-400 bg-base-200/2 text-content" %}
+  {% set default_icon = "info" %}
+{% endif %}
+{% if icon_name %}
+  {% set resolved_icon = icon_name %}
+{% else %}
+  {% set resolved_icon = default_icon %}
+{% endif %}
+{% set all = base + " " + color_cls %}
+{% if props.class %}
+  {% set all = all + " " + props.class %}
+{% endif %}
+{% if color == "error" or color == "warning" %}
+  {% set role = "alert" %}
+{% else %}
+  {% set role = "status" %}
+{% endif %}
+<div class="{{ all }}" role="{{ role }}">
+  <div class="flex gap-3">
+    {% if title %}<div class="mt-0.5 shrink-0">
+        {{ icon(resolved_icon, "size-5") | safe }}
+      </div>{% endif %}
+    <div class="flex-1">
+      {% if title %}<h3 class="font-medium">{{ title }}</h3>{% endif %}
+      {% if description %}
+        <p class="text-sm leading-relaxed opacity-90">
+          {{ description }}
+        </p>
+      {% endif %}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,130 @@
+{% import "../templates/veta/macros/button.j2" button %}
+
+{% set container = props.container | default:"lg" %}
+{% set eyebrow = props.eyebrow %}
+{% set title = props.title %}
+{% set description = props.description %}
+{% set bg = props.bg | default:"base-100" %}
+{% set class = props.class %}
+{% set plan_1_featured = props.plan_1_featured | default:"false" %}
+{% set plan_2_featured = props.plan_2_featured | default:"false" %}
+{% set plan_3_featured = props.plan_3_featured | default:"false" %}
+
+{% if container == "xs" %}
+  {% set container_cls = "max-w-md" %}
+{% elif container == "sm" %}
+  {% set container_cls = "max-w-3xl" %}
+{% elif container == "md" %}
+  {% set container_cls = "max-w-6xl" %}
+{% elif container == "xl" %}
+  {% set container_cls = "max-w-[120rem]" %}
+{% elif container == "full" %}
+  {% set container_cls = "max-w-full" %}
+{% else %}
+  {% set container_cls = "max-w-7xl" %}
+{% endif %}
+
+{% macro feature(text) %}
+  <div class="flex items-start gap-3 text-sm leading-6 text-content-muted">
+    {{ icon("check", "mt-1 size-4 shrink-0 text-content") | safe }}<span>{{ text }}</span>
+  </div>
+{% endmacro %}
+
+{% macro plan(name, price, period, description, badge, featured, cta_text, cta_url, cta_variant, cta_color, footnote, feat_1, feat_2, feat_3, feat_4, feat_5) %}
+  <div class="flex h-full flex-col gap-5 rounded-lg border border-base-400 bg-base-200 p-4 desk:p-6{% if featured == 'true' %} border-content bg-base-100{% endif %}">
+    <div class="space-y-4">
+      <div class="flex items-start justify-between gap-4">
+        <div class="space-y-2">
+          <h3 class="text-lg font-medium tracking-tight text-content desk:text-xl">
+            {{ name }}
+          </h3>
+          {% if description %}
+            <p class="text-sm leading-6 text-content-muted">
+              {{ description }}
+            </p>
+          {% endif %}
+        </div>
+        {% if badge %}
+          <span class="rounded-full border border-base-400 px-2.5 py-1 text-[11px] font-medium uppercase tracking-[0.18em] text-content-muted">
+            {{ badge }}
+          </span>
+        {% endif %}
+      </div>
+      <div class="border-t border-base-400 pt-4">
+        <div class="flex items-end gap-2">
+          <span class="text-4xl font-semibold tracking-tight text-content">
+            {{ price }}
+          </span>
+          {% if period %}
+            <span class="pb-1 text-sm text-content-muted">
+              {{ period }}
+            </span>
+          {% endif %}
+        </div>
+        {% if footnote %}
+          <p class="mt-2 text-sm text-content-muted">
+            {{ footnote }}
+          </p>
+        {% endif %}
+      </div>
+    </div>
+    {% if cta_text %}
+      {{ button(cta_text, cta_url | default:"#", "", "", "", "lg", "md", cta_variant | default:"outline", cta_color | default:"neutral", "true") }}
+    {% endif %}
+    <div class="space-y-3 border-t border-base-400 pt-5">
+      {% if feat_1 %}
+        {{ feature(feat_1) }}
+      {% endif %}
+      {% if feat_2 %}
+        {{ feature(feat_2) }}
+      {% endif %}
+      {% if feat_3 %}
+        {{ feature(feat_3) }}
+      {% endif %}
+      {% if feat_4 %}
+        {{ feature(feat_4) }}
+      {% endif %}
+      {% if feat_5 %}
+        {{ feature(feat_5) }}
+      {% endif %}
+    </div>
+  </div>
+{% endmacro %}
+
+<section class="bg-{{ bg }} py-10 desk:py-20{% if class %} {{ class }}{% endif %}">
+  <div class="mx-auto w-full {{ container_cls }} px-4">
+    <div class="space-y-8 desk:space-y-10">
+      {% if eyebrow or title or description %}
+        <div class="mx-auto flex max-w-3xl flex-col gap-3 text-center">
+          {% if eyebrow %}
+            <p class="text-xs font-medium uppercase tracking-[0.24em] text-content-muted">
+              {{ eyebrow }}
+            </p>
+          {% endif %}
+          {% if title %}
+            <h2 class="text-3xl font-semibold tracking-tight text-content desk:text-4xl">
+              {{ title }}
+            </h2>
+          {% endif %}
+          {% if description %}
+            <p class="text-base leading-7 text-content-muted desk:text-lg">
+              {{ description }}
+            </p>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      <div class="grid grid-cols-1 gap-4 desk:grid-cols-3 desk:gap-5">
+        {% if props.plan_1_name %}
+          {{ plan(props.plan_1_name, props.plan_1_price, props.plan_1_period, props.plan_1_desc, props.plan_1_badge, plan_1_featured, props.plan_1_cta_text, props.plan_1_cta_url, props.plan_1_cta_variant, props.plan_1_cta_color, props.plan_1_footnote, props.plan_1_feat_1, props.plan_1_feat_2, props.plan_1_feat_3, props.plan_1_feat_4, props.plan_1_feat_5) }}
+        {% endif %}
+        {% if props.plan_2_name %}
+          {{ plan(props.plan_2_name, props.plan_2_price, props.plan_2_period, props.plan_2_desc, props.plan_2_badge, plan_2_featured, props.plan_2_cta_text, props.plan_2_cta_url, props.plan_2_cta_variant, props.plan_2_cta_color, props.plan_2_footnote, props.plan_2_feat_1, props.plan_2_feat_2, props.plan_2_feat_3, props.plan_2_feat_4, props.plan_2_feat_5) }}
+        {% endif %}
+        {% if props.plan_3_name %}
+          {{ plan(props.plan_3_name, props.plan_3_price, props.plan_3_period, props.plan_3_desc, props.plan_3_badge, plan_3_featured, props.plan_3_cta_text, props.plan_3_cta_url, props.plan_3_cta_variant, props.plan_3_cta_color, props.plan_3_footnote, props.plan_3_feat_1, props.plan_3_feat_2, props.plan_3_feat_3, props.plan_3_feat_4, props.plan_3_feat_5) }}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,325 @@
+{% set container = props.container %}
+{% set eyebrow = props.eyebrow %}
+{% set title = props.title %}
+{% set description = props.description %}
+{% set tab_1_label = props.tab_1_label %}
+{% set tab_1_icon = props.tab_1_icon %}
+{% set tab_1_title = props.tab_1_title %}
+{% set tab_1_desc = props.tab_1_desc %}
+{% set tab_1_meta = props.tab_1_meta %}
+{% set tab_1_bullet_1 = props.tab_1_bullet_1 %}
+{% set tab_1_bullet_2 = props.tab_1_bullet_2 %}
+{% set tab_1_bullet_3 = props.tab_1_bullet_3 %}
+{% set tab_2_label = props.tab_2_label %}
+{% set tab_2_icon = props.tab_2_icon %}
+{% set tab_2_title = props.tab_2_title %}
+{% set tab_2_desc = props.tab_2_desc %}
+{% set tab_2_meta = props.tab_2_meta %}
+{% set tab_2_bullet_1 = props.tab_2_bullet_1 %}
+{% set tab_2_bullet_2 = props.tab_2_bullet_2 %}
+{% set tab_2_bullet_3 = props.tab_2_bullet_3 %}
+{% set tab_3_label = props.tab_3_label %}
+{% set tab_3_icon = props.tab_3_icon %}
+{% set tab_3_title = props.tab_3_title %}
+{% set tab_3_desc = props.tab_3_desc %}
+{% set tab_3_meta = props.tab_3_meta %}
+{% set tab_3_bullet_1 = props.tab_3_bullet_1 %}
+{% set tab_3_bullet_2 = props.tab_3_bullet_2 %}
+{% set tab_3_bullet_3 = props.tab_3_bullet_3 %}
+{% set tab_4_label = props.tab_4_label %}
+{% set tab_4_icon = props.tab_4_icon %}
+{% set tab_4_title = props.tab_4_title %}
+{% set tab_4_desc = props.tab_4_desc %}
+{% set tab_4_meta = props.tab_4_meta %}
+{% set tab_4_bullet_1 = props.tab_4_bullet_1 %}
+{% set tab_4_bullet_2 = props.tab_4_bullet_2 %}
+{% set tab_4_bullet_3 = props.tab_4_bullet_3 %}
+{% set bg = props.bg %}
+{% set class = props.class %}
+
+{% set container = container|default:"lg" %}
+{% if container == "xs" %}
+  {% set container_cls = "max-w-md" %}
+{% elif container == "sm" %}
+  {% set container_cls = "max-w-3xl" %}
+{% elif container == "md" %}
+  {% set container_cls = "max-w-6xl" %}
+{% elif container == "xl" %}
+  {% set container_cls = "max-w-[120rem]" %}
+{% elif container == "full" %}
+  {% set container_cls = "max-w-full" %}
+{% else %}
+  {% set container_cls = "max-w-7xl" %}
+{% endif %}
+
+{% set bg = bg|default:"base-100" %}
+
+<section class="bg-{{ bg }} py-10 desk:py-20{% if class %} {{ class }}{% endif %}">
+  <div class="mx-auto w-full {{ container_cls }} px-4">
+    <div class="space-y-8 desk:space-y-10" x-data="{ active: 1 }">
+      {% if eyebrow or title or description %}
+        <div class="mx-auto flex max-w-3xl flex-col gap-3 text-center">
+          {% if eyebrow %}
+            <p class="text-xs font-medium uppercase tracking-[0.24em] text-content-muted">
+              {{ eyebrow }}
+            </p>
+          {% endif %}
+          {% if title %}
+            <h2 class="text-3xl font-semibold tracking-tight text-content desk:text-4xl">
+              {{ title }}
+            </h2>
+          {% endif %}
+          {% if description %}
+            <p class="text-base leading-7 text-content-muted desk:text-lg">
+              {{ description }}
+            </p>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      <div class="grid gap-4 desk:grid-cols-[0.8fr_1.2fr] desk:gap-5">
+        <div class="grid gap-2 rounded-lg border border-base-400 bg-base-200 p-4">
+          {% if tab_1_label %}
+            <button
+              class="flex cursor-pointer items-center gap-3 rounded-md border border-transparent p-3 text-left text-sm font-medium text-content-muted transition-colors hover:bg-base-300 hover:text-content focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-content"
+              x-on:click="active = 1"
+              x-bind:class="active === 1 ? 'border-base-400 bg-base-100 text-content' : ''"
+            >
+              {% if tab_1_icon %}
+                {{ icon(tab_1_icon, "size-4 shrink-0")|safe }}
+              {% endif %}
+              <span>
+                {{ tab_1_label }}
+              </span>
+            </button>
+          {% endif %}
+          {% if tab_2_label %}
+            <button
+              class="flex cursor-pointer items-center gap-3 rounded-md border border-transparent p-3 text-left text-sm font-medium text-content-muted transition-colors hover:bg-base-300 hover:text-content focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-content"
+              x-on:click="active = 2"
+              x-bind:class="active === 2 ? 'border-base-400 bg-base-100 text-content' : ''"
+            >
+              {% if tab_2_icon %}
+                {{ icon(tab_2_icon, "size-4 shrink-0")|safe }}
+              {% endif %}
+              <span>
+                {{ tab_2_label }}
+              </span>
+            </button>
+          {% endif %}
+          {% if tab_3_label %}
+            <button
+              class="flex cursor-pointer items-center gap-3 rounded-md border border-transparent p-3 text-left text-sm font-medium text-content-muted transition-colors hover:bg-base-300 hover:text-content focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-content"
+              x-on:click="active = 3"
+              x-bind:class="active === 3 ? 'border-base-400 bg-base-100 text-content' : ''"
+            >
+              {% if tab_3_icon %}
+                {{ icon(tab_3_icon, "size-4 shrink-0")|safe }}
+              {% endif %}
+              <span>
+                {{ tab_3_label }}
+              </span>
+            </button>
+          {% endif %}
+          {% if tab_4_label %}
+            <button
+              class="flex cursor-pointer items-center gap-3 rounded-md border border-transparent p-3 text-left text-sm font-medium text-content-muted transition-colors hover:bg-base-300 hover:text-content focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-content"
+              x-on:click="active = 4"
+              x-bind:class="active === 4 ? 'border-base-400 bg-base-100 text-content' : ''"
+            >
+              {% if tab_4_icon %}
+                {{ icon(tab_4_icon, "size-4 shrink-0")|safe }}
+              {% endif %}
+              <span>
+                {{ tab_4_label }}
+              </span>
+            </button>
+          {% endif %}
+        </div>
+
+        <div class="rounded-lg border border-base-400 bg-base-200 p-4 desk:p-6">
+          {% if tab_1_label %}
+            <div x-show="active === 1">
+              <div class="rounded-md border border-base-400 bg-base-100 p-4">
+                {% if tab_1_meta %}
+                  <p class="text-xs font-medium uppercase tracking-[0.18em] text-content-muted">
+                    {{ tab_1_meta }}
+                  </p>
+                {% endif %}
+                <h3 class="mt-2 text-2xl font-semibold tracking-tight text-content">
+                  {{ tab_1_title }}
+                </h3>
+                {% if tab_1_desc %}
+                  <p class="mt-3 text-sm leading-6 text-content-muted desk:text-base">
+                    {{ tab_1_desc }}
+                  </p>
+                {% endif %}
+                <div class="mt-5 space-y-3">
+                  {% if tab_1_bullet_1 %}
+                    <div class="flex gap-3 text-sm text-content-muted">
+                      {{ icon("check", "size-4 shrink-0 text-content")|safe }}
+                      <span>
+                        {{ tab_1_bullet_1 }}
+                      </span>
+                    </div>
+                  {% endif %}
+                  {% if tab_1_bullet_2 %}
+                    <div class="flex gap-3 text-sm text-content-muted">
+                      {{ icon("check", "size-4 shrink-0 text-content")|safe }}
+                      <span>
+                        {{ tab_1_bullet_2 }}
+                      </span>
+                    </div>
+                  {% endif %}
+                  {% if tab_1_bullet_3 %}
+                    <div class="flex gap-3 text-sm text-content-muted">
+                      {{ icon("check", "size-4 shrink-0 text-content")|safe }}
+                      <span>
+                        {{ tab_1_bullet_3 }}
+                      </span>
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          {% endif %}
+          {% if tab_2_label %}
+            <div x-show="active === 2" x-cloak>
+              <div class="rounded-md border border-base-400 bg-base-100 p-4">
+                {% if tab_2_meta %}
+                  <p class="text-xs font-medium uppercase tracking-[0.18em] text-content-muted">
+                    {{ tab_2_meta }}
+                  </p>
+                {% endif %}
+                <h3 class="mt-2 text-2xl font-semibold tracking-tight text-content">
+                  {{ tab_2_title }}
+                </h3>
+                {% if tab_2_desc %}
+                  <p class="mt-3 text-sm leading-6 text-content-muted desk:text-base">
+                    {{ tab_2_desc }}
+                  </p>
+                {% endif %}
+                <div class="mt-5 space-y-3">
+                  {% if tab_2_bullet_1 %}
+                    <div class="flex gap-3 text-sm text-content-muted">
+                      {{ icon("check", "size-4 shrink-0 text-content")|safe }}
+                      <span>
+                        {{ tab_2_bullet_1 }}
+                      </span>
+                    </div>
+                  {% endif %}
+                  {% if tab_2_bullet_2 %}
+                    <div class="flex gap-3 text-sm text-content-muted">
+                      {{ icon("check", "size-4 shrink-0 text-content")|safe }}
+                      <span>
+                        {{ tab_2_bullet_2 }}
+                      </span>
+                    </div>
+                  {% endif %}
+                  {% if tab_2_bullet_3 %}
+                    <div class="flex gap-3 text-sm text-content-muted">
+                      {{ icon("check", "size-4 shrink-0 text-content")|safe }}
+                      <span>
+                        {{ tab_2_bullet_3 }}
+                      </span>
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          {% endif %}
+          {% if tab_3_label %}
+            <div x-show="active === 3" x-cloak>
+              <div class="rounded-md border border-base-400 bg-base-100 p-4">
+                {% if tab_3_meta %}
+                  <p class="text-xs font-medium uppercase tracking-[0.18em] text-content-muted">
+                    {{ tab_3_meta }}
+                  </p>
+                {% endif %}
+                <h3 class="mt-2 text-2xl font-semibold tracking-tight text-content">
+                  {{ tab_3_title }}
+                </h3>
+                {% if tab_3_desc %}
+                  <p class="mt-3 text-sm leading-6 text-content-muted desk:text-base">
+                    {{ tab_3_desc }}
+                  </p>
+                {% endif %}
+                <div class="mt-5 space-y-3">
+                  {% if tab_3_bullet_1 %}
+                    <div class="flex gap-3 text-sm text-content-muted">
+                      {{ icon("check", "size-4 shrink-0 text-content")|safe }}
+                      <span>
+                        {{ tab_3_bullet_1 }}
+                      </span>
+                    </div>
+                  {% endif %}
+                  {% if tab_3_bullet_2 %}
+                    <div class="flex gap-3 text-sm text-content-muted">
+                      {{ icon("check", "size-4 shrink-0 text-content")|safe }}
+                      <span>
+                        {{ tab_3_bullet_2 }}
+                      </span>
+                    </div>
+                  {% endif %}
+                  {% if tab_3_bullet_3 %}
+                    <div class="flex gap-3 text-sm text-content-muted">
+                      {{ icon("check", "size-4 shrink-0 text-content")|safe }}
+                      <span>
+                        {{ tab_3_bullet_3 }}
+                      </span>
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          {% endif %}
+          {% if tab_4_label %}
+            <div x-show="active === 4" x-cloak>
+              <div class="rounded-md border border-base-400 bg-base-100 p-4">
+                {% if tab_4_meta %}
+                  <p class="text-xs font-medium uppercase tracking-[0.18em] text-content-muted">
+                    {{ tab_4_meta }}
+                  </p>
+                {% endif %}
+                <h3 class="mt-2 text-2xl font-semibold tracking-tight text-content">
+                  {{ tab_4_title }}
+                </h3>
+                {% if tab_4_desc %}
+                  <p class="mt-3 text-sm leading-6 text-content-muted desk:text-base">
+                    {{ tab_4_desc }}
+                  </p>
+                {% endif %}
+                <div class="mt-5 space-y-3">
+                  {% if tab_4_bullet_1 %}
+                    <div class="flex gap-3 text-sm text-content-muted">
+                      {{ icon("check", "size-4 shrink-0 text-content")|safe }}
+                      <span>
+                        {{ tab_4_bullet_1 }}
+                      </span>
+                    </div>
+                  {% endif %}
+                  {% if tab_4_bullet_2 %}
+                    <div class="flex gap-3 text-sm text-content-muted">
+                      {{ icon("check", "size-4 shrink-0 text-content")|safe }}
+                      <span>
+                        {{ tab_4_bullet_2 }}
+                      </span>
+                    </div>
+                  {% endif %}
+                  {% if tab_4_bullet_3 %}
+                    <div class="flex gap-3 text-sm text-content-muted">
+                      {{ icon("check", "size-4 shrink-0 text-content")|safe }}
+                      <span>
+                        {{ tab_4_bullet_3 }}
+                      </span>
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,4 @@
+{% set name = props.name | default:"" %}
+{% set class = props.class | default:"" %}
+
+{{ icon(name, class) | safe }}

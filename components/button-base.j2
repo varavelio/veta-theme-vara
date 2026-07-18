@@ -1,0 +1,3 @@
+{% import "../templates/veta/macros/button.j2" button %}
+
+{{ button(props.text, props.href|default:"", props.target|default:"", props.icon|default:"", props.icon_right|default:"", props.size|default:"md", props.radius|default:"md", props.variant|default:"solid", props.color|default:"neutral", props.wide|default:"false", props.disabled|default:"false", props.type|default:"button", props.class|default:"") }}

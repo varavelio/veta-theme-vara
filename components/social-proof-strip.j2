@@ -1,0 +1,72 @@
+{% set container = props.container |default:"lg" %}
+{% set text = props.text %}
+{% set rating = props.rating |default:"5" %}
+{% set avatar_1 = props.avatar_1 %}
+{% set avatar_2 = props.avatar_2 %}
+{% set avatar_3 = props.avatar_3 %}
+{% set avatar_4 = props.avatar_4 %}
+{% set label_1 = props.label_1 %}
+{% set label_2 = props.label_2 %}
+{% set label_3 = props.label_3 %}
+{% set bg = props.bg |default:"base-100" %}
+{% set class = props.class %}
+
+{% if container == "xs" %}
+  {% set container_cls = "max-w-md" %}
+{% elif container == "sm" %}
+  {% set container_cls = "max-w-3xl" %}
+{% elif container == "md" %}
+  {% set container_cls = "max-w-6xl" %}
+{% elif container == "xl" %}
+  {% set container_cls = "max-w-[120rem]" %}
+{% elif container == "full" %}
+  {% set container_cls = "max-w-full" %}
+{% else %}
+  {% set container_cls = "max-w-7xl" %}
+{% endif %}
+
+<section class="bg-{{ bg }} py-6 desk:py-10{% if class %} {{ class }}{% endif %}">
+  <div class="mx-auto w-full {{ container_cls }} px-4">
+    <div class="flex flex-col gap-4 rounded-lg border border-base-400 bg-base-200 p-4 desk:flex-row desk:items-center desk:justify-between desk:p-5">
+      <div class="flex items-center gap-3">
+        <div class="flex -space-x-2">
+          {% if avatar_1 %}
+            <img src="{{ avatar_1 }}" alt="" class="size-9 rounded-full border border-base-400 object-cover" />
+          {% endif %}
+          {% if avatar_2 %}
+            <img src="{{ avatar_2 }}" alt="" class="size-9 rounded-full border border-base-400 object-cover" />
+          {% endif %}
+          {% if avatar_3 %}
+            <img src="{{ avatar_3 }}" alt="" class="size-9 rounded-full border border-base-400 object-cover" />
+          {% endif %}
+          {% if avatar_4 %}
+            <img src="{{ avatar_4 }}" alt="" class="size-9 rounded-full border border-base-400 object-cover" />
+          {% endif %}
+        </div>
+        <div>
+          <div class="flex gap-1 text-content">
+            {% for i in range(rating) %}
+              <svg class="size-4" viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+              </svg>
+            {% endfor %}
+          </div>
+          {% if text %}
+            <p class="mt-1 text-sm text-content-muted">{{ text }}</p>
+          {% endif %}
+        </div>
+      </div>
+      <div class="flex flex-wrap gap-2 text-xs font-medium uppercase tracking-[0.18em] text-content-muted">
+        {% if label_1 %}
+          <span class="rounded-full border border-base-400 px-2.5 py-1">{{ label_1 }}</span>
+        {% endif %}
+        {% if label_2 %}
+          <span class="rounded-full border border-base-400 px-2.5 py-1">{{ label_2 }}</span>
+        {% endif %}
+        {% if label_3 %}
+          <span class="rounded-full border border-base-400 px-2.5 py-1">{{ label_3 }}</span>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>

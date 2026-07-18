@@ -1,0 +1,61 @@
+{% set container = props.container |default:"lg" %}
+{% set quote = props.quote %}
+{% set name = props.name %}
+{% set role = props.role %}
+{% set avatar = props.avatar %}
+{% set metric_value = props.metric_value %}
+{% set metric_label = props.metric_label %}
+{% set bg = props.bg |default:"base-100" %}
+{% set class = props.class %}
+
+{% if container == "xs" %}
+  {% set container_cls = "max-w-md" %}
+{% elif container == "sm" %}
+  {% set container_cls = "max-w-3xl" %}
+{% elif container == "md" %}
+  {% set container_cls = "max-w-6xl" %}
+{% elif container == "xl" %}
+  {% set container_cls = "max-w-[120rem]" %}
+{% elif container == "full" %}
+  {% set container_cls = "max-w-full" %}
+{% else %}
+  {% set container_cls = "max-w-7xl" %}
+{% endif %}
+
+<section class="bg-{{ bg }} py-10 desk:py-20{% if class %} {{ class }}{% endif %}">
+  <div class="mx-auto w-full {{ container_cls }} px-4">
+    <figure class="grid gap-6 rounded-lg border border-base-400 bg-base-200 p-4 desk:grid-cols-[1fr_0.35fr] desk:items-end desk:p-8">
+      <div>
+        <div class="flex size-10 items-center justify-center rounded-md border border-base-400 bg-base-100">
+          {{ icon("quote", "size-5 text-content")|safe }}
+        </div>
+        <blockquote class="mt-6 text-2xl font-medium leading-tight tracking-tight text-content desk:text-4xl">
+          {{ quote }}
+        </blockquote>
+        <figcaption class="mt-6 flex items-center gap-3 border-t border-base-400 pt-5">
+          {% if avatar %}
+            <img
+              src="{{ avatar }}"
+              alt="{{ name }}"
+              class="size-10 rounded-full border border-base-400 object-cover"
+            />
+          {% endif %}
+          <div>
+            <p class="font-medium text-content">{{ name }}</p>
+            {% if role %}
+              <p class="text-sm text-content-muted">{{ role }}</p>
+            {% endif %}
+          </div>
+        </figcaption>
+      </div>
+      {% if metric_value %}
+        <div class="rounded-md border border-base-400 bg-base-100 p-4">
+          <p class="font-mono text-4xl font-semibold text-content">{{ metric_value }}</p>
+          {% if metric_label %}
+            <p class="mt-2 text-sm leading-6 text-content-muted">{{ metric_label }}</p>
+          {% endif %}
+        </div>
+      {% endif %}
+    </figure>
+  </div>
+</section>

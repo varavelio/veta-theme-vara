@@ -1,0 +1,109 @@
+{% set container = props.container|default:"lg" %}
+{% set bg = props.bg|default:"base-100" %}
+{% set image_alt = props.image_alt|default:props.title %}
+
+{% if container == "xs" %}
+  {% set container_cls = "max-w-md" %}
+{% elif container == "sm" %}
+  {% set container_cls = "max-w-3xl" %}
+{% elif container == "md" %}
+  {% set container_cls = "max-w-6xl" %}
+{% elif container == "xl" %}
+  {% set container_cls = "max-w-[120rem]" %}
+{% elif container == "full" %}
+  {% set container_cls = "max-w-full" %}
+{% else %}
+  {% set container_cls = "max-w-7xl" %}
+{% endif %}
+
+<section class="bg-{{ bg }} py-10 desk:py-20{% if props.class %} {{ props.class }}{% endif %}">
+  <div class="mx-auto w-full {{ container_cls }} px-4">
+    <div class="space-y-8 desk:space-y-10">
+      {% if props.eyebrow or props.title or props.description %}
+        <div class="mx-auto flex max-w-3xl flex-col gap-3 text-center">
+          {% if props.eyebrow %}
+            <p class="text-xs font-medium uppercase tracking-[0.24em] text-content-muted">
+              {{ props.eyebrow }}
+            </p>
+          {% endif %}
+          {% if props.title %}
+            <h2 class="text-3xl font-semibold tracking-tight text-content desk:text-4xl">
+              {{ props.title }}
+            </h2>
+          {% endif %}
+          {% if props.description %}
+            <p class="text-base leading-7 text-content-muted desk:text-lg">
+              {{ props.description }}
+            </p>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      <div class="rounded-lg border border-base-400 bg-base-200 p-3 desk:p-4">
+        <div class="rounded-md border border-base-400 bg-base-100">
+          <div class="flex items-center gap-2 border-b border-base-400 px-4 py-3">
+            <span class="size-2 rounded-full bg-base-400"></span>
+            <span class="size-2 rounded-full bg-base-400"></span>
+            <span class="size-2 rounded-full bg-base-400"></span>
+            <div class="ml-2 h-6 flex-1 rounded-md border border-base-400 bg-base-200">
+            </div>
+          </div>
+          {% if props.image_src %}
+            <img
+              src="{{ props.image_src }}"
+              alt="{{ image_alt }}"
+              class="aspect-[16/9] w-full rounded-b-md object-cover"
+            />
+          {% else %}
+            <div class="grid min-h-72 gap-4 p-4 desk:grid-cols-[0.7fr_1.3fr] desk:p-6">
+              <div class="rounded-md border border-base-400 bg-base-200 p-4">
+                <div class="h-4 w-24 rounded-sm bg-base-400">
+                </div>
+                <div class="mt-5 grid gap-3">
+                  <div class="h-9 rounded-md border border-base-400 bg-base-100">
+                  </div>
+                  <div class="h-9 rounded-md border border-base-400 bg-base-100">
+                  </div>
+                  <div class="h-9 rounded-md border border-base-400 bg-base-100">
+                  </div>
+                </div>
+              </div>
+              <div class="rounded-md border border-base-400 bg-base-200 p-4">
+                <div class="grid gap-3 desk:grid-cols-3">
+                  <div class="h-24 rounded-md border border-base-400 bg-base-100">
+                  </div>
+                  <div class="h-24 rounded-md border border-base-400 bg-base-100">
+                  </div>
+                  <div class="h-24 rounded-md border border-base-400 bg-base-100">
+                  </div>
+                </div>
+                <div class="mt-4 h-32 rounded-md border border-base-400 bg-base-100">
+                </div>
+              </div>
+            </div>
+          {% endif %}
+        </div>
+        {% if props.caption or props.badge_1 %}
+          <div class="flex flex-col gap-3 px-1 pt-4 text-sm text-content-muted desk:flex-row desk:items-center desk:justify-between">
+            {% if props.caption %}
+              <p>
+                {{ props.caption }}
+              </p>
+            {% endif %}
+            <div class="flex flex-wrap gap-2">
+              {% if props.badge_1 %}
+                <span class="rounded-full border border-base-400 px-2.5 py-1 text-xs font-medium text-content-muted">{{ props.badge_1 }}</span>
+              {% endif %}
+              {% if props.badge_2 %}
+                <span class="rounded-full border border-base-400 px-2.5 py-1 text-xs font-medium text-content-muted">{{ props.badge_2 }}</span>
+              {% endif %}
+              {% if props.badge_3 %}
+                <span class="rounded-full border border-base-400 px-2.5 py-1 text-xs font-medium text-content-muted">{{ props.badge_3 }}</span>
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>

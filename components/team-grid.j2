@@ -1,0 +1,158 @@
+{% set container = props.container |default:"lg" %}
+{% set eyebrow = props.eyebrow %}
+{% set title = props.title %}
+{% set description = props.description %}
+{% set member_1_name = props.member_1_name %}
+{% set member_1_role = props.member_1_role %}
+{% set member_1_bio = props.member_1_bio %}
+{% set member_1_avatar = props.member_1_avatar %}
+{% set member_1_href = props.member_1_href %}
+{% set member_2_name = props.member_2_name %}
+{% set member_2_role = props.member_2_role %}
+{% set member_2_bio = props.member_2_bio %}
+{% set member_2_avatar = props.member_2_avatar %}
+{% set member_2_href = props.member_2_href %}
+{% set member_3_name = props.member_3_name %}
+{% set member_3_role = props.member_3_role %}
+{% set member_3_bio = props.member_3_bio %}
+{% set member_3_avatar = props.member_3_avatar %}
+{% set member_3_href = props.member_3_href %}
+{% set member_4_name = props.member_4_name %}
+{% set member_4_role = props.member_4_role %}
+{% set member_4_bio = props.member_4_bio %}
+{% set member_4_avatar = props.member_4_avatar %}
+{% set member_4_href = props.member_4_href %}
+{% set bg = props.bg |default:"base-100" %}
+{% set class = props.class %}
+
+{% if container == "xs" %}
+  {% set container_cls = "max-w-md" %}
+{% elif container == "sm" %}
+  {% set container_cls = "max-w-3xl" %}
+{% elif container == "md" %}
+  {% set container_cls = "max-w-6xl" %}
+{% elif container == "xl" %}
+  {% set container_cls = "max-w-[120rem]" %}
+{% elif container == "full" %}
+  {% set container_cls = "max-w-full" %}
+{% else %}
+  {% set container_cls = "max-w-7xl" %}
+{% endif %}
+
+<section class="bg-{{ bg }} py-10 desk:py-20{% if class %} {{ class }}{% endif %}">
+  <div class="mx-auto w-full {{ container_cls }} px-4">
+    <div class="space-y-8 desk:space-y-10">
+      {% if eyebrow or title or description %}
+        <div class="mx-auto flex max-w-3xl flex-col gap-3 text-center">
+          {% if eyebrow %}
+            <p class="text-xs font-medium uppercase tracking-[0.24em] text-content-muted">{{ eyebrow }}</p>
+          {% endif %}
+          {% if title %}
+            <h2 class="text-3xl font-semibold tracking-tight text-content desk:text-4xl">{{ title }}</h2>
+          {% endif %}
+          {% if description %}
+            <p class="text-base leading-7 text-content-muted desk:text-lg">{{ description }}</p>
+          {% endif %}
+        </div>
+      {% endif %}
+      <div class="grid gap-4 desk:grid-cols-4 desk:gap-5">
+        {% if member_1_name %}
+          <article class="rounded-lg border border-base-400 bg-base-200 p-4">
+            {% if member_1_avatar %}
+              <img src="{{ member_1_avatar }}" alt="{{ member_1_name }}" class="aspect-square w-full rounded-md border border-base-400 object-cover" />
+            {% else %}
+              <div class="flex aspect-square w-full items-center justify-center rounded-md border border-base-400 bg-base-100 text-3xl font-medium text-content-muted">
+                {{ member_1_name |first }}
+              </div>
+            {% endif %}
+            <h3 class="mt-4 font-medium text-content">{{ member_1_name }}</h3>
+            {% if member_1_role %}
+              <p class="mt-1 text-sm text-content-muted">{{ member_1_role }}</p>
+            {% endif %}
+            {% if member_1_bio %}
+              <p class="mt-3 text-sm leading-6 text-content-muted">{{ member_1_bio }}</p>
+            {% endif %}
+            {% if member_1_href %}
+              <a href="{{ member_1_href }}" class="mt-4 inline-flex items-center gap-2 text-sm font-medium text-content no-underline hover:text-info">
+                Profile
+                {{ icon("arrow-right", "size-4")|safe }}
+              </a>
+            {% endif %}
+          </article>
+        {% endif %}
+        {% if member_2_name %}
+          <article class="rounded-lg border border-base-400 bg-base-200 p-4">
+            {% if member_2_avatar %}
+              <img src="{{ member_2_avatar }}" alt="{{ member_2_name }}" class="aspect-square w-full rounded-md border border-base-400 object-cover" />
+            {% else %}
+              <div class="flex aspect-square w-full items-center justify-center rounded-md border border-base-400 bg-base-100 text-3xl font-medium text-content-muted">
+                {{ member_2_name |first }}
+              </div>
+            {% endif %}
+            <h3 class="mt-4 font-medium text-content">{{ member_2_name }}</h3>
+            {% if member_2_role %}
+              <p class="mt-1 text-sm text-content-muted">{{ member_2_role }}</p>
+            {% endif %}
+            {% if member_2_bio %}
+              <p class="mt-3 text-sm leading-6 text-content-muted">{{ member_2_bio }}</p>
+            {% endif %}
+            {% if member_2_href %}
+              <a href="{{ member_2_href }}" class="mt-4 inline-flex items-center gap-2 text-sm font-medium text-content no-underline hover:text-info">
+                Profile
+                {{ icon("arrow-right", "size-4")|safe }}
+              </a>
+            {% endif %}
+          </article>
+        {% endif %}
+        {% if member_3_name %}
+          <article class="rounded-lg border border-base-400 bg-base-200 p-4">
+            {% if member_3_avatar %}
+              <img src="{{ member_3_avatar }}" alt="{{ member_3_name }}" class="aspect-square w-full rounded-md border border-base-400 object-cover" />
+            {% else %}
+              <div class="flex aspect-square w-full items-center justify-center rounded-md border border-base-400 bg-base-100 text-3xl font-medium text-content-muted">
+                {{ member_3_name |first }}
+              </div>
+            {% endif %}
+            <h3 class="mt-4 font-medium text-content">{{ member_3_name }}</h3>
+            {% if member_3_role %}
+              <p class="mt-1 text-sm text-content-muted">{{ member_3_role }}</p>
+            {% endif %}
+            {% if member_3_bio %}
+              <p class="mt-3 text-sm leading-6 text-content-muted">{{ member_3_bio }}</p>
+            {% endif %}
+            {% if member_3_href %}
+              <a href="{{ member_3_href }}" class="mt-4 inline-flex items-center gap-2 text-sm font-medium text-content no-underline hover:text-info">
+                Profile
+                {{ icon("arrow-right", "size-4")|safe }}
+              </a>
+            {% endif %}
+          </article>
+        {% endif %}
+        {% if member_4_name %}
+          <article class="rounded-lg border border-base-400 bg-base-200 p-4">
+            {% if member_4_avatar %}
+              <img src="{{ member_4_avatar }}" alt="{{ member_4_name }}" class="aspect-square w-full rounded-md border border-base-400 object-cover" />
+            {% else %}
+              <div class="flex aspect-square w-full items-center justify-center rounded-md border border-base-400 bg-base-100 text-3xl font-medium text-content-muted">
+                {{ member_4_name |first }}
+              </div>
+            {% endif %}
+            <h3 class="mt-4 font-medium text-content">{{ member_4_name }}</h3>
+            {% if member_4_role %}
+              <p class="mt-1 text-sm text-content-muted">{{ member_4_role }}</p>
+            {% endif %}
+            {% if member_4_bio %}
+              <p class="mt-3 text-sm leading-6 text-content-muted">{{ member_4_bio }}</p>
+            {% endif %}
+            {% if member_4_href %}
+              <a href="{{ member_4_href }}" class="mt-4 inline-flex items-center gap-2 text-sm font-medium text-content no-underline hover:text-info">
+                Profile
+                {{ icon("arrow-right", "size-4")|safe }}
+              </a>
+            {% endif %}
+          </article>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>

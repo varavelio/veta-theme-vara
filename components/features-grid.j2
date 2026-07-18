@@ -1,0 +1,276 @@
+{% set container = props.container %}
+{% set eyebrow = props.eyebrow %}
+{% set title = props.title %}
+{% set description = props.description %}
+{% set columns = props.columns %}
+{% set bg = props.bg %}
+{% set item_1_icon = props.item_1_icon %}
+{% set item_1_title = props.item_1_title %}
+{% set item_1_desc = props.item_1_desc %}
+{% set item_1_badge = props.item_1_badge %}
+{% set item_1_href = props.item_1_href %}
+{% set item_1_link = props.item_1_link %}
+{% set item_2_icon = props.item_2_icon %}
+{% set item_2_title = props.item_2_title %}
+{% set item_2_desc = props.item_2_desc %}
+{% set item_2_badge = props.item_2_badge %}
+{% set item_2_href = props.item_2_href %}
+{% set item_2_link = props.item_2_link %}
+{% set item_3_icon = props.item_3_icon %}
+{% set item_3_title = props.item_3_title %}
+{% set item_3_desc = props.item_3_desc %}
+{% set item_3_badge = props.item_3_badge %}
+{% set item_3_href = props.item_3_href %}
+{% set item_3_link = props.item_3_link %}
+{% set item_4_icon = props.item_4_icon %}
+{% set item_4_title = props.item_4_title %}
+{% set item_4_desc = props.item_4_desc %}
+{% set item_4_badge = props.item_4_badge %}
+{% set item_4_href = props.item_4_href %}
+{% set item_4_link = props.item_4_link %}
+{% set item_5_icon = props.item_5_icon %}
+{% set item_5_title = props.item_5_title %}
+{% set item_5_desc = props.item_5_desc %}
+{% set item_5_badge = props.item_5_badge %}
+{% set item_5_href = props.item_5_href %}
+{% set item_5_link = props.item_5_link %}
+{% set item_6_icon = props.item_6_icon %}
+{% set item_6_title = props.item_6_title %}
+{% set item_6_desc = props.item_6_desc %}
+{% set item_6_badge = props.item_6_badge %}
+{% set item_6_href = props.item_6_href %}
+{% set item_6_link = props.item_6_link %}
+{% set class = props.class %}
+
+{% set container = container|default:"lg" %}
+{% if container == "xs" %}
+  {% set container_cls = "max-w-md" %}
+{% elif container == "sm" %}
+  {% set container_cls = "max-w-3xl" %}
+{% elif container == "md" %}
+  {% set container_cls = "max-w-6xl" %}
+{% elif container == "xl" %}
+  {% set container_cls = "max-w-[120rem]" %}
+{% elif container == "full" %}
+  {% set container_cls = "max-w-full" %}
+{% else %}
+  {% set container_cls = "max-w-7xl" %}
+{% endif %}
+
+{% set bg = bg|default:"base-100" %}
+
+<section class="bg-{{ bg }} py-10 desk:py-20{% if class %} {{ class }}{% endif %}">
+  <div class="mx-auto w-full {{ container_cls }} px-4">
+    <div class="space-y-8 desk:space-y-10">
+      {% if eyebrow or title or description %}
+        <div class="mx-auto flex max-w-3xl flex-col gap-3 text-center">
+          {% if eyebrow %}
+            <p class="text-xs font-medium uppercase tracking-[0.24em] text-content-muted">
+              {{ eyebrow }}
+            </p>
+          {% endif %}
+          {% if title %}
+            <h2 class="text-3xl font-semibold tracking-tight text-content desk:text-4xl">
+              {{ title }}
+            </h2>
+          {% endif %}
+          {% if description %}
+            <p class="text-base leading-7 text-content-muted desk:text-lg">
+              {{ description }}
+            </p>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {% set cols = columns|default:"3" %}
+      <div class="grid grid-cols-1 gap-4 desk:gap-5{% if cols == '2' %} desk:grid-cols-2{% elif cols == '4' %} desk:grid-cols-4{% else %} desk:grid-cols-3{% endif %}">
+        {% if item_1_title %}
+          <div class="group flex h-full flex-col gap-4 rounded-lg border border-base-400 bg-base-200 p-4 transition-colors hover:bg-base-300 desk:p-6">
+            <div class="flex items-start justify-between gap-4">
+              {% if item_1_icon %}
+                <div class="flex size-10 shrink-0 items-center justify-center rounded-md border border-base-400 bg-base-100">
+                  {{ icon(item_1_icon, "size-5 text-content")|safe }}
+                </div>
+              {% endif %}
+              {% if item_1_badge %}
+                <span class="rounded-full border border-base-400 px-2.5 py-1 text-[11px] font-medium uppercase tracking-[0.18em] text-content-muted">
+                  {{ item_1_badge }}
+                </span>
+              {% endif %}
+            </div>
+            <div class="space-y-2">
+              <h3 class="text-lg font-medium tracking-tight text-content desk:text-xl">
+                {{ item_1_title }}
+              </h3>
+              {% if item_1_desc %}
+                <p class="text-sm leading-6 text-content-muted">
+                  {{ item_1_desc }}
+                </p>
+              {% endif %}
+            </div>
+            {% if item_1_href %}
+              <a href="{{ item_1_href }}" class="mt-auto inline-flex items-center gap-2 text-sm font-medium text-content no-underline transition-colors hover:text-info">
+                {{ item_1_link|default:"Learn more" }} {{ icon("arrow-right", "size-4")|safe }}
+              </a>
+            {% endif %}
+          </div>
+        {% endif %}
+        {% if item_2_title %}
+          <div class="group flex h-full flex-col gap-4 rounded-lg border border-base-400 bg-base-200 p-4 transition-colors hover:bg-base-300 desk:p-6">
+            <div class="flex items-start justify-between gap-4">
+              {% if item_2_icon %}
+                <div class="flex size-10 shrink-0 items-center justify-center rounded-md border border-base-400 bg-base-100">
+                  {{ icon(item_2_icon, "size-5 text-content")|safe }}
+                </div>
+              {% endif %}
+              {% if item_2_badge %}
+                <span class="rounded-full border border-base-400 px-2.5 py-1 text-[11px] font-medium uppercase tracking-[0.18em] text-content-muted">
+                  {{ item_2_badge }}
+                </span>
+              {% endif %}
+            </div>
+            <div class="space-y-2">
+              <h3 class="text-lg font-medium tracking-tight text-content desk:text-xl">
+                {{ item_2_title }}
+              </h3>
+              {% if item_2_desc %}
+                <p class="text-sm leading-6 text-content-muted">
+                  {{ item_2_desc }}
+                </p>
+              {% endif %}
+            </div>
+            {% if item_2_href %}
+              <a href="{{ item_2_href }}" class="mt-auto inline-flex items-center gap-2 text-sm font-medium text-content no-underline transition-colors hover:text-info">
+                {{ item_2_link|default:"Learn more" }} {{ icon("arrow-right", "size-4")|safe }}
+              </a>
+            {% endif %}
+          </div>
+        {% endif %}
+        {% if item_3_title %}
+          <div class="group flex h-full flex-col gap-4 rounded-lg border border-base-400 bg-base-200 p-4 transition-colors hover:bg-base-300 desk:p-6">
+            <div class="flex items-start justify-between gap-4">
+              {% if item_3_icon %}
+                <div class="flex size-10 shrink-0 items-center justify-center rounded-md border border-base-400 bg-base-100">
+                  {{ icon(item_3_icon, "size-5 text-content")|safe }}
+                </div>
+              {% endif %}
+              {% if item_3_badge %}
+                <span class="rounded-full border border-base-400 px-2.5 py-1 text-[11px] font-medium uppercase tracking-[0.18em] text-content-muted">
+                  {{ item_3_badge }}
+                </span>
+              {% endif %}
+            </div>
+            <div class="space-y-2">
+              <h3 class="text-lg font-medium tracking-tight text-content desk:text-xl">
+                {{ item_3_title }}
+              </h3>
+              {% if item_3_desc %}
+                <p class="text-sm leading-6 text-content-muted">
+                  {{ item_3_desc }}
+                </p>
+              {% endif %}
+            </div>
+            {% if item_3_href %}
+              <a href="{{ item_3_href }}" class="mt-auto inline-flex items-center gap-2 text-sm font-medium text-content no-underline transition-colors hover:text-info">
+                {{ item_3_link|default:"Learn more" }} {{ icon("arrow-right", "size-4")|safe }}
+              </a>
+            {% endif %}
+          </div>
+        {% endif %}
+        {% if item_4_title %}
+          <div class="group flex h-full flex-col gap-4 rounded-lg border border-base-400 bg-base-200 p-4 transition-colors hover:bg-base-300 desk:p-6">
+            <div class="flex items-start justify-between gap-4">
+              {% if item_4_icon %}
+                <div class="flex size-10 shrink-0 items-center justify-center rounded-md border border-base-400 bg-base-100">
+                  {{ icon(item_4_icon, "size-5 text-content")|safe }}
+                </div>
+              {% endif %}
+              {% if item_4_badge %}
+                <span class="rounded-full border border-base-400 px-2.5 py-1 text-[11px] font-medium uppercase tracking-[0.18em] text-content-muted">
+                  {{ item_4_badge }}
+                </span>
+              {% endif %}
+            </div>
+            <div class="space-y-2">
+              <h3 class="text-lg font-medium tracking-tight text-content desk:text-xl">
+                {{ item_4_title }}
+              </h3>
+              {% if item_4_desc %}
+                <p class="text-sm leading-6 text-content-muted">
+                  {{ item_4_desc }}
+                </p>
+              {% endif %}
+            </div>
+            {% if item_4_href %}
+              <a href="{{ item_4_href }}" class="mt-auto inline-flex items-center gap-2 text-sm font-medium text-content no-underline transition-colors hover:text-info">
+                {{ item_4_link|default:"Learn more" }} {{ icon("arrow-right", "size-4")|safe }}
+              </a>
+            {% endif %}
+          </div>
+        {% endif %}
+        {% if item_5_title %}
+          <div class="group flex h-full flex-col gap-4 rounded-lg border border-base-400 bg-base-200 p-4 transition-colors hover:bg-base-300 desk:p-6">
+            <div class="flex items-start justify-between gap-4">
+              {% if item_5_icon %}
+                <div class="flex size-10 shrink-0 items-center justify-center rounded-md border border-base-400 bg-base-100">
+                  {{ icon(item_5_icon, "size-5 text-content")|safe }}
+                </div>
+              {% endif %}
+              {% if item_5_badge %}
+                <span class="rounded-full border border-base-400 px-2.5 py-1 text-[11px] font-medium uppercase tracking-[0.18em] text-content-muted">
+                  {{ item_5_badge }}
+                </span>
+              {% endif %}
+            </div>
+            <div class="space-y-2">
+              <h3 class="text-lg font-medium tracking-tight text-content desk:text-xl">
+                {{ item_5_title }}
+              </h3>
+              {% if item_5_desc %}
+                <p class="text-sm leading-6 text-content-muted">
+                  {{ item_5_desc }}
+                </p>
+              {% endif %}
+            </div>
+            {% if item_5_href %}
+              <a href="{{ item_5_href }}" class="mt-auto inline-flex items-center gap-2 text-sm font-medium text-content no-underline transition-colors hover:text-info">
+                {{ item_5_link|default:"Learn more" }} {{ icon("arrow-right", "size-4")|safe }}
+              </a>
+            {% endif %}
+          </div>
+        {% endif %}
+        {% if item_6_title %}
+          <div class="group flex h-full flex-col gap-4 rounded-lg border border-base-400 bg-base-200 p-4 transition-colors hover:bg-base-300 desk:p-6">
+            <div class="flex items-start justify-between gap-4">
+              {% if item_6_icon %}
+                <div class="flex size-10 shrink-0 items-center justify-center rounded-md border border-base-400 bg-base-100">
+                  {{ icon(item_6_icon, "size-5 text-content")|safe }}
+                </div>
+              {% endif %}
+              {% if item_6_badge %}
+                <span class="rounded-full border border-base-400 px-2.5 py-1 text-[11px] font-medium uppercase tracking-[0.18em] text-content-muted">
+                  {{ item_6_badge }}
+                </span>
+              {% endif %}
+            </div>
+            <div class="space-y-2">
+              <h3 class="text-lg font-medium tracking-tight text-content desk:text-xl">
+                {{ item_6_title }}
+              </h3>
+              {% if item_6_desc %}
+                <p class="text-sm leading-6 text-content-muted">
+                  {{ item_6_desc }}
+                </p>
+              {% endif %}
+            </div>
+            {% if item_6_href %}
+              <a href="{{ item_6_href }}" class="mt-auto inline-flex items-center gap-2 text-sm font-medium text-content no-underline transition-colors hover:text-info">
+                {{ item_6_link|default:"Learn more" }} {{ icon("arrow-right", "size-4")|safe }}
+              </a>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>

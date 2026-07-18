@@ -1,0 +1,65 @@
+{% set container = props.container %}
+{% set eyebrow = props.eyebrow %}
+{% set title = props.title %}
+{% set description = props.description %}
+{% set action_1_text = props.action_1_text %}
+{% set action_1_url = props.action_1_url %}
+{% set action_1_variant = props.action_1_variant %}
+{% set action_1_color = props.action_1_color %}
+{% set action_2_text = props.action_2_text %}
+{% set action_2_url = props.action_2_url %}
+{% set bg = props.bg %}
+{% set class = props.class %}
+
+{% import "../templates/veta/macros/button.j2" button %}
+
+{% set container = container|default:"lg" %}
+{% if container == "xs" %}
+  {% set container_cls = "max-w-md" %}
+{% elif container == "sm" %}
+  {% set container_cls = "max-w-3xl" %}
+{% elif container == "md" %}
+  {% set container_cls = "max-w-6xl" %}
+{% elif container == "xl" %}
+  {% set container_cls = "max-w-[120rem]" %}
+{% elif container == "full" %}
+  {% set container_cls = "max-w-full" %}
+{% else %}
+  {% set container_cls = "max-w-7xl" %}
+{% endif %}
+
+{% set bg = bg|default:"base-100" %}
+
+<section class="bg-{{ bg }} py-6 desk:py-10{% if class %} {{ class }}{% endif %}">
+  <div class="mx-auto w-full {{ container_cls }} px-4">
+    <div
+      class="flex flex-col gap-4 rounded-lg border border-base-400 bg-base-200 p-4 desk:flex-row desk:items-center desk:justify-between desk:p-6"
+    >
+      <div class="max-w-2xl">
+        {% if eyebrow %}
+          <p class="text-xs font-medium uppercase tracking-[0.24em] text-content-muted">
+            {{ eyebrow }}
+          </p>
+        {% endif %}
+        {% if title %}
+          <h2 class="mt-1 text-2xl font-semibold tracking-tight text-content desk:text-3xl">
+            {{ title }}
+          </h2>
+        {% endif %}
+        {% if description %}
+          <p class="mt-2 text-sm leading-6 text-content-muted desk:text-base">
+            {{ description }}
+          </p>
+        {% endif %}
+      </div>
+      {% if action_1_text %}
+        <div class="flex shrink-0 flex-col gap-3 desk:flex-row">
+          {{ button(action_1_text, action_1_url|default:"#", "", "", "", "md", "md", action_1_variant|default:"solid", action_1_color|default:"neutral", "true", "false", "button", "desk:w-auto") }}
+          {% if action_2_text %}
+            {{ button(action_2_text, action_2_url|default:"#", "", "", "", "md", "md", "outline", "neutral", "true", "false", "button", "desk:w-auto") }}
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>

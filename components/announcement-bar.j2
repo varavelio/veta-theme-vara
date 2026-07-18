@@ -1,0 +1,43 @@
+{% set container = props.container|default:"lg" %}
+{% set bg = props.bg|default:"base-100" %}
+{% set icon_name = props.icon|default:"megaphone" %}
+
+{% if container == "xs" %}
+  {% set container_cls = "max-w-md" %}
+{% elif container == "sm" %}
+  {% set container_cls = "max-w-3xl" %}
+{% elif container == "md" %}
+  {% set container_cls = "max-w-6xl" %}
+{% elif container == "xl" %}
+  {% set container_cls = "max-w-[120rem]" %}
+{% elif container == "full" %}
+  {% set container_cls = "max-w-full" %}
+{% else %}
+  {% set container_cls = "max-w-7xl" %}
+{% endif %}
+
+<section class="bg-{{ bg }} py-4 desk:py-6{% if props.class %} {{ props.class }}{% endif %}">
+  <div class="mx-auto w-full {{ container_cls }} px-4">
+    <div class="flex flex-col gap-3 rounded-lg border border-base-400 bg-base-200 p-4 text-sm desk:flex-row desk:items-center desk:justify-between">
+      <div class="flex items-start gap-3">
+        <div class="flex size-9 shrink-0 items-center justify-center rounded-md border border-base-400 bg-base-100">
+          {{ icon(icon_name, "size-4 text-content")|safe }}
+        </div>
+        <p class="leading-6 text-content-muted">
+          {% if props.label %}
+            <span class="mr-2 font-medium text-content">{{ props.label }}</span>
+          {% endif %}
+          {{ props.text }}
+        </p>
+      </div>
+      {% if props.href %}
+        <a
+          href="{{ props.href }}"
+          class="inline-flex shrink-0 items-center gap-2 font-medium text-content no-underline transition-colors hover:text-info focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-content"
+        >
+          {{ props.link_text|default:"Learn more" }} {{ icon("arrow-right", "size-4")|safe }}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</section>

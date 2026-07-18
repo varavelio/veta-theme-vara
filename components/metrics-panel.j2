@@ -1,0 +1,106 @@
+{% set container = props.container | default:"lg" %}
+{% set eyebrow = props.eyebrow %}
+{% set title = props.title %}
+{% set description = props.description %}
+{% set metric_1_value = props.metric_1_value %}
+{% set metric_1_label = props.metric_1_label %}
+{% set metric_2_value = props.metric_2_value %}
+{% set metric_2_label = props.metric_2_label %}
+{% set metric_3_value = props.metric_3_value %}
+{% set metric_3_label = props.metric_3_label %}
+{% set metric_4_value = props.metric_4_value %}
+{% set metric_4_label = props.metric_4_label %}
+{% set check_1 = props.check_1 %}
+{% set check_2 = props.check_2 %}
+{% set check_3 = props.check_3 %}
+{% set check_4 = props.check_4 %}
+{% set bg = props.bg | default:"base-100" %}
+{% set reverse = props.reverse | default:"false" %}
+{% set class = props.class %}
+
+{% if container == "xs" %}
+  {% set container_cls = "max-w-md" %}
+{% elif container == "sm" %}
+  {% set container_cls = "max-w-3xl" %}
+{% elif container == "md" %}
+  {% set container_cls = "max-w-6xl" %}
+{% elif container == "xl" %}
+  {% set container_cls = "max-w-[120rem]" %}
+{% elif container == "full" %}
+  {% set container_cls = "max-w-full" %}
+{% else %}
+  {% set container_cls = "max-w-7xl" %}
+{% endif %}
+
+{% macro check_item(text) %}
+  <p class="flex gap-3">
+    {{ icon("check", "mt-1 size-4 shrink-0 text-content") | safe }}<span>{{ text }}</span>
+  </p>
+{% endmacro %}
+
+{% macro metric(value, label) %}
+  <div class="rounded-md border border-base-400 bg-base-100 p-4">
+    <p class="font-mono text-4xl font-semibold text-content">
+      {{ value }}
+    </p>
+    <p class="mt-2 text-sm text-content-muted">
+      {{ label }}
+    </p>
+  </div>
+{% endmacro %}
+
+<section class="bg-{{ bg }} py-10 desk:py-20{% if class %} {{ class }}{% endif %}">
+  <div class="mx-auto w-full {{ container_cls }} px-4">
+    <div class="grid gap-6 desk:grid-cols-[0.9fr_1.1fr] desk:items-center desk:gap-8">
+      <div class="{% if reverse == 'true' %}desk:order-2{% endif %}">
+        {% if eyebrow or title or description %}
+          <div class="flex max-w-3xl flex-col gap-3 text-left">
+            {% if eyebrow %}
+              <p class="text-xs font-medium uppercase tracking-[0.24em] text-content-muted">
+                {{ eyebrow }}
+              </p>
+            {% endif %}
+            {% if title %}
+              <h2 class="text-3xl font-semibold tracking-tight text-content desk:text-4xl">
+                {{ title }}
+              </h2>
+            {% endif %}
+            {% if description %}
+              <p class="text-base leading-7 text-content-muted desk:text-lg">
+                {{ description }}
+              </p>
+            {% endif %}
+          </div>
+        {% endif %}
+        <div class="mt-6 grid gap-3 text-sm leading-6 text-content-muted">
+          {% if check_1 %}
+            {{ check_item(check_1) }}
+          {% endif %}
+          {% if check_2 %}
+            {{ check_item(check_2) }}
+          {% endif %}
+          {% if check_3 %}
+            {{ check_item(check_3) }}
+          {% endif %}
+          {% if check_4 %}
+            {{ check_item(check_4) }}
+          {% endif %}
+        </div>
+      </div>
+      <div class="grid gap-4 rounded-lg border border-base-400 bg-base-200 p-4 desk:grid-cols-2 desk:p-6{% if reverse == 'true' %} desk:order-1{% endif %}">
+        {% if metric_1_value %}
+          {{ metric(metric_1_value, metric_1_label) }}
+        {% endif %}
+        {% if metric_2_value %}
+          {{ metric(metric_2_value, metric_2_label) }}
+        {% endif %}
+        {% if metric_3_value %}
+          {{ metric(metric_3_value, metric_3_label) }}
+        {% endif %}
+        {% if metric_4_value %}
+          {{ metric(metric_4_value, metric_4_label) }}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>

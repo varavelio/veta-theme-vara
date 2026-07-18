@@ -1,0 +1,147 @@
+{% set container = props.container %}
+{% set eyebrow = props.eyebrow %}
+{% set title = props.title %}
+{% set description = props.description %}
+{% set q_1 = props.q_1 %}
+{% set a_1 = props.a_1 %}
+{% set q_2 = props.q_2 %}
+{% set a_2 = props.a_2 %}
+{% set q_3 = props.q_3 %}
+{% set a_3 = props.a_3 %}
+{% set q_4 = props.q_4 %}
+{% set a_4 = props.a_4 %}
+{% set q_5 = props.q_5 %}
+{% set a_5 = props.a_5 %}
+{% set q_6 = props.q_6 %}
+{% set a_6 = props.a_6 %}
+{% set q_7 = props.q_7 %}
+{% set a_7 = props.a_7 %}
+{% set q_8 = props.q_8 %}
+{% set a_8 = props.a_8 %}
+{% set bg = props.bg %}
+{% set class = props.class %}
+
+{% set container = container|default:"lg" %}
+{% if container == "xs" %}
+  {% set container_cls = "max-w-md" %}
+{% elif container == "sm" %}
+  {% set container_cls = "max-w-3xl" %}
+{% elif container == "md" %}
+  {% set container_cls = "max-w-6xl" %}
+{% elif container == "xl" %}
+  {% set container_cls = "max-w-[120rem]" %}
+{% elif container == "full" %}
+  {% set container_cls = "max-w-full" %}
+{% else %}
+  {% set container_cls = "max-w-7xl" %}
+{% endif %}
+
+{% set bg = bg|default:"base-100" %}
+
+<section class="bg-{{ bg }} py-10 desk:py-20{% if class %} {{ class }}{% endif %}">
+  <div class="mx-auto w-full {{ container_cls }} px-4">
+    <div class="space-y-8 desk:space-y-10">
+      {% if eyebrow or title or description %}
+        <div class="mx-auto flex max-w-3xl flex-col gap-3 text-center">
+          {% if eyebrow %}
+            <p class="text-xs font-medium uppercase tracking-[0.24em] text-content-muted">
+              {{ eyebrow }}
+            </p>
+          {% endif %}
+          {% if title %}
+            <h2 class="text-3xl font-semibold tracking-tight text-content desk:text-4xl">
+              {{ title }}
+            </h2>
+          {% endif %}
+          {% if description %}
+            <p class="text-base leading-7 text-content-muted desk:text-lg">
+              {{ description }}
+            </p>
+          {% endif %}
+        </div>
+      {% endif %}
+      <div class="grid gap-4 desk:grid-cols-2 desk:gap-5">
+        {% if q_1 %}
+          <div class="rounded-lg border border-base-400 bg-base-200 p-4">
+            <h3 class="font-medium text-content">
+              {{ q_1 }}
+            </h3>
+            <p class="mt-2 text-sm leading-6 text-content-muted">
+              {{ a_1 }}
+            </p>
+          </div>
+        {% endif %}
+        {% if q_2 %}
+          <div class="rounded-lg border border-base-400 bg-base-200 p-4">
+            <h3 class="font-medium text-content">
+              {{ q_2 }}
+            </h3>
+            <p class="mt-2 text-sm leading-6 text-content-muted">
+              {{ a_2 }}
+            </p>
+          </div>
+        {% endif %}
+        {% if q_3 %}
+          <div class="rounded-lg border border-base-400 bg-base-200 p-4">
+            <h3 class="font-medium text-content">
+              {{ q_3 }}
+            </h3>
+            <p class="mt-2 text-sm leading-6 text-content-muted">
+              {{ a_3 }}
+            </p>
+          </div>
+        {% endif %}
+        {% if q_4 %}
+          <div class="rounded-lg border border-base-400 bg-base-200 p-4">
+            <h3 class="font-medium text-content">
+              {{ q_4 }}
+            </h3>
+            <p class="mt-2 text-sm leading-6 text-content-muted">
+              {{ a_4 }}
+            </p>
+          </div>
+        {% endif %}
+        {% if q_5 %}
+          <div class="rounded-lg border border-base-400 bg-base-200 p-4">
+            <h3 class="font-medium text-content">
+              {{ q_5 }}
+            </h3>
+            <p class="mt-2 text-sm leading-6 text-content-muted">
+              {{ a_5 }}
+            </p>
+          </div>
+        {% endif %}
+        {% if q_6 %}
+          <div class="rounded-lg border border-base-400 bg-base-200 p-4">
+            <h3 class="font-medium text-content">
+              {{ q_6 }}
+            </h3>
+            <p class="mt-2 text-sm leading-6 text-content-muted">
+              {{ a_6 }}
+            </p>
+          </div>
+        {% endif %}
+        {% if q_7 %}
+          <div class="rounded-lg border border-base-400 bg-base-200 p-4">
+            <h3 class="font-medium text-content">
+              {{ q_7 }}
+            </h3>
+            <p class="mt-2 text-sm leading-6 text-content-muted">
+              {{ a_7 }}
+            </p>
+          </div>
+        {% endif %}
+        {% if q_8 %}
+          <div class="rounded-lg border border-base-400 bg-base-200 p-4">
+            <h3 class="font-medium text-content">
+              {{ q_8 }}
+            </h3>
+            <p class="mt-2 text-sm leading-6 text-content-muted">
+              {{ a_8 }}
+            </p>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>

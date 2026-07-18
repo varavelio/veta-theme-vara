@@ -1,0 +1,208 @@
+{% set container = props.container %}
+{% set eyebrow = props.eyebrow %}
+{% set title = props.title %}
+{% set description = props.description %}
+{% set col_1 = props.col_1 %}
+{% set col_2 = props.col_2 %}
+{% set col_3 = props.col_3 %}
+{% set row_1_feature = props.row_1_feature %}
+{% set row_1_col_1 = props.row_1_col_1 %}
+{% set row_1_col_2 = props.row_1_col_2 %}
+{% set row_1_col_3 = props.row_1_col_3 %}
+{% set row_2_feature = props.row_2_feature %}
+{% set row_2_col_1 = props.row_2_col_1 %}
+{% set row_2_col_2 = props.row_2_col_2 %}
+{% set row_2_col_3 = props.row_2_col_3 %}
+{% set row_3_feature = props.row_3_feature %}
+{% set row_3_col_1 = props.row_3_col_1 %}
+{% set row_3_col_2 = props.row_3_col_2 %}
+{% set row_3_col_3 = props.row_3_col_3 %}
+{% set row_4_feature = props.row_4_feature %}
+{% set row_4_col_1 = props.row_4_col_1 %}
+{% set row_4_col_2 = props.row_4_col_2 %}
+{% set row_4_col_3 = props.row_4_col_3 %}
+{% set row_5_feature = props.row_5_feature %}
+{% set row_5_col_1 = props.row_5_col_1 %}
+{% set row_5_col_2 = props.row_5_col_2 %}
+{% set row_5_col_3 = props.row_5_col_3 %}
+{% set row_6_feature = props.row_6_feature %}
+{% set row_6_col_1 = props.row_6_col_1 %}
+{% set row_6_col_2 = props.row_6_col_2 %}
+{% set row_6_col_3 = props.row_6_col_3 %}
+{% set bg = props.bg %}
+{% set class = props.class %}
+
+{% set container = container|default:"lg" %}
+{% if container == "xs" %}
+  {% set container_cls = "max-w-md" %}
+{% elif container == "sm" %}
+  {% set container_cls = "max-w-3xl" %}
+{% elif container == "md" %}
+  {% set container_cls = "max-w-6xl" %}
+{% elif container == "xl" %}
+  {% set container_cls = "max-w-[120rem]" %}
+{% elif container == "full" %}
+  {% set container_cls = "max-w-full" %}
+{% else %}
+  {% set container_cls = "max-w-7xl" %}
+{% endif %}
+
+{% set bg = bg|default:"base-100" %}
+
+<section class="bg-{{ bg }} py-10 desk:py-20{% if class %} {{ class }}{% endif %}">
+  <div class="mx-auto w-full {{ container_cls }} px-4">
+    <div class="space-y-8 desk:space-y-10">
+      {% if eyebrow or title or description %}
+        <div class="mx-auto flex max-w-3xl flex-col gap-3 text-center">
+          {% if eyebrow %}
+            <p class="text-xs font-medium uppercase tracking-[0.24em] text-content-muted">
+              {{ eyebrow }}
+            </p>
+          {% endif %}
+          {% if title %}
+            <h2 class="text-3xl font-semibold tracking-tight text-content desk:text-4xl">
+              {{ title }}
+            </h2>
+          {% endif %}
+          {% if description %}
+            <p class="text-base leading-7 text-content-muted desk:text-lg">
+              {{ description }}
+            </p>
+          {% endif %}
+        </div>
+      {% endif %}
+      <div class="overflow-x-auto rounded-lg border border-base-400 bg-base-200 p-4 desk:p-6">
+        <table class="w-full min-w-[44rem] border-collapse text-left text-sm">
+          <thead>
+            <tr class="border-b border-base-400">
+              <th class="py-3 pr-4 font-medium text-content">
+                Feature
+              </th>
+              <th class="px-4 py-3 font-medium text-content">
+                {{ col_1 }}
+              </th>
+              <th class="px-4 py-3 font-medium text-content">
+                {{ col_2 }}
+              </th>
+              {% if col_3 %}
+                <th class="px-4 py-3 font-medium text-content">
+                  {{ col_3 }}
+                </th>
+              {% endif %}
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-base-400 text-content-muted">
+            {% if row_1_feature %}
+              <tr>
+                <td class="py-4 pr-4 font-medium text-content">
+                  {{ row_1_feature }}
+                </td>
+                <td class="px-4 py-4">
+                  {{ row_1_col_1 }}
+                </td>
+                <td class="px-4 py-4">
+                  {{ row_1_col_2 }}
+                </td>
+                {% if col_3 %}
+                  <td class="px-4 py-4">
+                    {{ row_1_col_3 }}
+                  </td>
+                {% endif %}
+              </tr>
+            {% endif %}
+            {% if row_2_feature %}
+              <tr>
+                <td class="py-4 pr-4 font-medium text-content">
+                  {{ row_2_feature }}
+                </td>
+                <td class="px-4 py-4">
+                  {{ row_2_col_1 }}
+                </td>
+                <td class="px-4 py-4">
+                  {{ row_2_col_2 }}
+                </td>
+                {% if col_3 %}
+                  <td class="px-4 py-4">
+                    {{ row_2_col_3 }}
+                  </td>
+                {% endif %}
+              </tr>
+            {% endif %}
+            {% if row_3_feature %}
+              <tr>
+                <td class="py-4 pr-4 font-medium text-content">
+                  {{ row_3_feature }}
+                </td>
+                <td class="px-4 py-4">
+                  {{ row_3_col_1 }}
+                </td>
+                <td class="px-4 py-4">
+                  {{ row_3_col_2 }}
+                </td>
+                {% if col_3 %}
+                  <td class="px-4 py-4">
+                    {{ row_3_col_3 }}
+                  </td>
+                {% endif %}
+              </tr>
+            {% endif %}
+            {% if row_4_feature %}
+              <tr>
+                <td class="py-4 pr-4 font-medium text-content">
+                  {{ row_4_feature }}
+                </td>
+                <td class="px-4 py-4">
+                  {{ row_4_col_1 }}
+                </td>
+                <td class="px-4 py-4">
+                  {{ row_4_col_2 }}
+                </td>
+                {% if col_3 %}
+                  <td class="px-4 py-4">
+                    {{ row_4_col_3 }}
+                  </td>
+                {% endif %}
+              </tr>
+            {% endif %}
+            {% if row_5_feature %}
+              <tr>
+                <td class="py-4 pr-4 font-medium text-content">
+                  {{ row_5_feature }}
+                </td>
+                <td class="px-4 py-4">
+                  {{ row_5_col_1 }}
+                </td>
+                <td class="px-4 py-4">
+                  {{ row_5_col_2 }}
+                </td>
+                {% if col_3 %}
+                  <td class="px-4 py-4">
+                    {{ row_5_col_3 }}
+                  </td>
+                {% endif %}
+              </tr>
+            {% endif %}
+            {% if row_6_feature %}
+              <tr>
+                <td class="py-4 pr-4 font-medium text-content">
+                  {{ row_6_feature }}
+                </td>
+                <td class="px-4 py-4">
+                  {{ row_6_col_1 }}
+                </td>
+                <td class="px-4 py-4">
+                  {{ row_6_col_2 }}
+                </td>
+                {% if col_3 %}
+                  <td class="px-4 py-4">
+                    {{ row_6_col_3 }}
+                  </td>
+                {% endif %}
+              </tr>
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,80 @@
+{% set container = props.container %}
+{% set copyright = props.copyright %}
+{% set links = props.links %}
+{% set show_github = props.show_github %}
+{% set class = props.class %}
+
+{% set container = container|default:"lg" %}
+{% if container == "xs" %}
+  {% set container_cls = "max-w-md" %}
+{% elif container == "sm" %}
+  {% set container_cls = "max-w-3xl" %}
+{% elif container == "md" %}
+  {% set container_cls = "max-w-6xl" %}
+{% elif container == "xl" %}
+  {% set container_cls = "max-w-[120rem]" %}
+{% elif container == "full" %}
+  {% set container_cls = "max-w-full" %}
+{% else %}
+  {% set container_cls = "max-w-7xl" %}
+{% endif %}
+
+{% set links = links|default:"" %}
+{% set link_items = links|split:"," %}
+{% set show_github = show_github|default:"true" %}
+{% set year = data.site.year|default:data.site_default.year %}
+{% set site_title = data.site.title|default:data.site_default.title|default:"VaraPress" %}
+{% set resolved_copyright = copyright|default:"" %}
+
+<footer class="shrink-0 border-t border-base-400 bg-base-100{% if class %} {{ class }}{% endif %}">
+  <div class="mx-auto w-full {{ container_cls }} px-4">
+    <div class="flex flex-col gap-4 py-6 desk:flex-row desk:items-center desk:justify-between">
+      <p class="max-w-2xl text-sm leading-6 text-content-muted">
+        {% if resolved_copyright %}
+          {{ resolved_copyright }}
+        {% else %}
+          &copy; {% if year %}{{ year }} {% endif %}{{ site_title }}.
+        {% endif %}
+        Built with
+        <a
+          href="https://veta.varavel.com"
+          class="font-medium text-content no-underline transition-colors hover:text-info"
+        >
+          Veta
+        </a>
+        and
+        <a
+          href="https://github.com/varavelio/varapress"
+          class="font-medium text-content no-underline transition-colors hover:text-info"
+        >
+          VaraPress
+        </a>.
+      </p>
+
+      <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
+        {% for link in link_items %}
+          {% set parts = link|trim|split:"|" %}
+          {% if parts|length == 2 %}
+            <a
+              href="{{ parts[1]|trim }}"
+              class="text-sm font-medium text-content-muted no-underline transition-colors hover:text-content"
+            >
+              {{ parts[0]|trim }}
+            </a>
+          {% endif %}
+        {% endfor %}
+        {% if show_github == "true" %}
+          <a
+            href="https://github.com/varavelio/varapress"
+            class="text-content-muted transition-colors hover:text-content"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="VaraPress on GitHub"
+          >
+            {{ icon("github", "size-5")|safe }}
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</footer>
