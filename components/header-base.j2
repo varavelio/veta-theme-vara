@@ -29,12 +29,16 @@
   {% set container_cls = "max-w-7xl" %}
 {% endif %}
 
-{% set show_title = show_title|default:data.site.docs_show_title|default:data.site_default.docs_show_title|default:true %}
+{% set site_title = site_setting("title")|default:"VaraPress" %}
+{% set docs_show_title = site_setting("docs_show_title") %}
+{% set docs_logo_light = site_setting("docs_logo_light", "logo_light") %}
+{% set docs_logo_dark = site_setting("docs_logo_dark", "logo_dark") %}
+{% set show_title = show_title|default:docs_show_title %}
 {% set show_theme = show_theme|default:"true" %}
 {% set sticky = sticky|default:"false" %}
-{% set title = title|default:data.site.title|default:data.site_default.title|default:"VaraPress" %}
-{% set logo_light = logo_light|default:data.site.docs_logo_light|default:data.site_default.docs_logo_light %}
-{% set logo_dark = logo_dark|default:data.site.docs_logo_dark|default:data.site_default.docs_logo_dark %}
+{% set title = title|default:site_title %}
+{% set logo_light = logo_light|default:docs_logo_light %}
+{% set logo_dark = logo_dark|default:docs_logo_dark %}
 {% set menu = menu|default:"" %}
 {% set menu_items = menu|split:"," %}
 {% set cta_variant = cta_variant|default:"solid" %}

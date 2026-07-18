@@ -22,8 +22,8 @@
 {% set links = links|default:"" %}
 {% set link_items = links|split:"," %}
 {% set show_github = show_github|default:"true" %}
-{% set year = data.site.year|default:data.site_default.year %}
-{% set site_title = data.site.title|default:data.site_default.title|default:"VaraPress" %}
+{% set year = site_setting("year") %}
+{% set site_title = site_setting("title")|default:"Vara" %}
 {% set resolved_copyright = copyright|default:"" %}
 
 <footer class="shrink-0 border-t border-base-400 bg-base-100{% if class %} {{ class }}{% endif %}">
@@ -44,10 +44,10 @@
         </a>
         and
         <a
-          href="https://github.com/varavelio/varapress"
+          href="https://github.com/varavelio/veta-theme-vara"
           class="font-medium text-content no-underline transition-colors hover:text-info"
         >
-          VaraPress
+          Vara theme
         </a>.
       </p>
 
@@ -65,11 +65,11 @@
         {% endfor %}
         {% if show_github == "true" %}
           <a
-            href="https://github.com/varavelio/varapress"
+            href="https://github.com/varavelio/veta-theme-vara"
             class="text-content-muted transition-colors hover:text-content"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="VaraPress on GitHub"
+            aria-label="Vara on GitHub"
           >
             {{ icon("github", "size-5")|safe }}
           </a>

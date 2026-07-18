@@ -1,19 +1,24 @@
 {% extends "../base/main.j2" %}
 
-{% set site = data.site %}
-{% set site_def = data.site_default %}
-
-{%  set docs_logo_light = site.docs_logo_light | default:site_def.docs_logo_light | default:"" %}
-{%  set docs_logo_dark = site.docs_logo_dark | default:site_def.docs_logo_dark | default:"" %}
-{%  set docs_show_title = site.docs_show_title | default:site_def.docs_show_title | default:true %}
-{%  set docs_github_repo = site.docs_github_repo | default:site_def.docs_github_repo | default:"" %}
-{%  set docs_sidebar_links = site.docs_sidebar_links | default:site_def.docs_sidebar_links | default:[] %}
+{% block favicon %}
+  {% set docs_favicon = site_setting("docs_favicon", "favicon") %}
+  {% if docs_favicon %}
+    <link rel="shortcut icon" href="{{ docs_favicon }}">
+  {% endif %}
+{% endblock %}
 
 {% block head_extra %}
   <script src="{{ url('/_vara/js/build/docs.js') }}" defer></script>
 {% endblock %}
 
 {% block body %}
+  {% set docs_logo_light = site_setting("docs_logo_light", "logo_light") %}
+  {% set docs_logo_dark = site_setting("docs_logo_dark", "logo_dark") %}
+  {% set docs_show_title = site_setting("docs_show_title") %}
+  {% set docs_github_repo = site_setting("docs_github_repo") %}
+  {% set docs_sidebar_links = site_setting("docs_sidebar_links") %}
+  {% set site_title = site_setting("title") %}
+
   <div class="flex flex-1 min-h-0 flex-col" x-data="varaDocs" x-cloak>
     {# ─── Header ─── #}
     <header class="flex h-14 shrink-0 items-center justify-between gap-3 border-b border-base-400 bg-base-100 px-4">
@@ -30,36 +35,36 @@
             href="{{ url('/') }}"
             class="group flex items-center justify-start whitespace-nowrap"
           >
-            {%           if docs_logo_light and docs_logo_dark and docs_logo_light == docs_logo_dark %}
+            {% if docs_logo_light and docs_logo_dark and docs_logo_light == docs_logo_dark %}
               <span class="mr-2 flex-none h-6">
                 <img
                   src="{{ docs_logo_light }}"
                   class="h-6 w-auto"
-                  alt="{{ site.title | default:site_def.title }}"
+                  alt="{{ site_title }}"
                 >
               </span>
             {% elif docs_logo_light or docs_logo_dark %}
-              {%             set logo_light_src = docs_logo_light | default:docs_logo_dark %}
+              {% set logo_light_src = docs_logo_light | default:docs_logo_dark %}
               {% set logo_dark_src = docs_logo_dark | default:docs_logo_light %}
               <span class="mr-2 flex-none h-6">
                 <img
                   x-show="resolvedTheme === 'light'"
                   src="{{ logo_light_src }}"
                   class="h-6 w-auto"
-                  alt="{{ site.title | default:site_def.title }}"
+                  alt="{{ site_title }}"
                 >
                 <img
                   x-show="resolvedTheme === 'dark'"
                   src="{{ logo_dark_src }}"
                   class="h-6 w-auto"
-                  alt="{{ site.title | default:site_def.title }}"
+                  alt="{{ site_title }}"
                 >
               </span>
             {% endif %}
             {% if docs_show_title %}
-              <span
-                class="font-semibold text-content transition-colors group-hover:text-info"
-              >{{ site.title | default:site_def.title }}</span>
+              <span class="font-semibold text-content transition-colors group-hover:text-info">
+                {{ site_title }}
+              </span>
             {% endif %}
           </a>
         </div>

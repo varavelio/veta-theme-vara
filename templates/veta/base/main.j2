@@ -1,9 +1,6 @@
-{% set site = data.site %}
-{% set site_def = data.site_default %}
-
-{% set site_title = site.title | default:site_def.title %}
-{% set site_description = site.description | default:site_def.description %}
-{% set site_favicon = site.favicon | default:site_def.favicon %}
+{% set site_title = site_setting("title") %}
+{% set site_description = site_setting("description") %}
+{% set site_favicon = site_setting("favicon") %}
 
 <!DOCTYPE html>
 <html lang='{{ page.lang | default:"en" }}'>

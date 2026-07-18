@@ -1,6 +1,6 @@
 {% extends "./base/main.j2" %}
 
-{% set site_title = data.site.title | default:data.site_default.title %}
+{% set site_title = site_setting("title") %}
 
 {% block title %}
   <title>Page not found - {{ site_title }}</title>

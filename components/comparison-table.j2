@@ -1,6 +1,6 @@
 {% set container = props.container|default:"lg" %}
 {% set bg = props.bg|default:"base-100" %}
-{% set primary_label = props.primary_label|default:data.site.title|default:data.site_default.title|default:"VaraPress" %}
+{% set primary_label = props.primary_label|default:site_setting("title")|default:"VaraPress" %}
 {% set secondary_label = props.secondary_label|default:"Alternative" %}
 
 {% if container == "xs" %}
