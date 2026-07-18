@@ -1,4 +1,7 @@
 export default function({ data, files, parse }) {
+  const siteTitle = data.site.title || data.site_default.title;
+  const siteDescription = data.site.description || data.site_default.description;
+
   let pages = [];
 
   const homePageRaw = files.readFile("content/index.md");
@@ -8,8 +11,8 @@ export default function({ data, files, parse }) {
   pages.push({
     permalink: "/",
     template: "veta/landing",
-    title: homePageMd.frontmatter.title || data.site.title,
-    description: homePageMd.frontmatter.description || data.site.description,
+    title: homePageMd.frontmatter.title || siteTitle,
+    description: homePageMd.frontmatter.description || siteDescription,
     content: homePageContent,
   });
 
