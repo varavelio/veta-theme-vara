@@ -12,6 +12,6 @@ export default function() {
     docs_show_title: true,
     docs_github_repo: "", // In user/repo format
     docs_sidebar_links: [],
-    docs_llms_txt: false,
+    docs_llms: true,
   };
 }
