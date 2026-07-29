@@ -8,9 +8,13 @@
     >
       {% for candidate in pages %}
         {% if candidate.template == "veta/docs" and candidate.permalink == docs_root_permalink %}
-          <a href="{{ url(candidate.permalink) }}" class="transition-colors hover:text-content">
-            {{ candidate.title }}
-          </a>
+          {% if candidate.content|trim %}
+            <a href="{{ url(candidate.permalink) }}" class="transition-colors hover:text-content">
+              {{ candidate.title }}
+            </a>
+          {% else %}
+            <span>{{ candidate.title }}</span>
+          {% endif %}
           {{ icon("chevron-right", "size-4 shrink-0 text-content-muted")|safe }}
         {% endif %}
       {% endfor %}
@@ -18,9 +22,13 @@
         {% set candidate_parts = candidate.permalink|split:"/" %}
         {% if candidate.template == "veta/docs" and candidate.permalink != page.permalink and candidate.permalink != docs_root_permalink %}
           {% if candidate_parts|length + 1 == path_parts|length and candidate_parts[2] == path_parts[2] %}
-            <a href="{{ url(candidate.permalink) }}" class="transition-colors hover:text-content">
-              {{ candidate.title }}
-            </a>
+            {% if candidate.content|trim %}
+              <a href="{{ url(candidate.permalink) }}" class="transition-colors hover:text-content">
+                {{ candidate.title }}
+              </a>
+            {% else %}
+              <span>{{ candidate.title }}</span>
+            {% endif %}
             {{ icon("chevron-right", "size-4 shrink-0 text-content-muted")|safe }}
           {% endif %}
         {% endif %}
@@ -33,15 +41,17 @@
     </nav>
   {% endif %}
 
-  <article class="prose dark:prose-invert max-w-none">
-    {% if docs_llms %}
-      {% set markdown_url = url(page.permalink + "index.md") %}
-      {% include "./markdown-actions.j2" %}
-    {% endif %}
-    {{ page.content|safe }}
-  </article>
+  {% if page.content|trim %}
+    <article class="prose dark:prose-invert max-w-none">
+      {% if docs_llms %}
+        {% set markdown_url = url(page.permalink + "index.md") %}
+        {% include "./markdown-actions.j2" %}
+      {% endif %}
+      {{ page.content|safe }}
+    </article>
 
-  {% include "./pagination.j2" %}
+    {% include "./pagination.j2" %}
+  {% endif %}
 
   <button
     type="button"

@@ -1,41 +1,47 @@
 {% import "./pager-link.j2" pager_link %}
+{% import "./pager-branch.j2" pager_branch %}
 {% set current_parts = page.permalink|split:"/" %}
 
-{# Pages are rendered in pre-order: root, each weighted top-level page, then its weighted children. #}
+{# Navigable pages follow pre-order: root, weighted branches, then each branch's weighted children. #}
 <nav class="mt-12 border-t border-base-400 pt-6" aria-label="Previous and next navigation">
   <div class="grid grid-cols-1 gap-3 desk:grid-cols-2 desk:gap-4">
     <div class="contents">
       {% if page.permalink != docs_root_permalink %}
         {% if current_parts|length == 4 %}
-          {# The last page in the previous branch wins; root is the fallback for the first branch. #}
+          {# The last navigable page in the previous branch wins. #}
           {% for candidate in pages %}
-            {% if candidate.template == "veta/docs" and candidate.permalink == docs_root_permalink %}
+            {% if candidate.template == "veta/docs" and candidate.content|trim and candidate.permalink == docs_root_permalink %}
               {{ pager_link(candidate, "previous", "hidden last:flex") }}
             {% endif %}
           {% endfor %}
           {% for branch in pages %}
             {% set branch_parts = branch.permalink|split:"/" %}
             {% if branch.template == "veta/docs" and branch_parts|length == 4 and (branch.weight < page.weight or branch.weight == page.weight and (branch.title < page.title or branch.title == page.title and branch.index < page.index)) %}
-              {{ pager_link(branch, "previous", "hidden last:flex") }}
-              {% for child in pages %}
-                {% set child_parts = child.permalink|split:"/" %}
-                {% if child.template == "veta/docs" and child_parts|length == 5 and child_parts[2] == branch_parts[2] %}
-                  {{ pager_link(child, "previous", "hidden last:flex") }}
-                {% endif %}
-              {% endfor %}
+              {{ pager_branch(branch, pages, "previous", "hidden last:flex") }}
             {% endif %}
           {% endfor %}
         {% elif current_parts|length == 5 %}
-          {# A first child goes back to its parent; later children go to their nearest weighted sibling. #}
+          {# Start with earlier branches, then the parent and preceding siblings. The last candidate wins. #}
           {% for parent in pages %}
             {% set parent_parts = parent.permalink|split:"/" %}
             {% if parent.template == "veta/docs" and parent_parts|length == 4 and parent_parts[2] == current_parts[2] %}
-              {{ pager_link(parent, "previous", "hidden last:flex") }}
+              {% for candidate in pages %}
+                {% if candidate.template == "veta/docs" and candidate.content|trim and candidate.permalink == docs_root_permalink %}
+                  {{ pager_link(candidate, "previous", "hidden last:flex") }}
+                {% endif %}
+              {% endfor %}
+              {% for branch in pages %}
+                {% set branch_parts = branch.permalink|split:"/" %}
+                {% if branch.template == "veta/docs" and branch_parts|length == 4 and (branch.weight < parent.weight or branch.weight == parent.weight and (branch.title < parent.title or branch.title == parent.title and branch.index < parent.index)) %}
+                  {{ pager_branch(branch, pages, "previous", "hidden last:flex") }}
+                {% endif %}
+              {% endfor %}
+              {% if parent.content|trim %}{{ pager_link(parent, "previous", "hidden last:flex") }}{% endif %}
             {% endif %}
           {% endfor %}
           {% for sibling in pages %}
             {% set sibling_parts = sibling.permalink|split:"/" %}
-            {% if sibling.template == "veta/docs" and sibling_parts|length == 5 and sibling_parts[2] == current_parts[2] and (sibling.weight < page.weight or sibling.weight == page.weight and (sibling.title < page.title or sibling.title == page.title and sibling.index < page.index)) %}
+            {% if sibling.template == "veta/docs" and sibling.content|trim and sibling_parts|length == 5 and sibling_parts[2] == current_parts[2] and (sibling.weight < page.weight or sibling.weight == page.weight and (sibling.title < page.title or sibling.title == page.title and sibling.index < page.index)) %}
               {{ pager_link(sibling, "previous", "hidden last:flex") }}
             {% endif %}
           {% endfor %}
@@ -45,42 +51,42 @@
 
     <div class="contents">
       {% if page.permalink == docs_root_permalink %}
-        {# The first weighted top-level page starts the tree after its root. #}
-        {% for candidate in pages %}
-          {% set candidate_parts = candidate.permalink|split:"/" %}
-          {% if candidate.template == "veta/docs" and candidate_parts|length == 4 %}
-            {{ pager_link(candidate, "next", "hidden first:flex") }}
+        {# The first navigable page in the first branch starts the tree after its root. #}
+        {% for branch in pages %}
+          {% set branch_parts = branch.permalink|split:"/" %}
+          {% if branch.template == "veta/docs" and branch_parts|length == 4 %}
+            {{ pager_branch(branch, pages, "next", "hidden first:flex") }}
           {% endif %}
         {% endfor %}
       {% elif current_parts|length == 4 %}
-        {# Children come before the next top-level branch. #}
+        {# Current children come first, followed by every later branch. #}
         {% for child in pages %}
           {% set child_parts = child.permalink|split:"/" %}
-          {% if child.template == "veta/docs" and child_parts|length == 5 and child_parts[2] == current_parts[2] %}
+          {% if child.template == "veta/docs" and child.content|trim and child_parts|length == 5 and child_parts[2] == current_parts[2] %}
             {{ pager_link(child, "next", "hidden first:flex") }}
           {% endif %}
         {% endfor %}
-        {% for candidate in pages %}
-          {% set candidate_parts = candidate.permalink|split:"/" %}
-          {% if candidate.template == "veta/docs" and candidate_parts|length == 4 and (candidate.weight > page.weight or candidate.weight == page.weight and (candidate.title > page.title or candidate.title == page.title and candidate.index > page.index)) %}
-            {{ pager_link(candidate, "next", "hidden first:flex") }}
+        {% for branch in pages %}
+          {% set branch_parts = branch.permalink|split:"/" %}
+          {% if branch.template == "veta/docs" and branch_parts|length == 4 and (branch.weight > page.weight or branch.weight == page.weight and (branch.title > page.title or branch.title == page.title and branch.index > page.index)) %}
+            {{ pager_branch(branch, pages, "next", "hidden first:flex") }}
           {% endif %}
         {% endfor %}
       {% elif current_parts|length == 5 %}
-        {# Exhaust remaining siblings before climbing to the parent's next branch. #}
+        {# Exhaust siblings before climbing to the first navigable page in a later branch. #}
         {% for sibling in pages %}
           {% set sibling_parts = sibling.permalink|split:"/" %}
-          {% if sibling.template == "veta/docs" and sibling_parts|length == 5 and sibling_parts[2] == current_parts[2] and (sibling.weight > page.weight or sibling.weight == page.weight and (sibling.title > page.title or sibling.title == page.title and sibling.index > page.index)) %}
+          {% if sibling.template == "veta/docs" and sibling.content|trim and sibling_parts|length == 5 and sibling_parts[2] == current_parts[2] and (sibling.weight > page.weight or sibling.weight == page.weight and (sibling.title > page.title or sibling.title == page.title and sibling.index > page.index)) %}
             {{ pager_link(sibling, "next", "hidden first:flex") }}
           {% endif %}
         {% endfor %}
         {% for parent in pages %}
           {% set parent_parts = parent.permalink|split:"/" %}
           {% if parent.template == "veta/docs" and parent_parts|length == 4 and parent_parts[2] == current_parts[2] %}
-            {% for candidate in pages %}
-              {% set candidate_parts = candidate.permalink|split:"/" %}
-              {% if candidate.template == "veta/docs" and candidate_parts|length == 4 and (candidate.weight > parent.weight or candidate.weight == parent.weight and (candidate.title > parent.title or candidate.title == parent.title and candidate.index > parent.index)) %}
-                {{ pager_link(candidate, "next", "hidden first:flex") }}
+            {% for branch in pages %}
+              {% set branch_parts = branch.permalink|split:"/" %}
+              {% if branch.template == "veta/docs" and branch_parts|length == 4 and (branch.weight > parent.weight or branch.weight == parent.weight and (branch.title > parent.title or branch.title == parent.title and branch.index > parent.index)) %}
+                {{ pager_branch(branch, pages, "next", "hidden first:flex") }}
               {% endif %}
             {% endfor %}
           {% endif %}

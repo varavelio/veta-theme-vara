@@ -16,21 +16,57 @@
 
 {% for item in pages %}
   {% set item_parts = item.permalink|split:"/" %}
+  {% set item_content = item.content|trim %}
   {% if item.template == "veta/docs" and item.permalink != docs_root_permalink and item_parts|length == 4 %}
-    <div>
-      <a
-        href="{{ url(item.permalink) }}"
-        class="flex items-center gap-2 rounded-md border border-transparent p-2 text-sm font-medium transition-colors{% if page.permalink == item.permalink %} bg-info/10 text-info{% else %} text-content/70 hover:bg-base-300 hover:text-content{% endif %}"
-        {% if page.permalink == item.permalink %}aria-current="page"{% endif %}
+    <div x-data='varapressSidebarGroup("section:{{ item.permalink }}", true)' class="flex flex-col space-y-1">
+      <div class="flex items-center gap-1">
+        {% if item_content %}
+          <a
+            href="{{ url(item.permalink) }}"
+            class="flex min-w-0 flex-1 items-center gap-2 rounded-md border border-transparent p-2 text-sm font-medium transition-colors{% if page.permalink == item.permalink %} bg-info/10 text-info{% else %} text-content/70 hover:bg-base-300 hover:text-content{% endif %}"
+            {% if page.permalink == item.permalink %}aria-current="page"{% endif %}
+          >
+            {% if item.icon %}{{ icon(item.icon, "size-4 shrink-0")|safe }}{% endif %}
+            <span class="truncate">{{ item.title }}</span>
+          </a>
+          <button
+            type="button"
+            x-show="$root.querySelector('[data-doc-child]')"
+            x-on:click="toggle()"
+            class="flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-md text-content/70 transition-colors hover:bg-base-300 hover:text-content"
+            x-bind:aria-expanded="open.toString()"
+            aria-label="Toggle {{ item.title }} section"
+          >
+            <span class="transition-transform duration-200" x-bind:class="open && 'rotate-90'">
+              {{ icon("chevron-right", "size-4")|safe }}
+            </span>
+          </button>
+        {% else %}
+          <button
+            type="button"
+            x-on:click="toggle()"
+            class="flex w-full cursor-pointer items-center gap-2 rounded-md border border-transparent p-2 text-left text-sm font-medium text-content/70 transition-colors hover:bg-base-300 hover:text-content"
+            x-bind:aria-expanded="open.toString()"
+          >
+            {% if item.icon %}{{ icon(item.icon, "size-4 shrink-0")|safe }}{% endif %}
+            <span class="flex-1 truncate">{{ item.title }}</span>
+            <span class="shrink-0 transition-transform duration-200" x-bind:class="open && 'rotate-90'">
+              {{ icon("chevron-right", "size-4")|safe }}
+            </span>
+          </button>
+        {% endif %}
+      </div>
+      <div
+        x-show="open"
+        x-transition
+        class="mt-1 ml-4 flex flex-col space-y-1 border-l border-dashed border-base-400 pl-3.5"
       >
-        {% if item.icon %}{{ icon(item.icon, "size-4 shrink-0")|safe }}{% endif %}
-        <span class="truncate">{{ item.title }}</span>
-      </a>
-      <div class="mt-1 ml-4 flex flex-col space-y-1 border-l border-dashed border-base-400 pl-3.5">
         {% for child in pages %}
           {% set child_parts = child.permalink|split:"/" %}
-          {% if child.template == "veta/docs" and child_parts|length == 5 and child_parts[2] == item_parts[2] %}
+          {% set child_content = child.content|trim %}
+          {% if child.template == "veta/docs" and child_content and child_parts|length == 5 and child_parts[2] == item_parts[2] %}
             <a
+              data-doc-child
               href="{{ url(child.permalink) }}"
               class="flex items-center gap-2 rounded-md border border-transparent p-2 text-sm font-medium transition-colors{% if page.permalink == child.permalink %} bg-info/10 text-info{% else %} text-content/70 hover:bg-base-300 hover:text-content{% endif %}"
               {% if page.permalink == child.permalink %}aria-current="page"{% endif %}
