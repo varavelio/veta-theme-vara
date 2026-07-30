@@ -166,6 +166,49 @@ export function resolveMarkdownCopyUi(status) {
   return { disabled: false, icon: "copy", label: "Copy Markdown" };
 }
 
+export function resolvePromptCopyUi(status) {
+  if (status === "loading") {
+    return { disabled: true, icon: "copy", label: "Copying Prompt" };
+  }
+
+  if (status === "copied") {
+    return { disabled: false, icon: "check", label: "Prompt Copied" };
+  }
+
+  if (status === "error") {
+    return { disabled: false, icon: "copy", label: "Could not copy" };
+  }
+
+  return { disabled: false, icon: "copy", label: "Copy Prompt" };
+}
+
+const ASK_AI_PROVIDER_URLS = {
+  chatgpt: "https://chatgpt.com/?q=",
+  claude: "https://claude.ai/new?q=",
+  deepseek: "https://chat.deepseek.com/?q=",
+  grok: "https://grok.com/?q=",
+  perplexity: "https://www.perplexity.ai/search/new?q=",
+};
+
+export function resolveAskAiPrompt(markdownUrl, baseUrl = globalThis.location?.href) {
+  const absoluteMarkdownUrl = new URL(markdownUrl, baseUrl).href;
+  return `Read ${absoluteMarkdownUrl} and get ready to answer my questions about it`;
+}
+
+export function resolveAskAiUrl(provider, markdownUrl, baseUrl = globalThis.location?.href) {
+  const providerUrl = ASK_AI_PROVIDER_URLS[provider];
+  if (!providerUrl) throw new Error(`Unknown AI provider: ${provider}`);
+
+  return providerUrl + encodeURIComponent(resolveAskAiPrompt(markdownUrl, baseUrl));
+}
+
+export async function copyAskAiPromptToClipboard(markdownUrl, options = {}) {
+  const clipboard = options.clipboard ?? globalThis.navigator?.clipboard;
+  if (!clipboard?.writeText) throw new Error("Clipboard is not available.");
+
+  await clipboard.writeText(resolveAskAiPrompt(markdownUrl, options.baseUrl));
+}
+
 export function resolveBackToTopState({
   currentScrollTop,
   previousScrollTop,
@@ -279,14 +322,22 @@ function registerAlpineVarapressDocs() {
     /** @type {"idle" | "loading" | "copied" | "error"} Current Markdown copy status. */
     markdownCopyStatus: "idle",
 
+    /** @type {"idle" | "loading" | "copied" | "error"} Current prompt copy status. */
+    promptCopyStatus: "idle",
+
     get markdownCopyUi() {
       return resolveMarkdownCopyUi(this.markdownCopyStatus);
+    },
+
+    get promptCopyUi() {
+      return resolvePromptCopyUi(this.promptCopyStatus);
     },
 
     backToTopRoot: null,
     backToTopFrame: null,
     backToTopResetTimer: null,
     markdownCopyResetTimer: null,
+    promptCopyResetTimer: null,
     backToTopProgrammaticScroll: false,
     sidebarScrollBeforeUnloadReady: false,
     sidebarScrollRoots: {},
@@ -390,11 +441,38 @@ function registerAlpineVarapressDocs() {
       this.resetMarkdownCopyStatusSoon();
     },
 
+    askAiUrl(provider, markdownUrl) {
+      return resolveAskAiUrl(provider, markdownUrl);
+    },
+
+    async copyAskAiPrompt(markdownUrl) {
+      if (this.promptCopyStatus === "loading") return;
+
+      this.promptCopyStatus = "loading";
+
+      try {
+        await copyAskAiPromptToClipboard(markdownUrl);
+        this.promptCopyStatus = "copied";
+      } catch (_error) {
+        this.promptCopyStatus = "error";
+      }
+
+      this.resetPromptCopyStatusSoon();
+    },
+
     resetMarkdownCopyStatusSoon() {
       if (this.markdownCopyResetTimer) clearTimeout(this.markdownCopyResetTimer);
 
       this.markdownCopyResetTimer = setTimeout(() => {
         this.markdownCopyStatus = "idle";
+      }, 2200);
+    },
+
+    resetPromptCopyStatusSoon() {
+      if (this.promptCopyResetTimer) clearTimeout(this.promptCopyResetTimer);
+
+      this.promptCopyResetTimer = setTimeout(() => {
+        this.promptCopyStatus = "idle";
       }, 2200);
     },
 

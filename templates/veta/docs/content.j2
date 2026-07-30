@@ -1,33 +1,38 @@
 <main class="flex-1 min-w-0 min-h-0 overflow-y-auto bg-base-100 p-4 scroll-p-4 not-desk:pb-20">
   {% set ancestors = docs_breadcrumb_ancestors() %}
 
-  <nav
-    class="flex flex-nowrap items-center gap-1.5 overflow-x-auto pb-6 text-sm whitespace-nowrap text-content-muted"
-    aria-label="Breadcrumb"
-  >
-    {% for ancestor in ancestors %}
-      {% if ancestor.content|trim %}
-        <a href="{{ url(ancestor.permalink) }}" class="transition-colors hover:text-content">
-          {{ ancestor.title }}
-        </a>
-      {% else %}
-        <span>{{ ancestor.title }}</span>
-      {% endif %}
-      {{ icon("chevron-right", "size-4 shrink-0 text-content-muted")|safe }}
-    {% endfor %}
-    <span
-      class="inline-flex items-center gap-1.5 font-medium text-content"
-      x-data
-      x-init="$el.scrollIntoView({ block: 'nearest', inline: 'center' })"
-    >{{ page.title }}</span>
-  </nav>
+  <div class="mb-6 flex min-w-0 items-center gap-2">
+    <nav
+      class="flex min-w-0 flex-1 flex-nowrap items-center gap-1.5 overflow-x-auto text-sm whitespace-nowrap text-content-muted"
+      aria-label="Breadcrumb"
+    >
+      {% for ancestor in ancestors %}
+        {% if ancestor.content|trim %}
+          <a href="{{ url(ancestor.permalink) }}" class="shrink-0 transition-colors hover:text-content">
+            {{ ancestor.title }}
+          </a>
+        {% else %}
+          <span class="shrink-0">{{ ancestor.title }}</span>
+        {% endif %}
+        {{ icon("chevron-right", "size-4 shrink-0 text-content-muted")|safe }}
+      {% endfor %}
+      <span
+        class="inline-flex shrink-0 items-center gap-1.5 font-medium text-content"
+        x-data
+        x-init="$nextTick(() => $el.scrollIntoView({ block: 'nearest', inline: 'end' }))"
+      >
+        {{ page.title }}
+      </span>
+    </nav>
+
+    {% if docs_llms %}
+      {% set markdown_url = url(page.permalink + "index.md") %}
+      {% include "./markdown-actions.j2" %}
+    {% endif %}
+  </div>
 
   {% if page.content|trim %}
     <article class="prose dark:prose-invert max-w-none">
-      {% if docs_llms %}
-        {% set markdown_url = url(page.permalink + "index.md") %}
-        {% include "./markdown-actions.j2" %}
-      {% endif %}
       {{ page.content|safe }}
     </article>
 

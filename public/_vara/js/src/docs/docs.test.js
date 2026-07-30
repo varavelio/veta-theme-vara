@@ -2,9 +2,13 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import {
+  copyAskAiPromptToClipboard,
   copyMarkdownFromUrl,
+  resolveAskAiPrompt,
+  resolveAskAiUrl,
   resolveBackToTopState,
   resolveMarkdownCopyUi,
+  resolvePromptCopyUi,
   resolveSidebarGroupOpen,
   resolveSidebarScrollTop,
   shouldCenterSidebarLink,
@@ -111,6 +115,50 @@ test("shows a check icon after markdown is copied", () => {
     icon: "check",
     label: "Copied Markdown",
   });
+});
+
+test("builds encoded AI prompts with an absolute Markdown URL", () => {
+  const markdownUrl = "../guide/index.md?mode=full";
+  const baseUrl = "https://docs.example.com/reference/api/";
+  const prompt =
+    "Read https://docs.example.com/reference/guide/index.md?mode=full and get ready to answer my questions about it.";
+  const encodedPrompt = encodeURIComponent(prompt);
+
+  assert.equal(resolveAskAiUrl("chatgpt", markdownUrl, baseUrl), `https://chatgpt.com/?q=${encodedPrompt}`);
+  assert.equal(resolveAskAiUrl("claude", markdownUrl, baseUrl), `https://claude.ai/new?q=${encodedPrompt}`);
+  assert.equal(resolveAskAiUrl("deepseek", markdownUrl, baseUrl), `https://chat.deepseek.com/?q=${encodedPrompt}`);
+  assert.equal(resolveAskAiUrl("grok", markdownUrl, baseUrl), `https://grok.com/?q=${encodedPrompt}`);
+  assert.equal(
+    resolveAskAiUrl("perplexity", markdownUrl, baseUrl),
+    `https://www.perplexity.ai/search/new?q=${encodedPrompt}`,
+  );
+});
+
+test("copies the same prompt used by AI provider links", async () => {
+  const clipboard = {
+    text: "",
+    async writeText(value) {
+      this.text = value;
+    },
+  };
+  const markdownUrl = "index.md";
+  const baseUrl = "https://docs.example.com/guide/";
+
+  await copyAskAiPromptToClipboard(markdownUrl, { baseUrl, clipboard });
+
+  assert.equal(clipboard.text, resolveAskAiPrompt(markdownUrl, baseUrl));
+  assert.deepEqual(resolvePromptCopyUi("copied"), {
+    disabled: false,
+    icon: "check",
+    label: "Prompt Copied",
+  });
+});
+
+test("rejects unknown AI providers", () => {
+  assert.throws(
+    () => resolveAskAiUrl("unknown", "index.md", "https://docs.example.com/page/"),
+    /Unknown AI provider/,
+  );
 });
 
 test("restores a closed sidebar group from storage", () => {
