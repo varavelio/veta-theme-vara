@@ -7,18 +7,30 @@ const resolveDocsLlmsPages = docsLlmsPages.resolve;
 
 test("resolveDocsLlmsPages returns docs LLM pages as a weighted hierarchy", () => {
   const pages = [
-    { permalink: "/docs/api/reference/index.md", template: "veta/docs-llms", title: "Reference", weight: 2 },
-    { permalink: "/docs/index.md", template: "veta/docs-llms", title: "Documentation", weight: 10 },
-    { permalink: "/docs/api/index.md", template: "veta/docs-llms", title: "API", weight: 2 },
-    { permalink: "/docs/guide/index.md", template: "veta/docs-llms", title: "Guide", weight: 1 },
+    {
+      content: "# Reference",
+      permalink: "/docs/api/reference/index.md",
+      template: "veta/docs-llms",
+      title: "Reference",
+      weight: 2,
+    },
+    {
+      content: "# Documentation",
+      permalink: "/docs/index.md",
+      template: "veta/docs-llms",
+      title: "Documentation",
+      weight: 10,
+    },
+    { content: "# API", permalink: "/docs/api/index.md", template: "veta/docs-llms", title: "API", weight: 2 },
+    { content: "# Guide", permalink: "/docs/guide/index.md", template: "veta/docs-llms", title: "Guide", weight: 1 },
     { permalink: "/docs/ignored/index.md", template: "veta/docs", title: "Ignored" },
   ];
 
   assert.deepEqual(resolveDocsLlmsPages(pages), [
-    { depth: 0, indent: "", permalink: "/docs/index.md", title: "Documentation" },
-    { depth: 1, indent: "  ", permalink: "/docs/guide/index.md", title: "Guide" },
-    { depth: 1, indent: "  ", permalink: "/docs/api/index.md", title: "API" },
-    { depth: 2, indent: "    ", permalink: "/docs/api/reference/index.md", title: "Reference" },
+    { content: "# Documentation", depth: 0, indent: "", permalink: "/docs/index.md", title: "Documentation" },
+    { content: "# Guide", depth: 1, indent: "  ", permalink: "/docs/guide/index.md", title: "Guide" },
+    { content: "# API", depth: 1, indent: "  ", permalink: "/docs/api/index.md", title: "API" },
+    { content: "# Reference", depth: 2, indent: "    ", permalink: "/docs/api/reference/index.md", title: "Reference" },
   ]);
 });
 
@@ -42,6 +54,7 @@ test("resolveDocsLlmsPages escapes Markdown labels and reads pages from context"
 
   assert.deepEqual(docsLlmsPages({ pages }), [
     {
+      content: "",
       depth: 0,
       indent: "",
       permalink: "/docs/index.md",

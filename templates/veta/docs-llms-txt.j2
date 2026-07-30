@@ -1,0 +1,5 @@
+## Documentation Index
+
+{% for item in docs_llms_pages() %}
+  {{- item.indent }}- [{{ item.title|safe }}]({{ url(item.permalink) }})
+{% endfor %}

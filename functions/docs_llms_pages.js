@@ -47,6 +47,7 @@ function resolveDocsLlmsPages(pages) {
 
 function appendNode(entries, node, depth) {
   entries.push({
+    content: String(node.page.content || ""),
     depth,
     indent: "  ".repeat(depth),
     permalink: node.page.permalink,
