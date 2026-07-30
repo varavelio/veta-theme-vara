@@ -1,4 +1,6 @@
-<header class="h-14 shrink-0 border-b border-base-400 bg-base-100" x-data="theme">
+{% import "../macros/theme-picker.j2" theme_picker %}
+
+<header class="h-14 shrink-0 border-b border-base-400 bg-base-100">
   <div class="mx-auto flex h-full max-w-[80rem] items-center justify-between gap-3 px-4">
     <div class="flex min-w-0 flex-auto items-center justify-start">
       <button
@@ -17,7 +19,7 @@
           {% elif docs_logo_light or docs_logo_dark %}
             {% set logo_light_src = docs_logo_light|default:docs_logo_dark %}
             {% set logo_dark_src = docs_logo_dark|default:docs_logo_light %}
-            <span class="mr-2 flex-none h-6">
+            <span class="mr-2 flex-none h-6" x-data="theme">
               <img
                 x-show="resolvedTheme === 'light'"
                 src="{{ logo_light_src }}"
@@ -53,16 +55,7 @@
           <span>GitHub</span>
         </a>
       {% endif %}
-      <button
-        class="-mr-4 flex cursor-pointer items-center gap-2 rounded-md px-4 py-2 transition-colors hover:bg-base-300"
-        x-on:click="cycleTheme()"
-        aria-label="Toggle theme"
-      >
-        <span x-show="theme === 'system'">{{ icon("laptop-minimal", "size-4")|safe }}</span>
-        <span x-show="theme === 'light'">{{ icon("sun-medium", "size-4")|safe }}</span>
-        <span x-show="theme === 'dark'">{{ icon("moon-star", "size-4")|safe }}</span>
-        <span>Theme</span>
-      </button>
+      {{ theme_picker("Theme", "-mr-4") }}
     </div>
   </div>
 </header>
