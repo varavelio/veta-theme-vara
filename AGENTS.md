@@ -28,13 +28,14 @@ You MUST follow the following instructions:
 
 ## Theme Structure
 
-- `templates/` contains Pongo page templates. The supported page templates are `templates/veta/landing.j2`, `templates/veta/docs.j2`, `templates/veta/docs-raw.j2`, `templates/veta/docs-llms-txt.j2`, `templates/veta/docs-llms-full-txt.j2`, and `templates/veta/404.j2`.
+- `templates/` contains Pongo page templates. The supported page templates are `templates/veta/landing.j2`, `templates/veta/docs.j2`, `templates/veta/docs-raw.j2`, `templates/veta/docs-llms-txt.j2`, `templates/veta/docs-llms-full-txt.j2`, `templates/veta/sitemap-xml.j2`, and `templates/veta/404.j2`.
 - `components/` contains Veta components. Component tag names use kebab-case because Veta component names cannot use underscores.
 - `filters/` contains distributable JS filters. These ARE part of the theme overlay and ship to consuming projects.
 - `functions/` contains JS template functions. These ARE part of the theme overlay and ship to consuming projects.
 - `data/site_default.js` contains theme defaults. `data/site.yaml` is the showcase override. In Pongo templates and components, resolve these values with `site_setting("specific_key", "fallback_key")`; it checks each key in `data.site` and then `data.site_default`. Keep literal defaults in the template with the `default` filter.
 - `veta/docs-raw` expects raw content in `page.content` and an exact-extension permalink such as `/docs/guide/index.md`. When `docs_llms_index` is enabled, it prepends a hierarchical index of every page using that template.
 - `veta/docs-llms-txt` and `veta/docs-llms-full-txt` generate documentation-wide indexes from all `veta/docs-raw` pages. Use them for root-level `/docs/llms.txt` and `/docs/llms-full.txt` outputs; the full variant also concatenates every raw content body.
+- `veta/sitemap-xml` lists every generated page except itself and pages with `sitemap: false`. Configure `site_url` for protocol-compliant absolute locations; without it, local builds use root-relative permalinks.
 - All theme-owned public assets must stay under `public/_vara/` to avoid collisions with consuming projects.
 - `pages/` and `content/` belong to the showcase, not the distributable theme.
 
