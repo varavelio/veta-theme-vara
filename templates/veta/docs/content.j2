@@ -1,45 +1,26 @@
 <main class="flex-1 min-w-0 min-h-0 overflow-y-auto bg-base-100 p-4 scroll-p-4 not-desk:pb-20">
-  {% set path_parts = page.permalink|split:"/" %}
+  {% set ancestors = docs_breadcrumb_ancestors() %}
 
-  {% if path_parts|length > 3 %}
-    <nav
-      class="flex flex-nowrap items-center gap-1.5 overflow-x-auto pb-6 text-sm whitespace-nowrap text-content-muted"
-      aria-label="Breadcrumb"
-    >
-      {% for candidate in pages %}
-        {% if candidate.template == "veta/docs" and candidate.permalink == docs_root_permalink %}
-          {% if candidate.content|trim %}
-            <a href="{{ url(candidate.permalink) }}" class="transition-colors hover:text-content">
-              {{ candidate.title }}
-            </a>
-          {% else %}
-            <span>{{ candidate.title }}</span>
-          {% endif %}
-          {{ icon("chevron-right", "size-4 shrink-0 text-content-muted")|safe }}
-        {% endif %}
-      {% endfor %}
-      {% for candidate in pages %}
-        {% set candidate_parts = candidate.permalink|split:"/" %}
-        {% if candidate.template == "veta/docs" and candidate.permalink != page.permalink and candidate.permalink != docs_root_permalink %}
-          {% if candidate_parts|length + 1 == path_parts|length and candidate_parts[2] == path_parts[2] %}
-            {% if candidate.content|trim %}
-              <a href="{{ url(candidate.permalink) }}" class="transition-colors hover:text-content">
-                {{ candidate.title }}
-              </a>
-            {% else %}
-              <span>{{ candidate.title }}</span>
-            {% endif %}
-            {{ icon("chevron-right", "size-4 shrink-0 text-content-muted")|safe }}
-          {% endif %}
-        {% endif %}
-      {% endfor %}
-      <span
-        class="inline-flex items-center gap-1.5 font-medium text-content"
-        x-data
-        x-init="$el.scrollIntoView({ block: 'nearest', inline: 'center' })"
-      >{{ page.title }}</span>
-    </nav>
-  {% endif %}
+  <nav
+    class="flex flex-nowrap items-center gap-1.5 overflow-x-auto pb-6 text-sm whitespace-nowrap text-content-muted"
+    aria-label="Breadcrumb"
+  >
+    {% for ancestor in ancestors %}
+      {% if ancestor.content|trim %}
+        <a href="{{ url(ancestor.permalink) }}" class="transition-colors hover:text-content">
+          {{ ancestor.title }}
+        </a>
+      {% else %}
+        <span>{{ ancestor.title }}</span>
+      {% endif %}
+      {{ icon("chevron-right", "size-4 shrink-0 text-content-muted")|safe }}
+    {% endfor %}
+    <span
+      class="inline-flex items-center gap-1.5 font-medium text-content"
+      x-data
+      x-init="$el.scrollIntoView({ block: 'nearest', inline: 'center' })"
+    >{{ page.title }}</span>
+  </nav>
 
   {% if page.content|trim %}
     <article class="prose dark:prose-invert max-w-none">
