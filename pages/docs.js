@@ -32,7 +32,7 @@ export default function({ files, parse }) {
     // Markdown Version
     pages.push({
       permalink: permalink + "index.md",
-      template: "veta/docs-llms",
+      template: "veta/docs-raw",
       title,
       description,
       weight,
