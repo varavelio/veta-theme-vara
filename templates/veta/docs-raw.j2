@@ -1,4 +1,6 @@
-## Documentation index
+{% if site_setting("docs_llms_index") %}
+
+{{- "## Documentation index"}}
 
 This index lists every available documentation page. Each link is relative to the URL of this file.
 
@@ -6,12 +8,6 @@ This index lists every available documentation page. Each link is relative to th
   {{- item.indent }}- [{{ item.title|safe }}]({{ url(item.permalink)|docs_relative_url }})
 {% endfor %}
 
-## Documentation content
+{% endif %}
 
-The complete documentation for this website follows, reproduced verbatim from every page.
-
-{% for item in docs_raw_pages() %}---
-
-{{ item.content|safe }}
-
-{% endfor %}
+{{- page.content -}}

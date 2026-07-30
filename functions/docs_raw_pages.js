@@ -1,21 +1,21 @@
 /**
- * Returns all docs LLM pages in a stable, hierarchical order.
+ * Returns all raw docs pages in a stable, hierarchical order.
  *
  * Hierarchy is derived from exact permalink segment prefixes. Depth counts
  * actual indexed ancestors, so missing intermediate pages never create broken
  * Markdown indentation.
  *
  * Usage:
- *   {% for item in docs_llms_pages() %}
- *     {{ item.indent }}- [{{ item.title }}]({{ url(item.permalink) }})
+ *   {% for item in docs_raw_pages() %}
+ *     {{ item.indent }}- [{{ item.title }}]({{ url(item.permalink) | docs_relative_url }})
  *   {% endfor %}
  */
 
-function resolveDocsLlmsPages(pages) {
+function resolveDocsRawPages(pages) {
   if (!Array.isArray(pages)) return [];
 
   const nodes = pages
-    .filter(page => page && page.template === "veta/docs-llms")
+    .filter(page => page && page.template === "veta/docs-raw")
     .map((page, sourceIndex) => ({
       children: [],
       page,
@@ -92,10 +92,10 @@ function escapeMarkdownLabel(value) {
   return String(value).replace(/\\/g, "\\\\").replace(/\[/g, "\\[").replace(/\]/g, "\\]").replace(/[\r\n]+/g, " ");
 }
 
-function docsLlmsPages({ pages }) {
-  return resolveDocsLlmsPages(pages);
+function docsRawPages({ pages }) {
+  return resolveDocsRawPages(pages);
 }
 
-docsLlmsPages.resolve = resolveDocsLlmsPages;
+docsRawPages.resolve = resolveDocsRawPages;
 
-export default docsLlmsPages;
+export default docsRawPages;
