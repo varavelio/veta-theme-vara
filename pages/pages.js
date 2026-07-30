@@ -21,7 +21,13 @@ export default function({ data, files, parse }) {
     template: "veta/404",
     title: "Page not found",
     description: "The requested page could not be found.",
+    sitemap: false,
     content: "",
+  });
+
+  pages.push({
+    permalink: "/sitemap.xml",
+    template: "veta/sitemap-xml",
   });
 
   return pages;
