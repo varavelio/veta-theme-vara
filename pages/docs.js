@@ -41,7 +41,19 @@ export default function({ files, parse }) {
     });
   }
 
-  return pages.sort(compareByWeight);
+  pages.sort(compareByWeight);
+
+  pages.push({
+    permalink: "/docs/llms.txt",
+    template: "veta/docs-llms-txt",
+  });
+
+  pages.push({
+    permalink: "/docs/llms-full.txt",
+    template: "veta/docs-llms-full-txt",
+  });
+
+  return pages;
 }
 
 function compareByWeight(a, b) {
