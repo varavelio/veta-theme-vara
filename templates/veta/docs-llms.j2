@@ -1,10 +1,10 @@
 {% if site_setting("docs_llms_index") %}
 
-  {{- "## Documentation Index"}}
+{{- "## Documentation index"}}
 
-  {% for item in docs_llms_pages() %}
-    {{- item.indent }}- [{{ item.title|safe }}]({{ url(item.permalink) }})
-  {% endfor %}
+{% for item in docs_llms_pages() %}
+  {{- item.indent }}- [{{ item.title|safe }}]({{ url(item.permalink) }})
+{% endfor %}
 
 {% endif %}
 

@@ -1,10 +1,10 @@
-## Documentation Index
+## Documentation index
 
 {% for item in docs_llms_pages() %}
   {{- item.indent }}- {{ item.title|safe }}
 {% endfor %}
 
-## Documentation Content
+## Documentation content
 
 {% for item in docs_llms_pages() %}---
 
