@@ -13,5 +13,6 @@ export default function() {
     docs_github_repo: "", // In user/repo format
     docs_sidebar_links: [],
     docs_llms: true,
+    docs_llms_index: true,
   };
 }

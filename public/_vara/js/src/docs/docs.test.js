@@ -121,7 +121,7 @@ test("builds encoded AI prompts with an absolute Markdown URL", () => {
   const markdownUrl = "../guide/index.md?mode=full";
   const baseUrl = "https://docs.example.com/reference/api/";
   const prompt =
-    "Read https://docs.example.com/reference/guide/index.md?mode=full and get ready to answer my questions about it.";
+    "Read https://docs.example.com/reference/guide/index.md?mode=full and get ready to answer my questions about it";
   const encodedPrompt = encodeURIComponent(prompt);
 
   assert.equal(resolveAskAiUrl("chatgpt", markdownUrl, baseUrl), `https://chatgpt.com/?q=${encodedPrompt}`);
