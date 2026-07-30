@@ -251,8 +251,8 @@ export function resolveBackToTopState({
   };
 }
 
-export function resolveSidebarGroupOpen(storedValue, hasActiveLink, defaultOpen = true) {
-  if (hasActiveLink) return true;
+export function resolveSidebarGroupOpen(storedValue, hasActiveLink, defaultOpen = true, openActiveGroup = true) {
+  if (openActiveGroup && hasActiveLink) return true;
   if (storedValue === "true") return true;
   if (storedValue === "false") return false;
 
@@ -275,15 +275,16 @@ export function resolveSidebarScrollTop(storedValue) {
 }
 
 function registerAlpineVarapressDocs() {
-  Alpine.data("varapressSidebarGroup", (id, defaultOpen = true) => ({
-    open: true,
+  Alpine.data("varapressSidebarGroup", (id, collapsedByDefault = false) => ({
+    open: !collapsedByDefault,
     storageKey: `varapress.sidebar.${id}`,
 
     init() {
       this.open = resolveSidebarGroupOpen(
         this.readStoredOpen(),
         Boolean(this.$el.querySelector("[aria-current=\"page\"]")),
-        defaultOpen,
+        !collapsedByDefault,
+        !collapsedByDefault,
       );
     },
 

@@ -17,7 +17,7 @@
   {% set item_parts = item.permalink|split:"/" %}
   {% set item_content = item.content|trim %}
   {% if item.template == "veta/docs" and item.permalink != docs_root_permalink and item_parts|length == 4 %}
-    <div x-data='varapressSidebarGroup("section:{{ item.permalink }}", true)' class="flex flex-col space-y-1">
+    <div x-data='varapressSidebarGroup("section:{{ item.permalink }}", {{ docs_sidebar_collapsed|lower }})' class="flex flex-col space-y-1">
       <div class="flex items-center gap-1">
         {% if item_content %}
           <a
@@ -83,7 +83,7 @@
 {% endfor %}
 
 {% if docs_sidebar_links and docs_sidebar_links|length > 0 %}
-  <div x-data='varapressSidebarGroup("links", true)' class="flex flex-col space-y-1">
+  <div x-data='varapressSidebarGroup("links", {{ docs_sidebar_collapsed|lower }})' class="flex flex-col space-y-1">
     <button
       type="button"
       x-on:click="toggle()"
@@ -118,7 +118,7 @@
 {% endif %}
 
 {% if docs_llms %}
-  <div x-data='varapressSidebarGroup("agents", true)' class="flex flex-col space-y-1">
+  <div x-data='varapressSidebarGroup("agents", {{ docs_sidebar_collapsed|lower }})' class="flex flex-col space-y-1">
     <button
       type="button"
       x-on:click="toggle()"
