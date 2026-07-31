@@ -11,8 +11,34 @@ import {
   resolvePromptCopyUi,
   resolveSidebarGroupOpen,
   resolveSidebarScrollTop,
+  resolveTableOfContents,
   shouldCenterSidebarLink,
+  slugifyTocHeading,
 } from "./docs.js";
+
+test("creates stable slugs for table-of-contents headings", () => {
+  assert.equal(slugifyTocHeading("Configure Tailwind CSS"), "configure-tailwind-css");
+  assert.equal(slugifyTocHeading("Déjà vu"), "deja-vu");
+  assert.equal(slugifyTocHeading("---"), "section");
+});
+
+test("builds h2 and h3 entries while assigning unique heading ids", () => {
+  const headings = [
+    { id: "", tagName: "H1", textContent: "Guide" },
+    { id: "", tagName: "H2", textContent: "Install" },
+    { id: "install", tagName: "H3", textContent: "Existing install" },
+    { id: "", tagName: "H3", textContent: "Install" },
+    { id: "", tagName: "H4", textContent: "Details" },
+  ];
+
+  assert.deepEqual(resolveTableOfContents(headings), [
+    { id: "install-2", level: 2, title: "Install" },
+    { id: "install", level: 3, title: "Existing install" },
+    { id: "install-3", level: 3, title: "Install" },
+  ]);
+  assert.equal(headings[0].id, "guide");
+  assert.equal(headings[4].id, "details");
+});
 
 test("keeps back-to-top hidden for short upward scrolls", () => {
   const state = resolveBackToTopState({

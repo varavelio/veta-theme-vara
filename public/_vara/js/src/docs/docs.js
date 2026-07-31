@@ -3,6 +3,65 @@
  */
 const BACK_TO_TOP_SCROLL_THRESHOLD = 300;
 
+export function slugifyTocHeading(value) {
+  return String(value || "")
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "") || "section";
+}
+
+export function resolveTableOfContents(headings) {
+  const items = Array.from(headings || []);
+  const usedIds = new Set(items.map(heading => String(heading.id || "").trim()).filter(Boolean));
+
+  for (const heading of items) {
+    if (!heading.id) {
+      const baseId = slugifyTocHeading(heading.textContent);
+      let id = baseId;
+      let suffix = 2;
+
+      while (usedIds.has(id)) id = `${baseId}-${suffix++}`;
+      heading.id = id;
+      usedIds.add(id);
+    }
+  }
+
+  return items
+    .filter(heading => heading.tagName === "H2" || heading.tagName === "H3")
+    .map(heading => ({
+      id: heading.id,
+      level: Number(heading.tagName.slice(1)),
+      title: String(heading.textContent || "").trim(),
+    }))
+    .filter(item => item.title);
+}
+
+function initTableOfContents() {
+  const headings = document.querySelectorAll(".prose :is(h1, h2, h3, h4, h5, h6)");
+  const items = resolveTableOfContents(headings);
+  if (items.length === 0) return false;
+
+  document.querySelectorAll("[data-toc-links]").forEach((nav) => {
+    const isMobile = nav.dataset.tocLinks === "mobile";
+
+    for (const item of items) {
+      const link = document.createElement("a");
+      link.href = `#${item.id}`;
+      link.className = `block py-0.5 text-sm text-content-muted transition-colors hover:text-content toc-link${
+        item.level === 3 ? " pl-3" : ""
+      }`;
+      link.textContent = item.title;
+      if (isMobile) link.setAttribute("x-on:click", "tocOpen = false");
+      nav.append(link);
+    }
+  });
+
+  return true;
+}
+
 /**
  * Injects anchor links into prose headings that have an id attribute.
  * Each anchor link is placed as the last child of the heading element
@@ -274,7 +333,7 @@ export function resolveSidebarScrollTop(storedValue) {
   return scrollTop;
 }
 
-function registerAlpineVarapressDocs() {
+function registerAlpineVarapressDocs(tocAvailable) {
   Alpine.data("varapressSidebarGroup", (id, collapsedByDefault = false) => ({
     open: !collapsedByDefault,
     storageKey: `varapress.sidebar.${id}`,
@@ -316,6 +375,9 @@ function registerAlpineVarapressDocs() {
 
     /** @type {boolean} Whether the mobile TOC panel is open. */
     tocOpen: false,
+
+    /** @type {boolean} Whether this page has entries for the table of contents. */
+    tocAvailable,
 
     /** @type {boolean} Whether the back-to-top button is visible. */
     showBackToTop: false,
@@ -532,9 +594,10 @@ function registerAlpineVarapressDocs() {
 }
 
 export function initDocs() {
+  const tocAvailable = initTableOfContents();
   injectAnchorLinks();
   initTocHighlight();
   document.addEventListener("alpine:init", () => {
-    registerAlpineVarapressDocs();
+    registerAlpineVarapressDocs(tocAvailable);
   });
 }
