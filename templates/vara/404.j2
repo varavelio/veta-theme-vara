@@ -1,0 +1,43 @@
+{% extends "./base/main.j2" %}
+
+{% set site_title = vara_site_setting("title") %}
+
+{% block title %}
+  <title>Page not found - {{ site_title }}</title>
+{% endblock %}
+
+{% block seo %}
+  <meta name="description" content="The requested page could not be found.">
+  <meta name="robots" content="noindex">
+  <meta property="og:title" content="Page not found - {{ site_title }}">
+  <meta
+    property="og:description"
+    content="The requested page could not be found."
+  >
+  <meta property="og:type" content="website">
+{% endblock %}
+
+{% block body %}
+  {% import "./macros/button.j2" button %}
+
+  <main class="size-full flex items-center justify-center bg-base-100 px-4 py-16">
+    <section class="w-full max-w-xl rounded-lg border border-base-400 bg-base-100 p-6 desk:p-8">
+      <p class="font-mono text-sm font-medium text-content-muted">
+        404
+      </p>
+
+      <div class="mt-4 space-y-3">
+        <h1 class="text-3xl font-semibold tracking-tight text-content desk:text-4xl">
+          Page not found
+        </h1>
+        <p class="text-base leading-7 text-content-muted">
+          The page you requested does not exist or may have moved.
+        </p>
+      </div>
+
+      <div class="mt-8 flex">
+        {{ button("Go home", url("/")) }}
+      </div>
+    </section>
+  </main>
+{% endblock %}

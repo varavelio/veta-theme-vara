@@ -1,0 +1,13 @@
+{% if vara_site_setting("docs_llms_index") %}
+
+{{- "## Documentation index"}}
+
+This index lists every available documentation page. Each link is relative to the URL of this file.
+
+{% for item in vara_docs_raw_pages() %}
+  {{- item.indent }}- [{{ item.title|safe }}]({{ url(item.permalink)|vara_docs_relative_url }})
+{% endfor %}
+
+{% endif %}
+
+{{- page.content -}}

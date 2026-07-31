@@ -1,7 +1,0 @@
-## Documentation index
-
-This index lists every available documentation page. Each link is relative to the URL of this file.
-
-{% for item in docs_raw_pages() %}
-  {{- item.indent }}- [{{ item.title|safe }}]({{ url(item.permalink)|docs_relative_url }})
-{% endfor %}

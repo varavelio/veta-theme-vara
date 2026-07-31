@@ -1,0 +1,122 @@
+{% if docs_sidebar.root %}
+  <div class="-mt-1.5">
+    <a
+      href="{{ url(docs_sidebar.root.href) }}"
+      class="flex items-center gap-2 rounded-md border border-transparent p-2 text-sm font-medium transition-colors{% if docs_sidebar.root.active %} bg-info/10 text-info{% else %} text-content/70 hover:bg-base-300 hover:text-content{% endif %}"
+      {% if docs_sidebar.root.active %}aria-current="page"{% endif %}
+    >
+      {% if docs_sidebar.root.icon %}{{ vara_icon(docs_sidebar.root.icon, "size-4 shrink-0")|safe }}{% endif %}
+      <span class="truncate">{{ docs_sidebar.root.title }}</span>
+    </a>
+  </div>
+{% endif %}
+
+{% for section in docs_sidebar.sections %}
+  <div x-data='varapressSidebarGroup("{{ section.storage_id }}", {{ docs_sidebar_collapsed|lower }})' class="flex flex-col space-y-1">
+    <div class="flex items-center gap-1">
+      {% if section.href %}
+        <a
+          href="{{ url(section.href) }}"
+          class="flex min-w-0 flex-1 items-center gap-2 rounded-md border border-transparent p-2 text-sm font-medium transition-colors{% if section.active %} bg-info/10 text-info{% else %} text-content/70 hover:bg-base-300 hover:text-content{% endif %}"
+          {% if section.active %}aria-current="page"{% endif %}
+        >
+          {% if section.icon %}{{ vara_icon(section.icon, "size-4 shrink-0")|safe }}{% endif %}
+          <span class="truncate">{{ section.title }}</span>
+        </a>
+        {% if section.links|length > 0 %}
+          <button
+            type="button"
+            x-on:click="toggle()"
+            class="flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-md text-content/70 transition-colors hover:bg-base-300 hover:text-content"
+            x-bind:aria-expanded="open.toString()"
+            aria-label="Toggle {{ section.title }} section"
+          >
+            <span class="transition-transform duration-200" x-bind:class="open && 'rotate-90'">
+              {{ vara_icon("chevron-right", "size-4")|safe }}
+            </span>
+          </button>
+        {% endif %}
+      {% else %}
+        <button
+          type="button"
+          x-on:click="toggle()"
+          class="flex w-full cursor-pointer items-center gap-2 rounded-md border border-transparent p-2 text-left text-sm font-medium text-content/70 transition-colors hover:bg-base-300 hover:text-content"
+          x-bind:aria-expanded="open.toString()"
+        >
+          {% if section.icon %}{{ vara_icon(section.icon, "size-4 shrink-0")|safe }}{% endif %}
+          <span class="flex-1 truncate">{{ section.title }}</span>
+          <span class="shrink-0 transition-transform duration-200" x-bind:class="open && 'rotate-90'">
+            {{ vara_icon("chevron-right", "size-4")|safe }}
+          </span>
+        </button>
+      {% endif %}
+    </div>
+    {% if section.links|length > 0 %}
+      <div
+        x-show="open"
+        x-transition
+        class="tree-line-v after:h-[calc(100%-1.125rem)] mt-1 ml-4 flex flex-col space-y-1 pl-3.5"
+      >
+        {% for link in section.links %}
+          <div class="tree-line-h min-w-0">
+            <a
+              href="{% if link.external %}{{ link.href }}{% else %}{{ url(link.href) }}{% endif %}"
+              {% if link.new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
+              class="flex items-center gap-2 rounded-md border border-transparent p-2 text-sm font-medium transition-colors{% if link.active %} bg-info/10 text-info{% else %} text-content/70 hover:bg-base-300 hover:text-content{% endif %}"
+              {% if link.active %}aria-current="page"{% endif %}
+            >
+              {% if link.icon %}{{ vara_icon(link.icon, "size-4 shrink-0")|safe }}{% endif %}
+              <span class="flex-1 truncate">{{ link.title }}</span>
+              {% if link.new_tab %}{{ vara_icon("external-link", "size-3.5 shrink-0 text-content-muted")|safe }}{% endif %}
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+{% endfor %}
+
+{% if docs_llms %}
+  <div x-data='varapressSidebarGroup("agents", {{ docs_sidebar_collapsed|lower }})' class="flex flex-col space-y-1">
+    <button
+      type="button"
+      x-on:click="toggle()"
+      class="flex w-full cursor-pointer items-center gap-2 rounded-md border border-transparent p-2 text-left text-sm font-medium text-content/70 transition-colors hover:bg-base-300 hover:text-content"
+      x-bind:aria-expanded="open.toString()"
+    >
+      {{ vara_icon("bot", "size-4 shrink-0")|safe }}
+      <span class="flex-1 truncate">Agents</span>
+      <span class="flex-none transition-transform duration-200" x-bind:class="open && 'rotate-90'">
+        {{ vara_icon("chevron-right", "size-4 shrink-0")|safe }}
+      </span>
+    </button>
+    <div
+      x-show="open"
+      x-transition
+      class="tree-line-v after:h-[calc(100%-1.125rem)] mt-1 ml-4 flex flex-col space-y-1 pl-3.5"
+    >
+      <div class="tree-line-h min-w-0">
+        <a
+          href="{{ url(docs_root_permalink + 'llms.txt') }}"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-center gap-2 rounded-md border border-transparent p-2 text-sm font-medium text-content/70 transition-colors hover:bg-base-300 hover:text-content"
+        >
+          <span class="flex-1 truncate">llms.txt</span>
+          {{ vara_icon("external-link", "size-3.5 shrink-0 text-content-muted")|safe }}
+        </a>
+      </div>
+      <div class="tree-line-h min-w-0">
+        <a
+          href="{{ url(docs_root_permalink + 'llms-full.txt') }}"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-center gap-2 rounded-md border border-transparent p-2 text-sm font-medium text-content/70 transition-colors hover:bg-base-300 hover:text-content"
+        >
+          <span class="flex-1 truncate">llms-full.txt</span>
+          {{ vara_icon("external-link", "size-3.5 shrink-0 text-content-muted")|safe }}
+        </a>
+      </div>
+    </div>
+  </div>
+{% endif %}

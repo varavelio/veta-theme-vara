@@ -1,0 +1,97 @@
+{% import "./pager-link.j2" pager_link %}
+{% import "./pager-branch.j2" pager_branch %}
+{% set current_parts = page.permalink|split:"/" %}
+
+{# Navigable pages follow pre-order: root, weighted branches, then each branch's weighted children. #}
+<nav class="mt-12 border-t border-base-400 pt-6" aria-label="Previous and next navigation">
+  <div class="grid grid-cols-1 gap-3 desk:grid-cols-2 desk:gap-4">
+    <div class="contents">
+      {% if page.permalink != docs_root_permalink %}
+        {% if current_parts|length == 4 %}
+          {# The last navigable page in the previous branch wins. #}
+          {% for candidate in pages %}
+            {% if candidate.template == "vara/docs" and candidate.content|vara_trim and candidate.permalink == docs_root_permalink %}
+              {{ pager_link(candidate, "previous", "hidden last:flex") }}
+            {% endif %}
+          {% endfor %}
+          {% for branch in pages %}
+            {% set branch_parts = branch.permalink|split:"/" %}
+            {% if branch.template == "vara/docs" and branch_parts|length == 4 and (branch.weight < page.weight or branch.weight == page.weight and (branch.title < page.title or branch.title == page.title and branch.index < page.index)) %}
+              {{ pager_branch(branch, pages, "previous", "hidden last:flex") }}
+            {% endif %}
+          {% endfor %}
+        {% elif current_parts|length == 5 %}
+          {# Start with earlier branches, then the parent and preceding siblings. The last candidate wins. #}
+          {% for parent in pages %}
+            {% set parent_parts = parent.permalink|split:"/" %}
+            {% if parent.template == "vara/docs" and parent_parts|length == 4 and parent_parts[2] == current_parts[2] %}
+              {% for candidate in pages %}
+                {% if candidate.template == "vara/docs" and candidate.content|vara_trim and candidate.permalink == docs_root_permalink %}
+                  {{ pager_link(candidate, "previous", "hidden last:flex") }}
+                {% endif %}
+              {% endfor %}
+              {% for branch in pages %}
+                {% set branch_parts = branch.permalink|split:"/" %}
+                {% if branch.template == "vara/docs" and branch_parts|length == 4 and (branch.weight < parent.weight or branch.weight == parent.weight and (branch.title < parent.title or branch.title == parent.title and branch.index < parent.index)) %}
+                  {{ pager_branch(branch, pages, "previous", "hidden last:flex") }}
+                {% endif %}
+              {% endfor %}
+              {% if parent.content|vara_trim %}{{ pager_link(parent, "previous", "hidden last:flex") }}{% endif %}
+            {% endif %}
+          {% endfor %}
+          {% for sibling in pages %}
+            {% set sibling_parts = sibling.permalink|split:"/" %}
+            {% if sibling.template == "vara/docs" and sibling.content|vara_trim and sibling_parts|length == 5 and sibling_parts[2] == current_parts[2] and (sibling.weight < page.weight or sibling.weight == page.weight and (sibling.title < page.title or sibling.title == page.title and sibling.index < page.index)) %}
+              {{ pager_link(sibling, "previous", "hidden last:flex") }}
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+      {% endif %}
+    </div>
+
+    <div class="contents">
+      {% if page.permalink == docs_root_permalink %}
+        {# The first navigable page in the first branch starts the tree after its root. #}
+        {% for branch in pages %}
+          {% set branch_parts = branch.permalink|split:"/" %}
+          {% if branch.template == "vara/docs" and branch_parts|length == 4 %}
+            {{ pager_branch(branch, pages, "next", "hidden first:flex") }}
+          {% endif %}
+        {% endfor %}
+      {% elif current_parts|length == 4 %}
+        {# Current children come first, followed by every later branch. #}
+        {% for child in pages %}
+          {% set child_parts = child.permalink|split:"/" %}
+          {% if child.template == "vara/docs" and child.content|vara_trim and child_parts|length == 5 and child_parts[2] == current_parts[2] %}
+            {{ pager_link(child, "next", "hidden first:flex") }}
+          {% endif %}
+        {% endfor %}
+        {% for branch in pages %}
+          {% set branch_parts = branch.permalink|split:"/" %}
+          {% if branch.template == "vara/docs" and branch_parts|length == 4 and (branch.weight > page.weight or branch.weight == page.weight and (branch.title > page.title or branch.title == page.title and branch.index > page.index)) %}
+            {{ pager_branch(branch, pages, "next", "hidden first:flex") }}
+          {% endif %}
+        {% endfor %}
+      {% elif current_parts|length == 5 %}
+        {# Exhaust siblings before climbing to the first navigable page in a later branch. #}
+        {% for sibling in pages %}
+          {% set sibling_parts = sibling.permalink|split:"/" %}
+          {% if sibling.template == "vara/docs" and sibling.content|vara_trim and sibling_parts|length == 5 and sibling_parts[2] == current_parts[2] and (sibling.weight > page.weight or sibling.weight == page.weight and (sibling.title > page.title or sibling.title == page.title and sibling.index > page.index)) %}
+            {{ pager_link(sibling, "next", "hidden first:flex") }}
+          {% endif %}
+        {% endfor %}
+        {% for parent in pages %}
+          {% set parent_parts = parent.permalink|split:"/" %}
+          {% if parent.template == "vara/docs" and parent_parts|length == 4 and parent_parts[2] == current_parts[2] %}
+            {% for branch in pages %}
+              {% set branch_parts = branch.permalink|split:"/" %}
+              {% if branch.template == "vara/docs" and branch_parts|length == 4 and (branch.weight > parent.weight or branch.weight == parent.weight and (branch.title > parent.title or branch.title == parent.title and branch.index > parent.index)) %}
+                {{ pager_branch(branch, pages, "next", "hidden first:flex") }}
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</nav>
