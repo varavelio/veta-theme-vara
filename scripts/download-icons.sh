@@ -5,7 +5,7 @@ LUCIDE_VERSION="1.28.0"
 SIMPLE_ICONS_VERSION="16.27.1"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-ICONS_DIR="$SCRIPT_DIR/../public/_vara/icons"
+ICONS_DIR="$SCRIPT_DIR/../templates/vara/icons"
 TMP_DIR="$(mktemp -d)"
 
 wget -q -O $TMP_DIR/LICENSE-SIMPLE-ICONS https://raw.githubusercontent.com/simple-icons/simple-icons/refs/tags/$SIMPLE_ICONS_VERSION/LICENSE.md

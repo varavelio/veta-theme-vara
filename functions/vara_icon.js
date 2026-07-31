@@ -53,7 +53,7 @@ export default function({ files }, name, className) {
 
   let svg = "";
   try {
-    svg = files.readFile(`public/_vara/icons/${iconName}.svg`);
+    svg = files.readFile(`templates/vara/icons/${iconName}.svg`);
   } catch (_error) {
     return fallback(resolvedClassName);
   }
