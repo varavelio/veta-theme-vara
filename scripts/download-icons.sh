@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e
 
-LUCIDE_VERSION="1.22.0"
-SIMPLE_ICONS_VERSION="16.24.1"
+LUCIDE_VERSION="1.28.0"
+SIMPLE_ICONS_VERSION="16.27.1"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ICONS_DIR="$SCRIPT_DIR/../public/_vara/icons"
@@ -21,8 +21,16 @@ rm -rf $ICONS_DIR && mkdir -p $ICONS_DIR
 mv $TMP_DIR/LICENSE-SIMPLE-ICONS $ICONS_DIR/LICENSE-SIMPLE-ICONS
 mv $TMP_DIR/LICENSE-LUCIDE $ICONS_DIR/LICENSE-LUCIDE
 
-# Move simple icons and lucide icons in order of priority (most important last)
+# Move simple icons and preserve collisions before Lucide takes priority
 mv -f $TMP_DIR/simple-icons/simple-icons-$SIMPLE_ICONS_VERSION/icons/*.svg $ICONS_DIR
+
+for lucide_icon in "$TMP_DIR"/lucide/icons/*.svg; do
+  icon_name="$(basename "$lucide_icon")"
+  if [ -f "$ICONS_DIR/$icon_name" ]; then
+    mv "$ICONS_DIR/$icon_name" "$ICONS_DIR/si-$icon_name"
+  fi
+done
+
 mv -f $TMP_DIR/lucide/icons/*.svg $ICONS_DIR
 
 # Download Varavel logo
