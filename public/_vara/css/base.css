@@ -9,9 +9,10 @@
 @import "./fonts.css";
 
 @theme {
-  /* Single-breakpoint responsive model */
+  /* Responsive layout breakpoints. */
   --breakpoint-*: initial;
   --breakpoint-desk: 64rem;
+  --breakpoint-wide: 72rem;
 
   /* Typography families. */
   --font-sans:

@@ -1,4 +1,4 @@
-<main class="flex-1 min-w-0 min-h-0 overflow-y-auto bg-base-100 p-4 scroll-p-4 not-desk:pb-20">
+<main class="flex-1 min-w-0 min-h-0 overflow-y-auto bg-base-100 p-4 scroll-p-4 not-desk:pb-20 desk:px-8">
   {% set ancestors = vara_docs_breadcrumb_ancestors() %}
 
   <div class="mb-6 flex min-w-0 items-center gap-2">
@@ -32,7 +32,7 @@
       {% endif %}
       <button
         type="button"
-        class="inline-flex size-8 cursor-pointer items-center justify-center rounded-md border border-base-400 bg-base-100 text-content outline-content transition-colors hover:bg-base-200 focus-visible:outline-2 desk:hidden"
+        class="inline-flex size-8 cursor-pointer items-center justify-center rounded-md border border-base-400 bg-base-100 text-content outline-content transition-colors hover:bg-base-200 focus-visible:outline-2 wide:hidden"
         x-cloak
         x-show="tocAvailable"
         x-on:click="toggleToc()"

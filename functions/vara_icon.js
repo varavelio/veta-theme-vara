@@ -58,5 +58,5 @@ export default function({ files }, name, className) {
     return fallback(resolvedClassName);
   }
 
-  return svg.replace("<svg ", `<svg class="${escapeAttr(resolvedClassName)}" `);
+  return svg.replace("<svg", `<svg class="${escapeAttr(resolvedClassName)}"`);
 }
