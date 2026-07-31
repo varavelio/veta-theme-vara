@@ -1,7 +1,7 @@
 export default function() {
   return {
-    title: "Vara",
-    description: "A clean, fast, and responsive theme for Veta.",
+    title: "",
+    description: "",
     site_url: "",
     favicon: "https://cdn.jsdelivr.net/gh/varavelio/brand@v1.0.2/dist/avatar-dark.svg",
     logo_light: "https://cdn.jsdelivr.net/gh/varavelio/brand@v1.0.2/dist/logo-black.svg",
