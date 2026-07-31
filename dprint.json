@@ -15,8 +15,8 @@
     "./**/*.j2",
     "./dist/**/*",
     "./node_modules/**/*",
+    "./templates/vara/icons/**/*",
     "./public/_vara/js/build/**/*",
-    "./public/_vara/icons/**/*"
   ],
   "plugins": [
     "https://plugins.dprint.dev/typescript-0.96.1.wasm",
