@@ -10,7 +10,7 @@ export default function({ data, files, parse }) {
 
   pages.push({
     permalink: "/",
-    template: "vara/landing",
+    template: "vara-landing",
     title: homePageMd.frontmatter.title || siteTitle,
     description: homePageMd.frontmatter.description || siteDescription,
     content: homePageContent,
@@ -18,7 +18,7 @@ export default function({ data, files, parse }) {
 
   pages.push({
     permalink: "/404.html",
-    template: "vara/404",
+    template: "vara-404",
     title: "Page not found",
     description: "The requested page could not be found.",
     sitemap: false,
@@ -27,7 +27,7 @@ export default function({ data, files, parse }) {
 
   pages.push({
     permalink: "/sitemap.xml",
-    template: "vara/sitemap-xml",
+    template: "vara-sitemap-xml",
   });
 
   return pages;

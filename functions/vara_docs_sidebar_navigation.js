@@ -16,7 +16,7 @@ function resolveDocsSidebarNavigation(pages, rootPermalink, configuredSections, 
   if (rootSegments.length === 0) return { root: null, sections: [] };
 
   const docsPages = Array.isArray(pages)
-    ? pages.filter(page => page && page.template === "vara/docs")
+    ? pages.filter(page => page && page.template === "vara-docs")
     : [];
   const root = resolveRoot(docsPages, rootSegments, currentPermalink);
   const sections = new Map();

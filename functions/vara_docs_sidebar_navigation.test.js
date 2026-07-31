@@ -12,7 +12,7 @@ test("builds weighted sidebar sections from generated documentation pages", () =
     docsPage("/docs/reference/", "Reference", 20, "braces"),
     docsPage("/docs/guide/", "Guide", 10, "rocket"),
     docsPage("/docs/guide/empty/", "Empty", 1, "", ""),
-    { permalink: "/docs/guide/index.md", template: "vara/docs-raw", title: "Ignored" },
+    { permalink: "/docs/guide/index.md", template: "vara-docs-raw", title: "Ignored" },
   ];
 
   assert.deepEqual(resolveDocsSidebarNavigation(pages, "/docs/", [], "/docs/guide/install/"), {
@@ -196,5 +196,5 @@ test("reads pages and the current permalink from the function context", () => {
 });
 
 function docsPage(permalink, title, weight, icon = "", content = "# Content") {
-  return { content, icon, permalink, template: "vara/docs", title, weight };
+  return { content, icon, permalink, template: "vara-docs", title, weight };
 }

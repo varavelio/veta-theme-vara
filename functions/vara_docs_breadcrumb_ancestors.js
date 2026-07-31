@@ -17,7 +17,7 @@ function resolveDocsBreadcrumbAncestors(pages, currentPermalink) {
 
   return pages
     .filter(page => {
-      if (!page || page.template !== "vara/docs") return false;
+      if (!page || page.template !== "vara-docs") return false;
 
       const candidate = normalizePermalink(page.permalink);
       return candidate && candidate !== current && current.startsWith(candidate);

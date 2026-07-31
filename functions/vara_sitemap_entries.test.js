@@ -10,7 +10,7 @@ test("resolveSitemapEntries builds absolute URLs and excludes opted-out pages", 
     { permalink: "/" },
     { permalink: "/docs/" },
     { permalink: "/404.html", sitemap: false },
-    { permalink: "/sitemap.xml", template: "vara/sitemap-xml" },
+    { permalink: "/sitemap.xml", template: "vara-sitemap-xml" },
   ];
 
   assert.deepEqual(resolveSitemapEntries(pages, "/sitemap.xml", "https://example.com/"), [

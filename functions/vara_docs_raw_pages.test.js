@@ -10,20 +10,20 @@ test("resolveDocsRawPages returns raw docs pages as a weighted hierarchy", () =>
     {
       content: "# Reference",
       permalink: "/docs/api/reference/index.md",
-      template: "vara/docs-raw",
+      template: "vara-docs-raw",
       title: "Reference",
       weight: 2,
     },
     {
       content: "# Documentation",
       permalink: "/docs/index.md",
-      template: "vara/docs-raw",
+      template: "vara-docs-raw",
       title: "Documentation",
       weight: 10,
     },
-    { content: "# API", permalink: "/docs/api/index.md", template: "vara/docs-raw", title: "API", weight: 2 },
-    { content: "# Guide", permalink: "/docs/guide/index.md", template: "vara/docs-raw", title: "Guide", weight: 1 },
-    { permalink: "/docs/ignored/index.md", template: "vara/docs", title: "Ignored" },
+    { content: "# API", permalink: "/docs/api/index.md", template: "vara-docs-raw", title: "API", weight: 2 },
+    { content: "# Guide", permalink: "/docs/guide/index.md", template: "vara-docs-raw", title: "Guide", weight: 1 },
+    { permalink: "/docs/ignored/index.md", template: "vara-docs", title: "Ignored" },
   ];
 
   assert.deepEqual(resolveDocsRawPages(pages), [
@@ -36,9 +36,9 @@ test("resolveDocsRawPages returns raw docs pages as a weighted hierarchy", () =>
 
 test("resolveDocsRawPages uses real ancestors and supports independent roots", () => {
   const pages = [
-    { permalink: "/docs/guide/install/index.md", template: "vara/docs-raw", title: "Install" },
-    { permalink: "/api/index.md", template: "vara/docs-raw", title: "API" },
-    { permalink: "/docs/index.md", template: "vara/docs-raw", title: "Docs" },
+    { permalink: "/docs/guide/install/index.md", template: "vara-docs-raw", title: "Install" },
+    { permalink: "/api/index.md", template: "vara-docs-raw", title: "API" },
+    { permalink: "/docs/index.md", template: "vara-docs-raw", title: "Docs" },
   ];
 
   assert.deepEqual(
@@ -49,7 +49,7 @@ test("resolveDocsRawPages uses real ancestors and supports independent roots", (
 
 test("resolveDocsRawPages escapes Markdown labels and reads pages from context", () => {
   const pages = [
-    { permalink: "/docs/index.md", template: "vara/docs-raw", title: "Docs [v2]\\Guide\nHome" },
+    { permalink: "/docs/index.md", template: "vara-docs-raw", title: "Docs [v2]\\Guide\nHome" },
   ];
 
   assert.deepEqual(docsRawPages({ pages }), [

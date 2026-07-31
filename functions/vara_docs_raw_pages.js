@@ -15,7 +15,7 @@ function resolveDocsRawPages(pages) {
   if (!Array.isArray(pages)) return [];
 
   const nodes = pages
-    .filter(page => page && page.template === "vara/docs-raw")
+    .filter(page => page && page.template === "vara-docs-raw")
     .map((page, sourceIndex) => ({
       children: [],
       page,

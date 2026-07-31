@@ -5,7 +5,7 @@
   {% if branch.content|vara_trim %}{{ pager_link(branch, direction, selection_class) }}{% endif %}
   {% for child in pages %}
     {% set child_parts = child.permalink|split:"/" %}
-    {% if child.template == "vara/docs" and child.content|vara_trim and child_parts|length == 5 and child_parts[2] == branch_parts[2] %}
+    {% if child.template == "vara-docs" and child.content|vara_trim and child_parts|length == 5 and child_parts[2] == branch_parts[2] %}
       {{ pager_link(child, direction, selection_class) }}
     {% endif %}
   {% endfor %}

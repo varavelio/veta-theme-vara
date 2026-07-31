@@ -6,13 +6,13 @@ import docsBreadcrumbAncestors from "./vara_docs_breadcrumb_ancestors.js";
 const resolveDocsBreadcrumbAncestors = docsBreadcrumbAncestors.resolve;
 
 const pages = [
-  { permalink: "/docs/foo/qux/bar/", template: "vara/docs", title: "Bar" },
-  { permalink: "/docs/foo/bar/", template: "vara/docs", title: "Sibling Bar" },
-  { permalink: "/docs/", template: "vara/docs", title: "Documentation" },
-  { permalink: "/docs/foo/qux/", template: "vara/docs", title: "Qux" },
-  { permalink: "/docs/foo/", template: "vara/docs", title: "Foo" },
-  { permalink: "/docs/foo/qux/other/", template: "vara/docs", title: "Other" },
-  { permalink: "/docs/foo/qux/", template: "vara/landing", title: "Landing" },
+  { permalink: "/docs/foo/qux/bar/", template: "vara-docs", title: "Bar" },
+  { permalink: "/docs/foo/bar/", template: "vara-docs", title: "Sibling Bar" },
+  { permalink: "/docs/", template: "vara-docs", title: "Documentation" },
+  { permalink: "/docs/foo/qux/", template: "vara-docs", title: "Qux" },
+  { permalink: "/docs/foo/", template: "vara-docs", title: "Foo" },
+  { permalink: "/docs/foo/qux/other/", template: "vara-docs", title: "Other" },
+  { permalink: "/docs/foo/qux/", template: "vara-landing", title: "Landing" },
 ];
 
 test("resolveDocsBreadcrumbAncestors returns no ancestors for the docs root", () => {

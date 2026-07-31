@@ -21,7 +21,7 @@ export default function({ files, parse }) {
     // HTML Version
     pages.push({
       permalink,
-      template: "vara/docs",
+      template: "vara-docs",
       title,
       description,
       weight,
@@ -32,7 +32,7 @@ export default function({ files, parse }) {
     // Markdown Version
     pages.push({
       permalink: permalink + "index.md",
-      template: "vara/docs-raw",
+      template: "vara-docs-raw",
       title,
       description,
       weight,
@@ -45,12 +45,12 @@ export default function({ files, parse }) {
 
   pages.push({
     permalink: "/docs/llms.txt",
-    template: "vara/docs-llms-txt",
+    template: "vara-docs-llms-txt",
   });
 
   pages.push({
     permalink: "/docs/llms-full.txt",
-    template: "vara/docs-llms-full-txt",
+    template: "vara-docs-llms-full-txt",
   });
 
   return pages;
