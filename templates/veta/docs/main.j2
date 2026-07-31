@@ -16,12 +16,13 @@
   {% set docs_logo_dark = site_setting("docs_logo_dark", "logo_dark") %}
   {% set docs_show_title = site_setting("docs_show_title") %}
   {% set docs_github_repo = site_setting("docs_github_repo") %}
-  {% set docs_sidebar_links = site_setting("docs_sidebar_links") %}
+  {% set docs_sidebar_sections = site_setting("docs_sidebar_sections") %}
   {% set docs_sidebar_collapsed = site_setting("docs_sidebar_collapsed") %}
   {% set docs_llms = site_setting("docs_llms") %}
   {% set site_title = site_setting("title") %}
   {% set page_path_parts = page.permalink|split:"/" %}
   {% set docs_root_permalink = "/" + page_path_parts[1] + "/" %}
+  {% set docs_sidebar = docs_sidebar_navigation(docs_root_permalink, docs_sidebar_sections) %}
 
   <div class="flex h-dvh flex-col" x-data="varapressDocs" x-cloak>
     {% include "./header.j2" %}
