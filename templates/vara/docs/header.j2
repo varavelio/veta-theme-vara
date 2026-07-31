@@ -3,7 +3,7 @@
 
 <header class="h-14 shrink-0 border-b border-base-400 bg-base-100">
   <div class="mx-auto flex h-full max-w-[80rem] items-center justify-between gap-3 px-4">
-    <div class="flex min-w-0 flex-auto items-center justify-start">
+    <div class="flex min-w-0 flex-none items-center justify-start">
       <button
         class="-ml-2 mr-2 flex-none cursor-pointer rounded-md p-2 transition-colors hover:bg-base-300 desk:hidden"
         x-on:click="toggleSidebar()"
@@ -44,21 +44,23 @@
       </div>
     </div>
 
-    <div class="flex flex-none items-center gap-2">
+    <div class="flex min-w-0 flex-1 items-center justify-end gap-2">
       {% if docs_header_links and docs_header_links|length > 0 %}
-        <nav class="hidden items-center gap-1 desk:flex" aria-label="Documentation links">
-          {% for link in docs_header_links %}
-            {% if link.title and link.href %}
-              <a
-                href="{{ url(link.href) }}"
-                {% if link.new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
-                class="inline-flex h-8 items-center gap-1.5 rounded-md bg-transparent px-2.5 text-sm font-medium whitespace-nowrap text-content outline-content transition-colors hover:bg-base-300 focus-visible:outline-2"
-              >
-                {% if link.icon %}{{ vara_icon(link.icon, "size-4 shrink-0")|safe }}{% endif %}
-                <span>{{ link.title }}</span>
-              </a>
-            {% endif %}
-          {% endfor %}
+        <nav class="hidden min-w-0 flex-1 overflow-x-auto overflow-y-hidden desk:block" aria-label="Documentation links">
+          <div class="ml-auto flex w-max items-center gap-1">
+            {% for link in docs_header_links %}
+              {% if link.title and link.href %}
+                <a
+                  href="{{ url(link.href) }}"
+                  {% if link.new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
+                  class="inline-flex h-8 items-center gap-1.5 rounded-md bg-transparent px-2.5 text-sm font-medium whitespace-nowrap text-content outline-content transition-colors hover:bg-base-300 focus-visible:outline-2"
+                >
+                  {% if link.icon %}{{ vara_icon(link.icon, "size-4 shrink-0")|safe }}{% endif %}
+                  <span>{{ link.title }}</span>
+                </a>
+              {% endif %}
+            {% endfor %}
+          </div>
         </nav>
       {% endif %}
       {% if docs_github_repo %}
