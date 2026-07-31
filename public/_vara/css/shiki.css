@@ -1,15 +1,50 @@
 /* Preserve code-block layout while client-side highlighting is loading. */
+:root {
+  --vara-shiki-background: #eef2f6;
+  --vara-shiki-copy-background: #ffffff;
+  --vara-shiki-copy-background-hover: #f6f8fa;
+  --vara-shiki-copy-border: #afb8c1;
+  --vara-shiki-copy-content: #24292f;
+}
+
+:root:where(.dark, [data-theme="dark"]) {
+  --vara-shiki-background: #0d1117;
+  --vara-shiki-copy-background: #21262d;
+  --vara-shiki-copy-background-hover: #30363d;
+  --vara-shiki-copy-border: #57606a;
+  --vara-shiki-copy-content: #e6edf3;
+}
+
 .prose.vara-shiki-enabled pre:has(> code[class*="language-"]) {
-  visibility: hidden;
+  background-color: var(--vara-shiki-background);
 }
 
 .prose.vara-shiki-enabled
-  pre[data-vara-shiki-ready]:has(> code[class*="language-"]) {
-  visibility: visible;
+  pre:not([data-vara-shiki-ready])
+  > code[class*="language-"] {
+  visibility: hidden;
 }
 
 .prose .vara-shiki-block {
   position: relative;
+}
+
+.prose .shiki {
+  color: var(--shiki-light, inherit);
+  background-color: var(--vara-shiki-background);
+}
+
+.prose .shiki span {
+  color: var(--shiki-light, inherit);
+  background-color: transparent;
+}
+
+:where(.dark, [data-theme="dark"]) .prose .shiki {
+  color: var(--shiki-dark, inherit);
+}
+
+:where(.dark, [data-theme="dark"]) .prose .shiki span {
+  color: var(--shiki-dark, inherit);
 }
 
 .prose .vara-shiki-copy {
@@ -23,11 +58,11 @@
   cursor: pointer;
   align-items: center;
   justify-content: center;
-  border: 1px solid #57606a;
+  border: 1px solid var(--vara-shiki-copy-border);
   border-radius: var(--radius-sm);
-  background-color: #24292e;
+  background-color: var(--vara-shiki-copy-background);
   padding: 0 0.5rem;
-  color: #e1e4e8;
+  color: var(--vara-shiki-copy-content);
   font-family: var(--font-sans);
   font-size: 0.875rem;
   font-weight: var(--font-weight-medium);
@@ -43,7 +78,7 @@
 }
 
 .prose .vara-shiki-copy:hover {
-  background-color: #30363d;
+  background-color: var(--vara-shiki-copy-background-hover);
 }
 
 .prose .vara-shiki-copy:focus-visible {

@@ -1,6 +1,9 @@
 const SHIKI_MODULE_URL = "https://esm.run/shiki@4.4.1";
 const COPY_BUTTON_MODULE_URL = "https://esm.run/shiki-transformer-copy-button@0.0.6";
-const SHIKI_THEME = "github-dark";
+const SHIKI_THEMES = {
+  light: "github-light",
+  dark: "github-dark",
+};
 const LANGUAGE_CLASS_PREFIX = "language-";
 const READY_ATTRIBUTE = "data-vara-shiki-ready";
 const COPY_RESET_DELAY = 2000;
@@ -260,7 +263,7 @@ export async function initShiki(options = {}) {
     let highlighter;
     try {
       highlighter = await shiki.createHighlighter({
-        themes: [SHIKI_THEME],
+        themes: Object.values(SHIKI_THEMES),
         langs: [],
       });
     } catch (error) {
@@ -285,7 +288,8 @@ export async function initShiki(options = {}) {
       try {
         const html = await highlighter.codeToHtml(codeText, {
           lang: block.language,
-          theme: SHIKI_THEME,
+          themes: SHIKI_THEMES,
+          defaultColor: false,
           transformers,
         });
 
