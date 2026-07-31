@@ -8,7 +8,7 @@
 }
 
 :root:where(.dark, [data-theme="dark"]) {
-  --vara-shiki-background: #0d1117;
+  --vara-shiki-background: #111827;
   --vara-shiki-copy-background: #21262d;
   --vara-shiki-copy-background-hover: #30363d;
   --vara-shiki-copy-border: #57606a;
