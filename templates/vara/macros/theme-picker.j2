@@ -18,7 +18,7 @@
       <button
         x-ref="trigger"
         type="button"
-        class="relative inline-flex h-10 cursor-pointer select-none items-center gap-2 rounded-md border border-base-400 bg-transparent px-4 text-sm font-medium text-content outline-content transition-all duration-75 hover:bg-base-300 focus-visible:outline-2"
+        class="relative inline-flex h-8 cursor-pointer select-none items-center gap-1.5 rounded-md bg-transparent px-2.5 text-sm font-medium text-content outline-content transition-colors hover:bg-base-300 focus-visible:outline-2"
         x-on:click="open = !open"
         x-on:keydown.arrow-down.prevent="open = true; $nextTick(() => $refs.system.focus())"
         x-on:keydown.arrow-up.prevent="open = true; $nextTick(() => $refs.dark.focus())"

@@ -1,4 +1,5 @@
 {% import "../macros/theme-picker.j2" theme_picker %}
+{% import "../macros/github-button.j2" github_button %}
 
 <header class="h-14 shrink-0 border-b border-base-400 bg-base-100">
   <div class="mx-auto flex h-full max-w-[80rem] items-center justify-between gap-3 px-4">
@@ -51,7 +52,7 @@
               <a
                 href="{{ url(link.href) }}"
                 {% if link.new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
-                class="inline-flex h-8 items-center gap-1.5 rounded-md px-2.5 text-sm font-medium whitespace-nowrap text-content-muted transition-colors hover:bg-base-200 hover:text-content focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-content"
+                class="inline-flex h-8 items-center gap-1.5 rounded-md bg-transparent px-2.5 text-sm font-medium whitespace-nowrap text-content outline-content transition-colors hover:bg-base-300 focus-visible:outline-2"
               >
                 {% if link.icon %}{{ vara_icon(link.icon, "size-4 shrink-0")|safe }}{% endif %}
                 <span>{{ link.title }}</span>
@@ -61,15 +62,9 @@
         </nav>
       {% endif %}
       {% if docs_github_repo %}
-        <a
-          href="https://github.com/{{ docs_github_repo }}"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="hidden items-center gap-2 rounded-md border border-base-400 px-3 py-1.5 text-sm font-medium text-content transition-colors hover:bg-base-300 desk:flex"
-        >
-          {{ vara_icon("github", "size-4")|safe }}
-          <span>GitHub</span>
-        </a>
+        <div class="hidden desk:block">
+          {{ github_button(docs_github_repo) }}
+        </div>
       {% endif %}
       {{ theme_picker("Theme") }}
     </div>

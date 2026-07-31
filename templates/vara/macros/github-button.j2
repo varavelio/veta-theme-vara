@@ -1,0 +1,33 @@
+{% comment %}
+  GitHub repository link with public star metadata fetched at build time.
+
+  Parameters:
+    repo       - Repository in "owner/name" format (required)
+    href       - Custom URL override (defaults to github.com/owner/name)
+    target     - Link target (default: "_blank")
+    show_stars - "true" (default) | "false"
+    class      - Additional classes
+{% endcomment %}
+
+{% macro github_button(repo, href="", target="_blank", show_stars="true", class="") export %}
+  {% set repo_data = vara_github_repo(repo) %}
+  {% set resolved_href = href|default:"https://github.com/" + repo %}
+  <a
+    href="{{ resolved_href }}"
+    {% if target %}target="{{ target }}"{% endif %}
+    {% if target == "_blank" %}rel="noopener noreferrer"{% endif %}
+    class="inline-flex h-8 items-center gap-1.5 rounded-md bg-transparent px-2.5 text-sm font-medium whitespace-nowrap text-content outline-content transition-colors hover:bg-base-300 focus-visible:outline-2{% if class %} {{ class }}{% endif %}"
+  >
+    {{ vara_icon("github", "size-4 shrink-0")|safe }}
+    <span class="font-mono">{{ repo }}</span>
+    {% if show_stars == "true" and repo_data.ok %}
+      <span
+        class="ml-1 inline-flex items-center gap-1 border-l border-base-400 pl-2 text-content"
+        aria-label="{{ repo_data.stars }} GitHub stars"
+      >
+        {{ vara_icon("star", "size-3.5 shrink-0")|safe }}
+        <span class="font-mono tabular-nums">{{ repo_data.stars|vara_compact_number }}</span>
+      </span>
+    {% endif %}
+  </a>
+{% endmacro %}
