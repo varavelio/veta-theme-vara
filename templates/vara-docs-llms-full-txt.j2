@@ -1,9 +1,9 @@
 ## Documentation index
 
-This index lists every available documentation page. Each link is relative to the URL of this file.
+This index lists every available documentation page and its Markdown source.
 
 {% for item in vara_docs_raw_pages() %}
-  {{- item.indent }}- [{{ item.title|safe }}]({{ url(item.permalink)|vara_docs_relative_url }})
+  {{- item.indent }}- [{{ item.title|safe }}]({{ vara_absolute_url(item.permalink) }})
 {% endfor %}
 
 ## Documentation content

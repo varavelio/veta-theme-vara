@@ -20,10 +20,22 @@
   {% set docs_sidebar_sections = vara_site_setting("docs_sidebar_sections") %}
   {% set docs_sidebar_collapsed = vara_site_setting("docs_sidebar_collapsed") %}
   {% set docs_llms = vara_site_setting("docs_llms") %}
+  {% set docs_shiki = vara_site_setting("docs_shiki") %}
+  {% set docs_shiki_custom_languages = vara_site_setting("docs_shiki_custom_languages") %}
   {% set site_title = vara_site_setting("title") %}
   {% set page_path_parts = page.permalink|split:"/" %}
   {% set docs_root_permalink = "/" + page_path_parts[1] + "/" %}
   {% set docs_sidebar = vara_docs_sidebar_navigation(docs_root_permalink, docs_sidebar_sections) %}
+
+  {% if docs_shiki %}
+    <template id="vara-shiki-config">
+      {% for language in docs_shiki_custom_languages %}
+        {% if language.id and language.url %}
+          <span data-language-id="{{ language.id }}" data-language-url="{{ language.url }}"></span>
+        {% endif %}
+      {% endfor %}
+    </template>
+  {% endif %}
 
   <div class="flex h-dvh flex-col" x-data="varapressDocs" x-cloak>
     {% include "./header.j2" %}

@@ -7,7 +7,7 @@
  *
  * Usage:
  *   {% for item in vara_docs_raw_pages() %}
- *     {{ item.indent }}- [{{ item.title }}]({{ url(item.permalink) |vara_docs_relative_url }})
+ *     {{ item.indent }}- [{{ item.title }}]({{ vara_absolute_url(item.permalink) }})
  *   {% endfor %}
  */
 

@@ -17,5 +17,12 @@ export default function() {
     docs_sidebar_collapsed: false,
     docs_llms: true,
     docs_llms_index: true,
+    docs_shiki: true,
+    docs_shiki_custom_languages: [
+      {
+        id: "vdl",
+        url: "https://cdn.jsdelivr.net/gh/varavelio/vdl@e0b51b/integrations/syntax/textmate/vdl.tmLanguage.json",
+      },
+    ],
   };
 }

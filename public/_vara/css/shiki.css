@@ -1,0 +1,72 @@
+/* Preserve code-block layout while client-side highlighting is loading. */
+.prose.vara-shiki-enabled pre:has(> code[class*="language-"]) {
+  visibility: hidden;
+}
+
+.prose.vara-shiki-enabled
+  pre[data-vara-shiki-ready]:has(> code[class*="language-"]) {
+  visibility: visible;
+}
+
+.prose .vara-shiki-block {
+  position: relative;
+}
+
+.prose .vara-shiki-copy {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 1;
+  display: inline-flex;
+  height: 1.5rem;
+  min-width: 3.25rem;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #57606a;
+  border-radius: var(--radius-sm);
+  background-color: #24292e;
+  padding: 0 0.5rem;
+  color: #e1e4e8;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-medium);
+  line-height: 1.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: background-color 0.15s ease-in-out, opacity 0.15s ease-in-out;
+}
+
+.prose .vara-shiki-block:hover > .vara-shiki-copy {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.prose .vara-shiki-copy:hover {
+  background-color: #30363d;
+}
+
+.prose .vara-shiki-copy:focus-visible {
+  outline: 2px solid var(--color-info);
+  outline-offset: 2px;
+}
+
+.prose .vara-shiki-copy .ready::before {
+  content: "Copy";
+}
+
+.prose .vara-shiki-copy .success {
+  display: none;
+}
+
+.prose .vara-shiki-copy .success::before {
+  content: "Copied";
+}
+
+.prose .vara-shiki-copy.copied .ready {
+  display: none;
+}
+
+.prose .vara-shiki-copy.copied .success {
+  display: inline;
+}

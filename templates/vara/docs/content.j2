@@ -44,7 +44,7 @@
   </div>
 
   {% if page.content|vara_trim %}
-    <article class="prose dark:prose-invert max-w-none">
+    <article class="prose dark:prose-invert max-w-none{% if docs_shiki %} vara-shiki-enabled{% endif %}">
       {{ page.content|safe }}
     </article>
 

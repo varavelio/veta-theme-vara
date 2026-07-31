@@ -34,4 +34,4 @@ Theme logic split into two files:
 
 ### `docs/`
 
-JavaScript specific to the documentation page templates (`docs.j2`).
+JavaScript specific to the documentation page templates. `docs.js` handles navigation and documentation interactions, while `shiki.js` detects and highlights code blocks on demand.

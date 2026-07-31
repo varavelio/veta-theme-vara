@@ -36,15 +36,18 @@ You MUST follow the following instructions:
 - `docs_header_links` adds ordered links to the desktop docs header and mobile navigation drawer. Each link requires `title` and `href`, with optional `new_tab` and `icon` values.
 - `docs_sidebar_sections` creates or extends weighted docs sidebar sections. It merges with generated sections by stable `id` (the first permalink segment below the docs root), and links with matching normalized `href` values are merged rather than duplicated.
 - The docs table of contents is built client-side from rendered `h2` and `h3` elements; do not add TOC metadata to page generators.
+- `docs_shiki` enables client-side syntax highlighting with the fixed `github-dark` theme and defaults to `true`. Languages are detected from rendered `language-*` classes and loaded on demand. Entries in `docs_shiki_custom_languages` require an exact `id` and a CORS-accessible TextMate grammar `url`; the ID must match the code fence language.
 - `vara-docs-raw` expects raw content in `page.content` and an exact-extension permalink such as `/docs/guide/index.md`. When `docs_llms_index` is enabled, it prepends a hierarchical index of every page using that template.
 - `vara-docs-llms-txt` and `vara-docs-llms-full-txt` generate documentation-wide indexes from all `vara-docs-raw` pages. Use them for root-level `/docs/llms.txt` and `/docs/llms-full.txt` outputs; the full variant also concatenates every raw content body.
-- `vara-sitemap-xml` lists every generated page except itself and pages with `sitemap: false`. Configure `site_url` for protocol-compliant absolute locations; without it, local builds use root-relative permalinks.
+- `site_url` is the public base URL for canonical and Open Graph metadata, sitemap locations, and generated Markdown documentation indexes. Resolve these external-facing URLs with `vara_absolute_url`; keep interactive navigation and asset URLs on Veta's relative `url()` helper so local previews remain navigable. Missing or invalid values fall back to root-relative URLs.
+- `vara-sitemap-xml` lists every generated page except itself and pages with `sitemap: false`.
 - All theme-owned public assets must stay under `public/_vara/` to avoid collisions with consuming projects.
 - `pages/` and `content/` belong to the showcase, not the distributable theme.
 
 ## Working with JavaScript
 
 - Before modifying or adding any JavaScript under `public/_vara/js/`, read `public/_vara/js/README.md` first. It explains the directory layout, bundling rules, and the role of each module.
+- Keep Shiki loading-state, theme, code-block, and copy-button styles centralized in `public/_vara/css/shiki.css`.
 - JS source modules under `public/_vara/js/src/` use modern ES syntax (esbuild handles transpilation).
 - JS source inside `pages/*.js`, `data/*.js`, `filters/*.js`, `functions/*.js` are constrained by Goja and are synchronous only.
 
