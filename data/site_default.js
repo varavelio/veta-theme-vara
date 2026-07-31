@@ -12,6 +12,7 @@ export default function() {
     docs_logo_dark: "", // Docs only override
     docs_show_title: true,
     docs_github_repo: "", // In user/repo format
+    docs_header_links: [],
     docs_sidebar_sections: [],
     docs_sidebar_collapsed: false,
     docs_llms: true,

@@ -16,6 +16,7 @@
   {% set docs_logo_dark = vara_site_setting("docs_logo_dark", "logo_dark") %}
   {% set docs_show_title = vara_site_setting("docs_show_title") %}
   {% set docs_github_repo = vara_site_setting("docs_github_repo") %}
+  {% set docs_header_links = vara_site_setting("docs_header_links") %}
   {% set docs_sidebar_sections = vara_site_setting("docs_sidebar_sections") %}
   {% set docs_sidebar_collapsed = vara_site_setting("docs_sidebar_collapsed") %}
   {% set docs_llms = vara_site_setting("docs_llms") %}
@@ -78,6 +79,23 @@
               x-effect='sidebarOpen && $nextTick(() => initSidebarScroll($el, "{{ page.permalink }}"))'
             >
               {% include "./sidebar.j2" %}
+              {% if docs_header_links and docs_header_links|length > 0 %}
+                <div class="mt-4 space-y-1 border-t border-base-400 pt-4">
+                  {% for link in docs_header_links %}
+                    {% if link.title and link.href %}
+                      <a
+                        href="{{ url(link.href) }}"
+                        {% if link.new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
+                        class="flex items-center gap-2 rounded-md border border-transparent p-2 text-sm font-medium text-content/70 transition-colors hover:bg-base-300 hover:text-content"
+                      >
+                        {% if link.icon %}{{ vara_icon(link.icon, "size-4 shrink-0")|safe }}{% endif %}
+                        <span class="flex-1 truncate">{{ link.title }}</span>
+                        {% if link.new_tab %}{{ vara_icon("external-link", "size-3.5 shrink-0 text-content-muted")|safe }}{% endif %}
+                      </a>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+              {% endif %}
             </nav>
           </aside>
         </div>

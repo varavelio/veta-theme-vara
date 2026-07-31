@@ -33,6 +33,7 @@ You MUST follow the following instructions:
 - `filters/` contains distributable JS filters. Every filter filename and template filter name must use the `vara_` prefix because these ship in the consuming project's global namespace.
 - `functions/` contains JS template functions. Every function filename and template function name must use the `vara_` prefix because these ship in the consuming project's global namespace.
 - `data/site_default.js` contains theme defaults. `data/site.yaml` is the showcase override. In Pongo templates and components, resolve these values with `vara_site_setting("specific_key", "fallback_key")`; it checks each key in `data.site` and then `data.site_default`. Keep literal defaults in the template with the `default` filter.
+- `docs_header_links` adds ordered links to the desktop docs header and mobile navigation drawer. Each link requires `title` and `href`, with optional `new_tab` and `icon` values.
 - `docs_sidebar_sections` creates or extends weighted docs sidebar sections. It merges with generated sections by stable `id` (the first permalink segment below the docs root), and links with matching normalized `href` values are merged rather than duplicated.
 - The docs table of contents is built client-side from rendered `h2` and `h3` elements; do not add TOC metadata to page generators.
 - `vara-docs-raw` expects raw content in `page.content` and an exact-extension permalink such as `/docs/guide/index.md`. When `docs_llms_index` is enabled, it prepends a hierarchical index of every page using that template.

@@ -43,19 +43,35 @@
       </div>
     </div>
 
-    <div class="flex flex-none items-center">
+    <div class="flex flex-none items-center gap-2">
+      {% if docs_header_links and docs_header_links|length > 0 %}
+        <nav class="hidden items-center gap-1 desk:flex" aria-label="Documentation links">
+          {% for link in docs_header_links %}
+            {% if link.title and link.href %}
+              <a
+                href="{{ url(link.href) }}"
+                {% if link.new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
+                class="inline-flex h-8 items-center gap-1.5 rounded-md px-2.5 text-sm font-medium whitespace-nowrap text-content-muted transition-colors hover:bg-base-200 hover:text-content focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-content"
+              >
+                {% if link.icon %}{{ vara_icon(link.icon, "size-4 shrink-0")|safe }}{% endif %}
+                <span>{{ link.title }}</span>
+              </a>
+            {% endif %}
+          {% endfor %}
+        </nav>
+      {% endif %}
       {% if docs_github_repo %}
         <a
           href="https://github.com/{{ docs_github_repo }}"
           target="_blank"
           rel="noopener noreferrer"
-          class="mr-2 hidden items-center gap-2 rounded-md border border-base-400 px-3 py-1.5 text-sm font-medium text-content transition-colors hover:bg-base-300 desk:flex"
+          class="hidden items-center gap-2 rounded-md border border-base-400 px-3 py-1.5 text-sm font-medium text-content transition-colors hover:bg-base-300 desk:flex"
         >
           {{ vara_icon("github", "size-4")|safe }}
           <span>GitHub</span>
         </a>
       {% endif %}
-      {{ theme_picker("Theme", "-mr-4") }}
+      {{ theme_picker("Theme") }}
     </div>
   </div>
 </header>
