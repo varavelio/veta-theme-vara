@@ -33,6 +33,7 @@ You MUST follow the following instructions:
 - `filters/` contains distributable JS filters. These ARE part of the theme overlay and ship to consuming projects.
 - `functions/` contains JS template functions. These ARE part of the theme overlay and ship to consuming projects.
 - `data/site_default.js` contains theme defaults. `data/site.yaml` is the showcase override. In Pongo templates and components, resolve these values with `site_setting("specific_key", "fallback_key")`; it checks each key in `data.site` and then `data.site_default`. Keep literal defaults in the template with the `default` filter.
+- `docs_sidebar_sections` creates or extends weighted docs sidebar sections. It merges with generated sections by stable `id` (the first permalink segment below the docs root), and links with matching normalized `href` values are merged rather than duplicated.
 - `veta/docs-raw` expects raw content in `page.content` and an exact-extension permalink such as `/docs/guide/index.md`. When `docs_llms_index` is enabled, it prepends a hierarchical index of every page using that template.
 - `veta/docs-llms-txt` and `veta/docs-llms-full-txt` generate documentation-wide indexes from all `veta/docs-raw` pages. Use them for root-level `/docs/llms.txt` and `/docs/llms-full.txt` outputs; the full variant also concatenates every raw content body.
 - `veta/sitemap-xml` lists every generated page except itself and pages with `sitemap: false`. Configure `site_url` for protocol-compliant absolute locations; without it, local builds use root-relative permalinks.
