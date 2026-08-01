@@ -8,6 +8,9 @@ This index lists every available documentation page and its Markdown source.
   {{- item.indent }}- [{{ item.title|safe }}]({{ vara_absolute_url(item.permalink) }})
 {% endfor %}
 
+{{"## Documentation content"}}
+
+The documentation for the current page follows, reproduced verbatim.
 {% endif %}
 
-{{- page.content -}}
+{{ page.content -}}
