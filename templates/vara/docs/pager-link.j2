@@ -1,11 +1,23 @@
 {% macro pager_link(item, direction, selection_class) export %}
   <a
     href="{{ url(item.permalink) }}"
-    class="group min-h-16 min-w-0 flex-col justify-center rounded-lg border border-base-400 p-3 transition-colors hover:border-base-300 hover:bg-base-200 {{ selection_class }}{% if direction == 'next' %} items-end text-right desk:col-start-2{% else %} items-start{% endif %}"
+    class="group min-h-16 min-w-0 overflow-hidden rounded-lg border border-base-400 transition-colors hover:border-base-300 hover:bg-base-200 {{ selection_class }}{% if direction == 'next' %} desk:col-start-2{% endif %}"
   >
-    <span class="text-xs text-content-muted">{% if direction == "next" %}Next{% else %}Previous{% endif %}</span>
-    <span class="block w-full truncate text-sm font-medium text-content transition-colors group-hover:text-info">
-      {{ item.title }}
+    {% if direction != "next" %}
+      <span class="flex w-10 shrink-0 items-center justify-center bg-base-200/60 text-content-muted transition-colors group-hover:bg-info/10 group-hover:text-info" aria-hidden="true">
+        {{ vara_icon("arrow-left", "size-5")|safe }}
+      </span>
+    {% endif %}
+    <span class="flex min-w-0 flex-1 flex-col justify-center p-3{% if direction == 'next' %} items-end text-right{% else %} items-start{% endif %}">
+      <span class="text-xs text-content-muted">{% if direction == "next" %}Next{% else %}Previous{% endif %}</span>
+      <span class="block w-full truncate text-sm font-medium text-content transition-colors group-hover:text-info">
+        {{ item.title }}
+      </span>
     </span>
+    {% if direction == "next" %}
+      <span class="flex w-10 shrink-0 items-center justify-center bg-base-200/60 text-content-muted transition-colors group-hover:bg-info/10 group-hover:text-info" aria-hidden="true">
+        {{ vara_icon("arrow-right", "size-5")|safe }}
+      </span>
+    {% endif %}
   </a>
 {% endmacro %}

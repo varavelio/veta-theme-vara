@@ -48,6 +48,8 @@
       {{ page.content|safe }}
     </article>
 
+    {% set docs_footer_links = vara_docs_footer_links(page.docs_footer_links) %}
+    {% include "./footer-links.j2" %}
     {% include "./pagination.j2" %}
   {% endif %}
 

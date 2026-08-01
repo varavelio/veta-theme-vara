@@ -34,6 +34,7 @@ You MUST follow the following instructions:
 - `functions/` contains JS template functions. Every function filename and template function name must use the `vara_` prefix because these ship in the consuming project's global namespace.
 - `data/site_default.js` contains theme defaults. `data/site.yaml` is the showcase override. In Pongo templates and components, resolve these values with `vara_site_setting("specific_key", "fallback_key")`; it checks each key in `data.site` and then `data.site_default`. Keep literal defaults in the template with the `default` filter.
 - `docs_header_links` adds ordered links to the desktop docs header and mobile navigation drawer. Each link requires `title` and `href`, with optional `new_tab` and `icon` values.
+- `page.docs_footer_links` adds opt-in links between a documentation page's content and pager. Each link requires `title` and a final `href`, with optional `icon`; `new_tab` defaults to `true`. The page generator owns source-specific URL construction.
 - `docs_sidebar_sections` creates or extends weighted docs sidebar sections. It merges with generated sections by stable `id` (the first permalink segment below the docs root), and links with matching normalized `href` values are merged rather than duplicated.
 - The docs table of contents is built client-side from rendered `h2` and `h3` elements; do not add TOC metadata to page generators.
 - Docs heading hashes and TOC links scroll the internal `main` container smoothly.

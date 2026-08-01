@@ -1,0 +1,15 @@
+{% if docs_footer_links and docs_footer_links|length > 0 %}
+  <nav class="mt-8 flex flex-wrap justify-end gap-2" aria-label="Page links">
+    {% for link in docs_footer_links %}
+      <a
+        href="{{ url(link.href) }}"
+        {% if link.new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
+        class="inline-flex h-8 min-w-0 max-w-full items-center gap-1.5 rounded-md border border-base-400 bg-base-100 px-2.5 text-xs font-medium whitespace-nowrap text-content outline-content transition-colors hover:bg-base-200 focus-visible:outline-2"
+      >
+        {% if link.icon %}{{ vara_icon(link.icon, "size-3.5 shrink-0 text-content-muted")|safe }}{% endif %}
+        <span class="truncate">{{ link.title }}</span>
+        {% if link.new_tab %}{{ vara_icon("external-link", "size-3.5 shrink-0 text-content-muted")|safe }}{% endif %}
+      </a>
+    {% endfor %}
+  </nav>
+{% endif %}
