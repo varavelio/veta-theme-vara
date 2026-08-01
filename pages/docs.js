@@ -27,6 +27,13 @@ export default function({ files, parse }) {
       weight,
       icon,
       content: pageContent,
+      docs_footer_links: [
+        {
+          title: "Edit this page",
+          href: `https://github.com/varavelio/veta-theme-vara/edit/main/${path}`,
+          icon: "pencil-line",
+        },
+      ],
     });
 
     // Markdown Version
