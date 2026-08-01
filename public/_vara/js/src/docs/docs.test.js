@@ -7,11 +7,13 @@ import {
   resolveAskAiPrompt,
   resolveAskAiUrl,
   resolveBackToTopState,
+  resolveHashId,
   resolveMarkdownCopyUi,
   resolvePromptCopyUi,
   resolveSidebarGroupOpen,
   resolveSidebarScrollTop,
   resolveTableOfContents,
+  scrollToHash,
   shouldCenterSidebarLink,
   slugifyTocHeading,
 } from "./docs.js";
@@ -38,6 +40,61 @@ test("builds h2 and h3 entries while assigning unique heading ids", () => {
   ]);
   assert.equal(headings[0].id, "guide");
   assert.equal(headings[4].id, "details");
+});
+
+test("resolves encoded heading ids from URL hashes", () => {
+  assert.equal(resolveHashId("#next-steps"), "next-steps");
+  assert.equal(resolveHashId("#caf%C3%A9"), "café");
+  assert.equal(resolveHashId("#"), "");
+  assert.equal(resolveHashId(""), "");
+});
+
+test("smoothly scrolls to a heading after it is available", () => {
+  const calls = [];
+  const heading = {
+    scrollIntoView(options) {
+      calls.push(options);
+    },
+  };
+
+  assert.equal(
+    scrollToHash("#next-steps", {
+      document: { getElementById: id => id === "next-steps" ? heading : null },
+    }),
+    true,
+  );
+  assert.deepEqual(calls, [{ behavior: "smooth", block: "start" }]);
+  assert.equal(
+    scrollToHash("#missing", {
+      document: { getElementById: () => null },
+    }),
+    false,
+  );
+});
+
+test("can defer initial hash scrolling until the next animation frame", () => {
+  let frame;
+  let scrolled = false;
+  const heading = {
+    scrollIntoView() {
+      scrolled = true;
+    },
+  };
+
+  assert.equal(
+    scrollToHash("#next-steps", {
+      document: { getElementById: () => heading },
+      defer: true,
+      requestAnimationFrame(callback) {
+        frame = callback;
+      },
+    }),
+    true,
+  );
+  assert.equal(scrolled, false);
+
+  frame();
+  assert.equal(scrolled, true);
 });
 
 test("keeps back-to-top hidden for short upward scrolls", () => {

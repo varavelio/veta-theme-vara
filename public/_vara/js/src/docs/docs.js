@@ -39,6 +39,41 @@ export function resolveTableOfContents(headings) {
     .filter(item => item.title);
 }
 
+export function resolveHashId(hash) {
+  const value = String(hash || "");
+  if (!value.startsWith("#") || value.length === 1) return "";
+
+  try {
+    return decodeURIComponent(value.slice(1));
+  } catch (_error) {
+    return value.slice(1);
+  }
+}
+
+export function scrollToHash(hash, options = {}) {
+  const documentRef = options.document ?? globalThis.document;
+  const id = resolveHashId(hash);
+  const heading = id ? documentRef?.getElementById(id) : null;
+  if (!heading) return false;
+
+  const scroll = () => heading.scrollIntoView({ behavior: "smooth", block: "start" });
+  if (options.defer) {
+    const requestFrame = options.requestAnimationFrame ?? globalThis.requestAnimationFrame;
+    requestFrame(scroll);
+  } else {
+    scroll();
+  }
+
+  return true;
+}
+
+function navigateToHeading(id) {
+  const url = new URL(window.location.href);
+  url.hash = id;
+  history.pushState(null, "", url);
+  return scrollToHash(url.hash);
+}
+
 function initTableOfContents() {
   const headings = document.querySelectorAll(".prose :is(h1, h2, h3, h4, h5, h6)");
   const items = resolveTableOfContents(headings);
@@ -54,6 +89,10 @@ function initTableOfContents() {
         item.level === 3 ? " pl-3" : ""
       }`;
       link.textContent = item.title;
+      link.addEventListener("click", (event) => {
+        event.preventDefault();
+        navigateToHeading(item.id);
+      });
       if (isMobile) link.setAttribute("x-on:click", "tocOpen = false");
       nav.append(link);
     }
@@ -84,10 +123,7 @@ function injectAnchorLinks() {
         anchor.innerHTML = LINK_SVG;
         anchor.addEventListener("click", (e) => {
           e.preventDefault();
-          const url = new URL(window.location.href);
-          url.hash = heading.id;
-          history.pushState(null, "", url);
-          heading.scrollIntoView({ behavior: "smooth", block: "start" });
+          navigateToHeading(heading.id);
         });
         heading.append(anchor);
       }
@@ -331,6 +367,11 @@ export function resolveSidebarScrollTop(storedValue) {
   if (!Number.isFinite(scrollTop) || scrollTop < 0) return null;
 
   return scrollTop;
+}
+
+function initHashNavigation() {
+  scrollToHash(location.hash, { defer: true });
+  window.addEventListener("hashchange", () => scrollToHash(location.hash));
 }
 
 function registerAlpineVarapressDocs(tocAvailable) {
@@ -597,6 +638,7 @@ export function initDocs() {
   const tocAvailable = initTableOfContents();
   injectAnchorLinks();
   initTocHighlight();
+  initHashNavigation();
   document.addEventListener("alpine:init", () => {
     registerAlpineVarapressDocs(tocAvailable);
   });
