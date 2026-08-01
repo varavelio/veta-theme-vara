@@ -7,6 +7,14 @@ export default function() {
     logo_light: "https://cdn.jsdelivr.net/gh/varavelio/brand@v1.0.2/dist/logo-black.svg",
     logo_dark: "https://cdn.jsdelivr.net/gh/varavelio/brand@v1.0.2/dist/logo-white.svg",
 
+    not_found_links: [
+      {
+        icon: "house",
+        title: "Go home",
+        href: "/",
+      },
+    ],
+
     docs_favicon: "", // Docs only override
     docs_logo_light: "", // Docs only override
     docs_logo_dark: "", // Docs only override

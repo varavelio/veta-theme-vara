@@ -19,25 +19,48 @@
 
 {% block body %}
   {% import "./vara/macros/button.j2" button %}
+  {% set not_found_links = vara_not_found_links(vara_site_setting("not_found_links")) %}
 
-  <main class="size-full flex items-center justify-center bg-base-100 px-4 py-16">
-    <section class="w-full max-w-xl rounded-lg border border-base-400 bg-base-100 p-6 desk:p-8">
-      <p class="font-mono text-sm font-medium text-content-muted">
+  <main class="relative isolate flex size-full items-center justify-center overflow-hidden bg-base-100 px-4 py-16">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
+      <span class="select-none font-mono text-[clamp(12rem,42vw,34rem)] leading-none font-semibold tracking-[-0.08em] text-base-300/70">
         404
+      </span>
+    </div>
+
+    <section class="relative z-10 w-full max-w-lg rounded-lg border border-base-400 bg-base-100/95 p-6 shadow-sm backdrop-blur-sm desk:p-8">
+      <p class="font-mono text-xs font-medium tracking-wider text-content-muted uppercase">
+        Error 404
       </p>
 
-      <div class="mt-4 space-y-3">
+      <div class="mt-5 space-y-3">
         <h1 class="text-3xl font-semibold tracking-tight text-content desk:text-4xl">
           Page not found
         </h1>
         <p class="text-base leading-7 text-content-muted">
-          The page you requested does not exist or may have moved.
+          The page you requested does not exist or may have moved
         </p>
       </div>
 
-      <div class="mt-8 flex">
-        {{ button("Go home", url("/")) }}
-      </div>
+      {% if not_found_links and not_found_links|length > 0 %}
+        <nav class="mt-8 flex flex-wrap gap-3" aria-label="Not found page links">
+          {% for link in not_found_links %}
+            {% if link.new_tab %}
+              {% set target = "_blank" %}
+              {% set icon_right = "external-link" %}
+            {% else %}
+              {% set target = "" %}
+              {% set icon_right = "" %}
+            {% endif %}
+
+            {% if link.primary %}
+              {{ button(link.title, url(link.href), target, link.icon, icon_right, "md", "md", "solid", "neutral", "false", "false", "button", "max-w-full") }}
+            {% else %}
+              {{ button(link.title, url(link.href), target, link.icon, icon_right, "md", "md", "outline", "neutral", "false", "false", "button", "max-w-full") }}
+            {% endif %}
+          {% endfor %}
+        </nav>
+      {% endif %}
     </section>
   </main>
 {% endblock %}
