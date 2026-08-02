@@ -1,0 +1,123 @@
+<dialog
+  x-data="varaDocsSearch($el.dataset.searchIndexUrl, $el.dataset.searchSiteRoot)"
+  x-ref="dialog"
+  data-search-index-url="{{ url(docs_root_permalink + docs_search_index_filename) }}"
+  data-search-site-root="{{ url('/') }}"
+  x-on:vara-search-open.window="openSearch()"
+  x-on:vara-search-preload.window="preload()"
+  x-on:keydown.window="handleShortcut($event)"
+  x-on:click="if ($event.target === $refs.dialog) closeSearch()"
+  x-on:close="resetSearch()"
+  class="fixed inset-0 m-auto max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-2xl overflow-hidden rounded-lg border border-base-400 bg-base-100 p-0 text-content shadow-xl backdrop:bg-black/50"
+  aria-label="Search documentation"
+>
+  <div class="flex max-h-[calc(100dvh-2rem)] min-h-80 flex-col">
+    <div class="border-b border-base-400 bg-base-200/50 p-3">
+      <div class="flex items-center gap-2 rounded-md border border-base-400 bg-base-100 px-3 shadow-sm transition-colors focus-within:border-content">
+        {{ vara_icon("search", "size-4 shrink-0 text-content-muted")|safe }}
+        <input
+          id="vara-search-input"
+          x-ref="input"
+          x-model="query"
+          x-on:input.debounce.80ms="runQuery()"
+          class="h-10 min-w-0 flex-1 bg-transparent text-sm text-content outline-none placeholder:text-content-muted"
+          type="text"
+          inputmode="search"
+          aria-label="Search documentation"
+          autocomplete="off"
+          autocapitalize="off"
+          spellcheck="false"
+          placeholder="Search pages and sections..."
+        >
+        <button
+          type="button"
+          x-on:click="closeSearch()"
+          class="inline-flex size-7 shrink-0 cursor-pointer items-center justify-center rounded-md text-content-muted outline-content transition-colors hover:bg-base-300 hover:text-content focus-visible:outline-2"
+          aria-label="Close search"
+        >
+          {{ vara_icon("x", "size-4")|safe }}
+        </button>
+      </div>
+    </div>
+
+    <nav class="min-h-0 flex-1 overflow-y-auto p-2" aria-label="Search results">
+      <div x-show="status === 'loading'" class="flex min-h-56 flex-col items-center justify-center gap-3 px-6 text-center">
+        {{ vara_icon("loader-circle", "size-5 animate-spin text-content-muted")|safe }}
+        <p class="text-sm text-content-muted">Preparing documentation search...</p>
+      </div>
+
+      <div x-show="status === 'error'" class="flex min-h-56 flex-col items-center justify-center gap-3 px-6 text-center">
+        <span class="flex size-10 items-center justify-center rounded-full bg-error/10 text-error">
+          {{ vara_icon("triangle-alert", "size-5")|safe }}
+        </span>
+        <div class="max-w-md space-y-1">
+          <p class="text-sm font-semibold text-content">Search index unavailable</p>
+          <p class="text-sm leading-6 text-content-muted">
+            Generate the documentation search index with the
+            <code class="rounded-sm bg-base-200 px-1 py-0.5 font-mono text-xs text-content">vara-docs-search-index</code>
+            template, or disable
+            <code class="rounded-sm bg-base-200 px-1 py-0.5 font-mono text-xs text-content">docs_search</code>.
+          </p>
+        </div>
+        <button
+          type="button"
+          x-on:click="retry()"
+          class="inline-flex h-8 cursor-pointer items-center rounded-md border border-base-400 bg-base-100 px-3 text-xs font-medium text-content outline-content transition-colors hover:bg-base-200 focus-visible:outline-2"
+        >
+          Try again
+        </button>
+      </div>
+
+      <div x-show="status === 'ready' && query.trim().length < 2" class="flex min-h-56 flex-col items-center justify-center gap-3 px-6 text-center">
+        <span class="flex size-10 items-center justify-center rounded-full bg-base-200 text-content-muted">
+          {{ vara_icon("search", "size-5")|safe }}
+        </span>
+        <div class="space-y-1">
+          <p class="text-sm font-medium text-content">Search every page and section</p>
+          <p class="text-sm text-content-muted">Type at least two characters to begin.</p>
+        </div>
+      </div>
+
+      <div x-show="status === 'ready' && query.trim().length >= 2 && results.length === 0" class="flex min-h-56 flex-col items-center justify-center gap-3 px-6 text-center">
+        <span class="flex size-10 items-center justify-center rounded-full bg-base-200 text-content-muted">
+          {{ vara_icon("search", "size-5")|safe }}
+        </span>
+        <div class="space-y-1">
+          <p class="text-sm font-medium text-content">No results found</p>
+          <p class="text-sm text-content-muted">Try a different term or check the spelling.</p>
+        </div>
+      </div>
+
+      <template x-for="result in results" x-bind:key="result.id">
+        <a
+          x-bind:href="result.url"
+          x-on:click="closeSearch()"
+          class="block rounded-md px-3 py-3 text-left outline-content transition-colors hover:bg-base-200/60 focus:bg-base-200 focus-visible:outline-2"
+        >
+          <span x-show="result.sectionTitle" x-text="result.pageTitle" class="block truncate text-xs font-medium text-content-muted"></span>
+          <span class="mt-0.5 block truncate text-sm font-semibold text-content">
+            <template x-for="(segment, segmentIndex) in result.titleSegments" x-bind:key="segmentIndex">
+              <template x-if="segment.match">
+                <mark x-text="segment.text" class="rounded-sm bg-yellow-300 px-0.5 text-black"></mark>
+              </template>
+              <template x-if="!segment.match">
+                <span x-text="segment.text"></span>
+              </template>
+            </template>
+          </span>
+          <p x-show="result.snippet.length" class="mt-1 line-clamp-2 text-sm leading-5 text-content-muted">
+            <template x-for="(segment, segmentIndex) in result.snippet" x-bind:key="segmentIndex">
+              <template x-if="segment.match">
+                <mark x-text="segment.text" class="rounded-sm bg-yellow-300 px-0.5 text-black"></mark>
+              </template>
+              <template x-if="!segment.match">
+                <span x-text="segment.text"></span>
+              </template>
+            </template>
+          </p>
+        </a>
+      </template>
+    </nav>
+
+  </div>
+</dialog>

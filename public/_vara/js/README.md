@@ -10,7 +10,8 @@ public/_vara/js/
 ├── src/
 │   ├── head/       ← High-priority scripts injected before </head> on every page
 │   ├── theme/      ← Theme logic
-│   └── docs/       ← JavaScript for documentation page templates
+│   ├── docs/       ← Documentation behavior and support modules
+│   └── docs-search/ ← Optional documentation search entry point
 ```
 
 ## How bundling works
@@ -35,3 +36,7 @@ Theme logic split into two files:
 ### `docs/`
 
 JavaScript specific to the documentation page templates. `docs.js` handles navigation and documentation interactions, while `shiki.js` detects and highlights code blocks on demand.
+
+### `docs-search/`
+
+Optional documentation search entry point and implementation. Keeping MiniSearch here leaves it out of the core docs bundle; the resulting bundle is included only when `docs_search` is enabled.

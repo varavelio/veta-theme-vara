@@ -1,5 +1,6 @@
 {% import "../macros/theme-picker.j2" theme_picker %}
 {% import "../macros/github-button.j2" github_button %}
+{% import "../macros/kbd.j2" kbd %}
 
 <header class="h-14 shrink-0 border-b border-base-400 bg-base-100">
   <div class="mx-auto flex h-full max-w-[80rem] items-center justify-between gap-3 px-4">
@@ -44,7 +45,35 @@
       </div>
     </div>
 
+    {% if docs_search %}
+      <div class="hidden min-w-40 max-w-xs flex-1 px-2 desk:block">
+        <button
+          type="button"
+          x-on:click="$dispatch('vara-search-open')"
+          x-on:mouseenter="$dispatch('vara-search-preload')"
+          x-on:focus="$dispatch('vara-search-preload')"
+          class="flex h-8 w-full cursor-text items-center gap-2 rounded-md border border-base-400 bg-base-100 px-2.5 text-sm text-content-muted outline-content transition-colors hover:bg-base-200 hover:text-content focus-visible:outline-2"
+          aria-label="Search documentation"
+        >
+          {{ vara_icon("search", "size-4 shrink-0")|safe }}
+          <span class="min-w-0 flex-1 truncate text-left">Search documentation</span>
+          {{ kbd("Ctrl K", "sm", "shrink-0") }}
+        </button>
+      </div>
+    {% endif %}
+
     <div class="flex min-w-0 flex-1 items-center justify-end gap-2">
+      {% if docs_search %}
+        <button
+          type="button"
+          x-on:click="$dispatch('vara-search-open')"
+          x-on:focus="$dispatch('vara-search-preload')"
+          class="inline-flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-md text-content outline-content transition-colors hover:bg-base-300 focus-visible:outline-2 desk:hidden"
+          aria-label="Search documentation"
+        >
+          {{ vara_icon("search", "size-4")|safe }}
+        </button>
+      {% endif %}
       {% if docs_header_links and docs_header_links|length > 0 %}
         <nav class="hidden min-w-0 flex-1 overflow-x-auto overflow-y-hidden desk:block" aria-label="Documentation links">
           <div class="ml-auto flex w-max items-center gap-1">

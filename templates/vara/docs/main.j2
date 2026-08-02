@@ -8,6 +8,9 @@
 {% endblock %}
 
 {% block head_extra %}
+  {% if vara_site_setting("docs_search") %}
+    <script src="{{ url('/_vara/js/build/docs-search.js') }}" defer></script>
+  {% endif %}
   <script src="{{ url('/_vara/js/build/docs.js') }}" defer></script>
 {% endblock %}
 
@@ -20,6 +23,8 @@
   {% set docs_sidebar_sections = vara_site_setting("docs_sidebar_sections") %}
   {% set docs_sidebar_collapsed = vara_site_setting("docs_sidebar_collapsed") %}
   {% set docs_llms = vara_site_setting("docs_llms") %}
+  {% set docs_search = vara_site_setting("docs_search") %}
+  {% set docs_search_index_filename = vara_site_setting("docs_search_index_filename") %}
   {% set docs_shiki = vara_site_setting("docs_shiki") %}
   {% set docs_shiki_custom_languages = vara_site_setting("docs_shiki_custom_languages") %}
   {% set site_title = vara_site_setting("title") %}
@@ -39,6 +44,7 @@
 
   <div class="flex h-dvh flex-col" x-data="varapressDocs" x-cloak>
     {% include "./header.j2" %}
+    {% if docs_search %}{% include "./search.j2" %}{% endif %}
 
     <div class="relative isolate flex min-h-0 flex-1 justify-center">
       <div
