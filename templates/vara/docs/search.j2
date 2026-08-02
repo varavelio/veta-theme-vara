@@ -94,25 +94,10 @@
           x-on:click="closeSearch()"
           class="block rounded-md px-3 py-3 text-left outline-content transition-colors hover:bg-base-200/60 focus:bg-base-200 focus-visible:outline-2"
         >
-          <span x-show="result.sectionTitle" x-text="result.pageTitle" class="block truncate text-xs font-medium text-content-muted"></span>
-          <span class="mt-0.5 block truncate text-sm font-semibold text-content">
-            <template x-for="(segment, segmentIndex) in result.titleSegments" x-bind:key="segmentIndex">
-              <template x-if="segment.match">
-                <mark x-text="segment.text" class="rounded-sm bg-yellow-300 px-0.5 text-black"></mark>
-              </template>
-              <template x-if="!segment.match">
-                <span x-text="segment.text"></span>
-              </template>
-            </template>
-          </span>
-          <p x-show="result.snippet.length" class="mt-1 line-clamp-2 text-sm leading-5 text-content-muted">
+          <span x-text="result.pageTitle" class="block truncate text-sm font-semibold text-content"></span>
+          <p class="mt-1 line-clamp-2 text-sm leading-5 text-content-muted">
             <template x-for="(segment, segmentIndex) in result.snippet" x-bind:key="segmentIndex">
-              <template x-if="segment.match">
-                <mark x-text="segment.text" class="rounded-sm bg-yellow-300 px-0.5 text-black"></mark>
-              </template>
-              <template x-if="!segment.match">
-                <span x-text="segment.text"></span>
-              </template>
+              <span x-text="segment.text" x-bind:class="segment.match && 'rounded-sm bg-yellow-300 px-0.5 text-black'"></span>
             </template>
           </p>
         </a>

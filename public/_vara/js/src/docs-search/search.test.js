@@ -103,7 +103,7 @@ test("ranks titles above body matches and supports prefixes and fuzzy terms", as
   assert.deepEqual(searchDocuments(engine, textById, "instal").map(result => result.id), ["title", "body"]);
   const fuzzyResult = searchDocuments(engine, textById, "instalation")[0];
   assert.equal(fuzzyResult.id, "title");
-  assert.deepEqual(fuzzyResult.titleSegments.filter(segment => segment.match), [
+  assert.deepEqual(fuzzyResult.snippet.filter(segment => segment.match), [
     { text: "Installation", match: true },
   ]);
   const technicalResults = searchDocuments(engine, textById, "footer links");
@@ -121,5 +121,15 @@ test("creates bounded snippets with safe highlighted segments", () => {
   assert.equal(segments.map(segment => segment.text).join(""), "...before the installation instructions and...");
   assert.deepEqual(segments.filter(segment => segment.match), [
     { text: "installation", match: true },
+  ]);
+
+  const prefixSegments = createSearchSnippet(
+    "Add the component to your page.",
+    "comp",
+    48,
+    ["component"],
+  );
+  assert.deepEqual(prefixSegments.filter(segment => segment.match), [
+    { text: "comp", match: true },
   ]);
 });

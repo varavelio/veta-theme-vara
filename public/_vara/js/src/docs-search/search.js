@@ -156,15 +156,14 @@ export function searchDocuments(engine, textById, query, limit = SEARCH_RESULT_L
     seenUrls.add(match.url);
 
     const matchedTerms = Object.keys(match.match || {});
-    const title = match.sectionTitle || match.pageTitle;
+    const text = textById.get(match.id);
+    const context = compactText(`${match.sectionTitle || match.pageTitle}. ${text || ""}`);
 
     results.push({
       id: String(match.id),
       url: match.url,
       pageTitle: match.pageTitle,
-      sectionTitle: match.sectionTitle,
-      titleSegments: createSearchHighlight(title, value, matchedTerms),
-      snippet: createSearchSnippet(textById.get(match.id), value, 170, matchedTerms),
+      snippet: createSearchSnippet(context, value, 170, matchedTerms),
     });
 
     if (results.length >= limit) break;
@@ -191,8 +190,11 @@ export function createSearchHighlight(value, query, matchedTerms = []) {
   const text = compactText(value);
   if (!text) return [];
 
-  const terms = queryTerms(query, matchedTerms);
   const normalized = normalizeSearchText(text);
+  const queryMatches = queryTerms(query);
+  const terms = queryMatches.some(term => normalized.includes(term))
+    ? queryMatches
+    : queryTerms("", matchedTerms);
   const segments = [];
   let cursor = 0;
 
