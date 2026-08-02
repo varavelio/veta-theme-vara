@@ -36,8 +36,9 @@ tasks:
     desc: Build javascript of the project
     cmds:
       - rm -rf ./public/_vara/js/build
-      - npx --no esbuild ./public/_vara/js/src/head/index.js --bundle --minify --outfile=./public/_vara/js/build/head.js
-      - npx --no esbuild ./public/_vara/js/src/docs/index.js --bundle --minify --outfile=./public/_vara/js/build/docs.js
+      - npx --no esbuild ./public/_vara/js/src/head/index.js        --bundle --minify --outfile=./public/_vara/js/build/head.js
+      - npx --no esbuild ./public/_vara/js/src/docs/index.js        --bundle --minify --outfile=./public/_vara/js/build/docs.js
+      - npx --no esbuild ./public/_vara/js/src/docs-search/index.js --bundle --minify --outfile=./public/_vara/js/build/docs-search.js
 
   format:
     desc: Run formatters
