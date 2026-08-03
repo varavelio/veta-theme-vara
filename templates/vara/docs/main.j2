@@ -24,12 +24,12 @@
   {% set docs_sidebar_collapsed = vara_site_setting("docs_sidebar_collapsed") %}
   {% set docs_llms = vara_site_setting("docs_llms") %}
   {% set docs_search = vara_site_setting("docs_search") %}
-  {% set docs_search_index_filename = vara_site_setting("docs_search_index_filename") %}
   {% set docs_shiki = vara_site_setting("docs_shiki") %}
   {% set docs_shiki_custom_languages = vara_site_setting("docs_shiki_custom_languages") %}
   {% set site_title = vara_site_setting("title") %}
-  {% set page_path_parts = page.permalink|split:"/" %}
-  {% set docs_root_permalink = "/" + page_path_parts[1] + "/" %}
+  {% set docs_routes = vara_docs_routes() %}
+  {% set docs_root_permalink = docs_routes.root %}
+  {% set docs_search_index_permalink = docs_routes.search_index %}
   {% set docs_sidebar = vara_docs_sidebar_navigation(docs_root_permalink, docs_sidebar_sections) %}
 
   {% if docs_shiki %}

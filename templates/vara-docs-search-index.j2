@@ -1,1 +1,2 @@
-{{ vara_docs_search_index()|safe -}}
+{% set docs_routes = vara_docs_routes() -%}
+{{ vara_docs_search_index(docs_routes.root)|safe -}}

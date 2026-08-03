@@ -42,9 +42,10 @@ test("resolveDocsRawPages uses real ancestors and supports independent roots", (
   ];
 
   assert.deepEqual(
-    resolveDocsRawPages(pages).map(item => [item.title, item.depth]),
-    [["API", 0], ["Docs", 0], ["Install", 1]],
+    resolveDocsRawPages(pages, "/docs/").map(item => [item.title, item.depth]),
+    [["Docs", 0], ["Install", 1]],
   );
+  assert.deepEqual(resolveDocsRawPages(pages, "/api/").map(item => item.title), ["API"]);
 });
 
 test("resolveDocsRawPages escapes Markdown labels and reads pages from context", () => {
@@ -52,7 +53,7 @@ test("resolveDocsRawPages escapes Markdown labels and reads pages from context",
     { permalink: "/docs/index.md", template: "vara-docs-raw", title: "Docs [v2]\\Guide\nHome" },
   ];
 
-  assert.deepEqual(docsRawPages({ pages }), [
+  assert.deepEqual(docsRawPages({ pages }, "/docs/"), [
     {
       content: "",
       depth: 0,

@@ -5,7 +5,7 @@ import docsSearchIndex from "./vara_docs_search_index.js";
 
 const resolveDocsSearchIndex = docsSearchIndex.resolve;
 
-test("serializes searchable HTML docs under the current index root", () => {
+test("serializes searchable HTML docs under the configured docs root", () => {
   const pages = [
     {
       permalink: "/docs/guide/",
@@ -38,7 +38,7 @@ test("serializes searchable HTML docs under the current index root", () => {
     },
   ];
 
-  assert.deepEqual(JSON.parse(resolveDocsSearchIndex(pages, "/docs/vara-docs-search-index.json")), {
+  assert.deepEqual(JSON.parse(resolveDocsSearchIndex(pages, "/docs/")), {
     version: 1,
     documents: [
       {
@@ -54,9 +54,20 @@ test("serializes searchable HTML docs under the current index root", () => {
 });
 
 test("returns an empty versioned index for invalid input", () => {
-  assert.equal(resolveDocsSearchIndex(null, "/docs/vara-docs-search-index.json"), "{\"version\":1,\"documents\":[]}");
+  assert.equal(resolveDocsSearchIndex(null, "/docs/"), "{\"version\":1,\"documents\":[]}");
   assert.deepEqual(JSON.parse(docsSearchIndex({ page: {}, pages: [] })), {
     version: 1,
     documents: [],
   });
+});
+
+test("scopes documents independently from the search index location", () => {
+  const pages = [
+    { permalink: "/products/acme/manual/", template: "vara-docs", title: "Manual" },
+    { permalink: "/products/acme/manual/guide/", template: "vara-docs", title: "Guide" },
+    { permalink: "/docs/", template: "vara-docs", title: "Other docs" },
+  ];
+
+  const index = JSON.parse(resolveDocsSearchIndex(pages, "/products/acme/manual/"));
+  assert.deepEqual(index.documents.map(document => document.title), ["Manual", "Guide"]);
 });

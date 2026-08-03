@@ -2,10 +2,10 @@ const SEARCH_INDEX_VERSION = 1;
 
 /**
  * Serializes searchable documentation pages for the client-side search engine.
- * Only HTML docs under the current index route are included.
+ * Only HTML docs under the configured docs root are included.
  */
-function resolveDocsSearchIndex(pages, currentPermalink) {
-  const root = indexRoot(currentPermalink);
+function resolveDocsSearchIndex(pages, rootPermalink) {
+  const root = normalizedDirectory(rootPermalink);
   const seenPermalinks = new Set();
   const documents = Array.isArray(pages)
     ? pages
@@ -30,15 +30,15 @@ function resolveDocsSearchIndex(pages, currentPermalink) {
   return JSON.stringify({ version: SEARCH_INDEX_VERSION, documents });
 }
 
-function indexRoot(value) {
-  const permalink = normalizedPath(value);
-  const lastSlash = permalink.lastIndexOf("/");
-  return lastSlash >= 0 ? permalink.slice(0, lastSlash + 1) : "/";
-}
-
 function isWithinRoot(value, root) {
   const permalink = normalizedPath(value);
   return root === "/" ? permalink.startsWith("/") : permalink.startsWith(root);
+}
+
+function normalizedDirectory(value) {
+  const path = normalizedPath(value);
+  if (!path) return "/docs/";
+  return path === "/" ? path : `${path.replace(/\/+$/, "")}/`;
 }
 
 function normalizedPath(value) {
@@ -48,8 +48,8 @@ function normalizedPath(value) {
   return path.startsWith("/") ? path : `/${path}`;
 }
 
-function docsSearchIndex({ page, pages }) {
-  return resolveDocsSearchIndex(pages, page && page.permalink);
+function docsSearchIndex({ pages }, rootPermalink) {
+  return resolveDocsSearchIndex(pages, rootPermalink);
 }
 
 docsSearchIndex.resolve = resolveDocsSearchIndex;

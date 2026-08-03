@@ -11,9 +11,10 @@
  *   {% endfor %}
  */
 
-function resolveDocsRawPages(pages) {
+function resolveDocsRawPages(pages, rootPermalink) {
   if (!Array.isArray(pages)) return [];
 
+  const rootRoute = logicalRoute(rootPermalink);
   const nodes = pages
     .filter(page => page && page.template === "vara-docs-raw")
     .map((page, sourceIndex) => ({
@@ -23,7 +24,8 @@ function resolveDocsRawPages(pages) {
       route: logicalRoute(page.permalink),
       sourceIndex,
     }))
-    .filter(node => node.route.length > 0);
+    .filter(node => node.route.length > 0)
+    .filter(node => rootRoute.length === 0 || isRoutePrefix(rootRoute, node.route));
 
   for (const node of nodes) {
     for (const candidate of nodes) {
@@ -92,8 +94,8 @@ function escapeMarkdownLabel(value) {
   return String(value).replace(/\\/g, "\\\\").replace(/\[/g, "\\[").replace(/\]/g, "\\]").replace(/[\r\n]+/g, " ");
 }
 
-function docsRawPages({ pages }) {
-  return resolveDocsRawPages(pages);
+function docsRawPages({ pages }, rootPermalink) {
+  return resolveDocsRawPages(pages, rootPermalink);
 }
 
 docsRawPages.resolve = resolveDocsRawPages;

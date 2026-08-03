@@ -1,7 +1,7 @@
 <dialog
   x-data="varaDocsSearch($el.dataset.searchIndexUrl, $el.dataset.searchSiteRoot)"
   x-ref="dialog"
-  data-search-index-url="{{ url(docs_root_permalink + docs_search_index_filename) }}"
+  data-search-index-url="{{ url(docs_search_index_permalink) }}"
   data-search-site-root="{{ url('/') }}"
   x-on:vara-search-open.window="openSearch()"
   x-on:vara-search-preload.window="preload()"

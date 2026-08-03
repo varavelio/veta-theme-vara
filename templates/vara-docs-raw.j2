@@ -1,10 +1,11 @@
+{% set docs_routes = vara_docs_routes() -%}
 {% if vara_site_setting("docs_llms_index") %}
 
 {{- "## Documentation index"}}
 
 This index lists every available documentation page and its Markdown source.
 
-{% for item in vara_docs_raw_pages() %}
+{% for item in vara_docs_raw_pages(docs_routes.root) %}
   {{- item.indent }}- [{{ item.title|safe }}]({{ vara_absolute_url(item.permalink) }})
 {% endfor %}
 

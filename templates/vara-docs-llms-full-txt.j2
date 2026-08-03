@@ -1,8 +1,10 @@
+{% set docs_routes = vara_docs_routes() %}
+{% set docs_raw_pages = vara_docs_raw_pages(docs_routes.root) -%}
 ## Documentation index
 
 This index lists every available documentation page and its Markdown source.
 
-{% for item in vara_docs_raw_pages() %}
+{% for item in docs_raw_pages %}
   {{- item.indent }}- [{{ item.title|safe }}]({{ vara_absolute_url(item.permalink) }})
 {% endfor %}
 
@@ -10,7 +12,7 @@ This index lists every available documentation page and its Markdown source.
 
 The complete documentation for this website follows, reproduced verbatim from every page.
 
-{% for item in vara_docs_raw_pages() %}---
+{% for item in docs_raw_pages %}---
 
 {{ item.content|safe }}
 

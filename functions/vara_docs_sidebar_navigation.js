@@ -13,7 +13,6 @@ const SECTION_ID_RE = /^[A-Za-z0-9%][A-Za-z0-9._~%-]*$/;
 
 function resolveDocsSidebarNavigation(pages, rootPermalink, configuredSections, currentPermalink) {
   const rootSegments = permalinkSegments(rootPermalink);
-  if (rootSegments.length === 0) return { root: null, sections: [] };
 
   const docsPages = Array.isArray(pages)
     ? pages.filter(page => page && page.template === "vara-docs")
@@ -176,7 +175,7 @@ function compareLinks(a, b) {
 
 function relativePermalinkSegments(permalink, rootSegments) {
   const segments = permalinkSegments(permalink);
-  if (segments.length <= rootSegments.length) return null;
+  if (segments.length < rootSegments.length) return null;
   if (!rootSegments.every((segment, index) => segment === segments[index])) return null;
 
   return segments.slice(rootSegments.length);

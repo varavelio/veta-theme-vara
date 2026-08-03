@@ -51,6 +51,12 @@ export default function({ files, parse }) {
   pages.sort(compareByWeight);
 
   pages.push({
+    permalink: "/docs/vara-docs-search-index.json",
+    template: "vara-docs-search-index",
+    sitemap: false,
+  });
+
+  pages.push({
     permalink: "/docs/llms.txt",
     template: "vara-docs-llms-txt",
   });

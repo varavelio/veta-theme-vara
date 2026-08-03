@@ -195,6 +195,19 @@ test("reads pages and the current permalink from the function context", () => {
   assert.equal(result.sections[0].active, true);
 });
 
+test("supports a documentation tree at the generated site root", () => {
+  const pages = [
+    docsPage("/", "Docs", 0),
+    docsPage("/guide/", "Guide", 1),
+    docsPage("/guide/install/", "Install", 1),
+  ];
+
+  const result = resolveDocsSidebarNavigation(pages, "/", [], "/guide/install/");
+  assert.equal(result.root.href, "/");
+  assert.equal(result.sections[0].href, "/guide/");
+  assert.equal(result.sections[0].links[0].href, "/guide/install/");
+});
+
 function docsPage(permalink, title, weight, icon = "", content = "# Content") {
   return { content, icon, permalink, template: "vara-docs", title, weight };
 }
