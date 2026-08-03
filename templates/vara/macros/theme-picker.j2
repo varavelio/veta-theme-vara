@@ -18,18 +18,19 @@
       <button
         x-ref="trigger"
         type="button"
-        class="relative inline-flex h-8 cursor-pointer select-none items-center gap-1.5 rounded-md bg-transparent px-2.5 text-sm font-medium text-content outline-content transition-colors hover:bg-base-300 focus-visible:outline-2"
+        class="relative inline-flex size-8 cursor-pointer select-none items-center justify-center rounded-md bg-transparent text-sm font-medium text-content outline-content transition-colors hover:bg-base-300 focus-visible:outline-2 desk:h-8 desk:w-auto desk:gap-1.5 desk:px-2.5"
         x-on:click="open = !open"
         x-on:keydown.arrow-down.prevent="open = true; $nextTick(() => $refs.system.focus())"
         x-on:keydown.arrow-up.prevent="open = true; $nextTick(() => $refs.dark.focus())"
         x-bind:aria-expanded="open.toString()"
         x-bind:aria-controls="$id('theme-picker-menu')"
         aria-haspopup="menu"
+        aria-label="{{ label }}"
       >
-        <span x-show="theme === 'system'" x-cloak>{{ vara_icon("laptop-minimal", "size-4 shrink-0")|safe }}</span>
-        <span x-show="theme === 'light'" x-cloak>{{ vara_icon("sun-medium", "size-4 shrink-0")|safe }}</span>
-        <span x-show="theme === 'dark'" x-cloak>{{ vara_icon("moon-star", "size-4 shrink-0")|safe }}</span>
-        <span>{{ label }}</span>
+        <span x-show="theme === 'system'" x-cloak>{{ vara_icon("sun-moon", "size-4 shrink-0")|safe }}</span>
+        <span x-show="theme === 'light'" x-cloak>{{ vara_icon("sun", "size-4 shrink-0")|safe }}</span>
+        <span x-show="theme === 'dark'" x-cloak>{{ vara_icon("moon", "size-4 shrink-0")|safe }}</span>
+        <span class="hidden desk:inline">{{ label }}</span>
       </button>
 
       <div
@@ -62,7 +63,7 @@
           x-on:keydown.arrow-up.prevent="$refs.dark.focus()"
         >
           <span class="flex size-4 shrink-0 items-center justify-center">
-            {{ vara_icon("laptop-minimal", "size-4")|safe }}
+            {{ vara_icon("sun-moon", "size-4")|safe }}
           </span>
           <span>System</span>
           <span class="ml-auto" x-show="theme === 'system'" x-cloak>
@@ -81,7 +82,7 @@
           x-on:keydown.arrow-up.prevent="$refs.system.focus()"
         >
           <span class="flex size-4 shrink-0 items-center justify-center">
-            {{ vara_icon("sun-medium", "size-4")|safe }}
+            {{ vara_icon("sun", "size-4")|safe }}
           </span>
           <span>Light</span>
           <span class="ml-auto" x-show="theme === 'light'" x-cloak>
@@ -100,7 +101,7 @@
           x-on:keydown.arrow-up.prevent="$refs.light.focus()"
         >
           <span class="flex size-4 shrink-0 items-center justify-center">
-            {{ vara_icon("moon-star", "size-4")|safe }}
+            {{ vara_icon("moon", "size-4")|safe }}
           </span>
           <span>Dark</span>
           <span class="ml-auto" x-show="theme === 'dark'" x-cloak>
