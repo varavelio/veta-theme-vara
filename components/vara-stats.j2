@@ -1,0 +1,32 @@
+{% import "../templates/vara/macros/component-layout.j2" component_container, section_heading %}
+
+{% set container = props.container|default:"lg" %}
+{% set background = props.background|default:"base-100" %}
+{% set columns = props.columns|default:"4" %}
+{% set variant = props.variant|default:"cards" %}
+
+{% macro stat(value, label, description) %}
+  {% if value and label %}
+    <div class="{% if variant == 'strip' %}border-b border-base-400 py-5 last:border-b-0 desk:border-b-0 desk:px-4{% else %}rounded-lg border border-base-400 bg-base-200 p-5 desk:p-6{% endif %}">
+      <dt class="text-sm font-medium text-content-muted">{{ label }}</dt>
+      <dd class="mt-2 font-mono text-4xl font-semibold tracking-tight text-content desk:text-5xl">{{ value }}</dd>
+      {% if description %}<dd class="mt-3 text-sm leading-6 text-content-muted">{{ description }}</dd>{% endif %}
+    </div>
+  {% endif %}
+{% endmacro %}
+
+<section class="bg-{{ background }} py-10 desk:py-20{% if props.class %} {{ props.class }}{% endif %}">
+  <div class="mx-auto w-full {{ component_container(container) }} px-4">
+    <div class="space-y-8 desk:space-y-10">
+      {{ section_heading(props.eyebrow, props.title, props.description, props.heading_level|default:"2") }}
+      <dl class="grid grid-cols-1{% if variant == 'strip' %} border-y border-base-400{% else %} gap-4 desk:gap-5{% endif %}{% if columns == '2' %} desk:grid-cols-2{% elif columns == '3' %} desk:grid-cols-3{% else %} desk:grid-cols-4{% endif %}">
+        {{ stat(props.stat_1_value, props.stat_1_label, props.stat_1_description) }}
+        {{ stat(props.stat_2_value, props.stat_2_label, props.stat_2_description) }}
+        {{ stat(props.stat_3_value, props.stat_3_label, props.stat_3_description) }}
+        {{ stat(props.stat_4_value, props.stat_4_label, props.stat_4_description) }}
+        {{ stat(props.stat_5_value, props.stat_5_label, props.stat_5_description) }}
+        {{ stat(props.stat_6_value, props.stat_6_label, props.stat_6_description) }}
+      </dl>
+    </div>
+  </div>
+</section>

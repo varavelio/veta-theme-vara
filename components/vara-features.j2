@@ -1,0 +1,41 @@
+{% import "../templates/vara/macros/component-layout.j2" component_container, section_heading %}
+
+{% set container = props.container|default:"lg" %}
+{% set background = props.background|default:"base-100" %}
+{% set columns = props.columns|default:"3" %}
+
+{% macro feature(icon, title, description, badge, href, link_label) %}
+  {% if title %}
+    <li class="h-full">
+      <article class="flex h-full flex-col gap-4 rounded-lg border border-base-400 bg-base-200 p-5{% if href %} transition-colors hover:bg-base-300{% endif %} desk:p-6">
+        {% if icon or badge %}
+          <div class="flex items-start justify-between gap-4">
+            {% if icon %}<span class="flex size-10 shrink-0 items-center justify-center rounded-md border border-base-400 bg-base-100" aria-hidden="true">{{ vara_icon(icon, "size-5 text-content")|safe }}</span>{% endif %}
+            {% if badge %}<span class="rounded-full border border-base-400 px-2.5 py-1 text-[11px] font-medium uppercase tracking-[0.18em] text-content-muted">{{ badge }}</span>{% endif %}
+          </div>
+        {% endif %}
+        <div class="space-y-2">
+          {% if props.heading_level == "3" %}<h4 class="text-lg font-medium tracking-tight text-content desk:text-xl">{{ title }}</h4>{% else %}<h3 class="text-lg font-medium tracking-tight text-content desk:text-xl">{{ title }}</h3>{% endif %}
+          {% if description %}<p class="text-sm leading-6 text-content-muted">{{ description }}</p>{% endif %}
+        </div>
+        {% if href %}<a href="{{ url(href) }}" class="mt-auto inline-flex w-fit items-center gap-2 rounded-sm text-sm font-medium text-content no-underline outline-content transition-colors hover:text-info focus-visible:outline-2 focus-visible:outline-offset-4">{{ link_label|default:"Learn more" }}<span aria-hidden="true">{{ vara_icon("arrow-right", "size-4")|safe }}</span></a>{% endif %}
+      </article>
+    </li>
+  {% endif %}
+{% endmacro %}
+
+<section class="bg-{{ background }} py-10 desk:py-20{% if props.class %} {{ props.class }}{% endif %}">
+  <div class="mx-auto w-full {{ component_container(container) }} px-4">
+    <div class="space-y-8 desk:space-y-10">
+      {{ section_heading(props.eyebrow, props.title, props.description, props.heading_level|default:"2") }}
+      <ul class="grid grid-cols-1 gap-4 desk:gap-5{% if columns == '2' %} desk:grid-cols-2{% elif columns == '4' %} desk:grid-cols-4{% else %} desk:grid-cols-3{% endif %}">
+        {{ feature(props.item_1_icon, props.item_1_title, props.item_1_description, props.item_1_badge, props.item_1_href, props.item_1_link_label) }}
+        {{ feature(props.item_2_icon, props.item_2_title, props.item_2_description, props.item_2_badge, props.item_2_href, props.item_2_link_label) }}
+        {{ feature(props.item_3_icon, props.item_3_title, props.item_3_description, props.item_3_badge, props.item_3_href, props.item_3_link_label) }}
+        {{ feature(props.item_4_icon, props.item_4_title, props.item_4_description, props.item_4_badge, props.item_4_href, props.item_4_link_label) }}
+        {{ feature(props.item_5_icon, props.item_5_title, props.item_5_description, props.item_5_badge, props.item_5_href, props.item_5_link_label) }}
+        {{ feature(props.item_6_icon, props.item_6_title, props.item_6_description, props.item_6_badge, props.item_6_href, props.item_6_link_label) }}
+      </ul>
+    </div>
+  </div>
+</section>

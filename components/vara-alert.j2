@@ -1,7 +1,9 @@
 {% set color = props.color|default:"neutral" %}
-{% set icon_name = props.icon_name|default:"" %}
+{% set icon = props.icon|default:"" %}
 {% set title = props.title|default:"" %}
-{% set description = props.description|default:props.content|default:"" %}
+{% set description = props.description|default:"" %}
+{% set role = props.role|default:"" %}
+{% set heading_level = props.heading_level|default:"3" %}
 {% set base = "relative rounded-lg border p-4" %}
 {% if color == "info" %}
   {% set color_cls = "border-info/40 bg-info/2 text-info" %}
@@ -19,8 +21,8 @@
   {% set color_cls = "border-base-400 bg-base-200/2 text-content" %}
   {% set default_icon = "info" %}
 {% endif %}
-{% if icon_name %}
-  {% set resolved_icon = icon_name %}
+{% if icon %}
+  {% set resolved_icon = icon %}
 {% else %}
   {% set resolved_icon = default_icon %}
 {% endif %}
@@ -28,23 +30,14 @@
 {% if props.class %}
   {% set all = all + " " + props.class %}
 {% endif %}
-{% if color == "error" or color == "warning" %}
-  {% set role = "alert" %}
-{% else %}
-  {% set role = "status" %}
-{% endif %}
-<div class="{{ all }}" role="{{ role }}">
+<aside class="{{ all }}"{% if role == "alert" or role == "status" %} role="{{ role }}"{% endif %}>
   <div class="flex gap-3">
-    {% if title %}<div class="mt-0.5 shrink-0">
-        {{ vara_icon(resolved_icon, "size-5") | safe }}
-      </div>{% endif %}
-    <div class="flex-1">
-      {% if title %}<h3 class="font-medium">{{ title }}</h3>{% endif %}
-      {% if description %}
-        <p class="text-sm leading-relaxed opacity-90">
-          {{ description }}
-        </p>
+    <span class="mt-0.5 shrink-0" aria-hidden="true">{{ vara_icon(resolved_icon, "size-5")|safe }}</span>
+    <div class="min-w-0 flex-1">
+      {% if title %}
+        {% if heading_level == "4" %}<h4 class="font-medium">{{ title }}</h4>{% else %}<h3 class="font-medium">{{ title }}</h3>{% endif %}
       {% endif %}
+      {% if props.content %}<div class="text-sm leading-relaxed opacity-90{% if title %} mt-1{% endif %}">{{ props.content|safe }}</div>{% elif description %}<p class="text-sm leading-relaxed opacity-90{% if title %} mt-1{% endif %}">{{ description }}</p>{% endif %}
     </div>
   </div>
-</div>
+</aside>

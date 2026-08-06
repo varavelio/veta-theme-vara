@@ -1,0 +1,30 @@
+{% import "../templates/vara/macros/component-layout.j2" component_container %}
+
+{% set container = props.container|default:"lg" %}
+{% set background = props.background|default:"base-100" %}
+
+<section class="bg-{{ background }} py-10 desk:py-20{% if props.class %} {{ props.class }}{% endif %}">
+  <div class="mx-auto w-full {{ component_container(container) }} px-4">
+    <figure class="grid gap-6 rounded-lg border border-base-400 bg-base-200 p-5 desk:grid-cols-[minmax(0,1fr)_minmax(12rem,0.35fr)] desk:items-end desk:p-8">
+      {% if props.author %}
+        <figcaption class="order-2 flex items-center gap-3 border-t border-base-400 pt-5 desk:col-start-1">
+          {% if props.avatar_src %}<img src="{{ url(props.avatar_src) }}" alt="{{ props.avatar_alt|default:'' }}" class="size-10 rounded-full border border-base-400 object-cover" loading="lazy" decoding="async"{% if props.avatar_width %} width="{{ props.avatar_width }}"{% endif %}{% if props.avatar_height %} height="{{ props.avatar_height }}"{% endif %}>{% endif %}
+          <div class="min-w-0">
+            <p class="font-medium text-content">{{ props.author }}</p>
+            {% if props.author_role %}<p class="text-sm text-content-muted">{{ props.author_role }}</p>{% endif %}
+          </div>
+        </figcaption>
+      {% endif %}
+      <div class="order-1 min-w-0 desk:col-start-1">
+        <span class="flex size-10 items-center justify-center rounded-md border border-base-400 bg-base-100" aria-hidden="true">{{ vara_icon("quote", "size-5 text-content")|safe }}</span>
+        {% if props.quote %}<blockquote class="mt-6 text-2xl font-medium leading-tight tracking-tight text-content desk:text-4xl">{{ props.quote }}</blockquote>{% endif %}
+      </div>
+      {% if props.result_value and props.result_label %}
+        <dl class="order-3 rounded-md border border-base-400 bg-base-100 p-4 desk:col-start-2 desk:row-span-2 desk:row-start-1">
+          <dt class="text-sm leading-6 text-content-muted">{{ props.result_label }}</dt>
+          <dd class="mt-2 font-mono text-4xl font-semibold text-content">{{ props.result_value }}</dd>
+        </dl>
+      {% endif %}
+    </figure>
+  </div>
+</section>

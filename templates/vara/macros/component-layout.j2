@@ -1,0 +1,33 @@
+{% comment %}
+  Shared layout helpers for Vara's public content components.
+{% endcomment %}
+
+{% macro component_container(size="lg") export -%}
+  {%- if size == "xs" -%}max-w-md
+  {%- elif size == "sm" -%}max-w-3xl
+  {%- elif size == "md" -%}max-w-6xl
+  {%- elif size == "xl" -%}max-w-[120rem]
+  {%- elif size == "full" -%}max-w-full
+  {%- else -%}max-w-7xl
+  {%- endif -%}
+{%- endmacro %}
+
+{% macro section_heading(eyebrow="", title="", description="", heading_level="2", align="center") export %}
+  {% if eyebrow or title or description %}
+    <div class="flex max-w-3xl flex-col gap-3{% if align == 'center' %} mx-auto text-center{% else %} text-left{% endif %}">
+      {% if eyebrow %}
+        <p class="text-xs font-medium uppercase tracking-[0.24em] text-content-muted">{{ eyebrow }}</p>
+      {% endif %}
+      {% if title %}
+        {% if heading_level == "3" %}
+          <h3 class="text-3xl font-semibold tracking-tight text-content desk:text-4xl">{{ title }}</h3>
+        {% else %}
+          <h2 class="text-3xl font-semibold tracking-tight text-content desk:text-4xl">{{ title }}</h2>
+        {% endif %}
+      {% endif %}
+      {% if description %}
+        <p class="text-base leading-7 text-content-muted desk:text-lg">{{ description }}</p>
+      {% endif %}
+    </div>
+  {% endif %}
+{% endmacro %}

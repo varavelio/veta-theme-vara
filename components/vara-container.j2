@@ -1,22 +1,9 @@
-{% set max_width = props.max_width|default:"md" %}
-{% set padded = props.padded|default:"true" %}
+{% import "../templates/vara/macros/component-layout.j2" component_container %}
+
+{% set size = props.size|default:"md" %}
+{% set padding = props.padding|default:"true" %}
 {% set align = props.align|default:"center" %}
-
-{% if max_width == "xs" %}
-  {% set width_cls = "max-w-md" %}
-{% elif max_width == "sm" %}
-  {% set width_cls = "max-w-3xl" %}
-{% elif max_width == "md" %}
-  {% set width_cls = "max-w-6xl" %}
-{% elif max_width == "lg" %}
-  {% set width_cls = "max-w-7xl" %}
-{% elif max_width == "xl" %}
-  {% set width_cls = "max-w-[120rem]" %}
-{% else %}
-  {% set width_cls = "max-w-full" %}
-{% endif %}
-
-{% if padded == "true" %}
+{% if padding == "true" %}
   {% set pad_cls = "px-4" %}
 {% else %}
   {% set pad_cls = "" %}
@@ -30,6 +17,6 @@
   {% set align_cls = "mx-auto" %}
 {% endif %}
 
-<div class="w-full {{ width_cls }} {{ pad_cls }} {{ align_cls }}{% if props.class %} {{ props.class }}{% endif %}">
+<div class="w-full {{ component_container(size) }} {{ pad_cls }} {{ align_cls }}{% if props.class %} {{ props.class }}{% endif %}">
   {{ props.content|safe }}
 </div>

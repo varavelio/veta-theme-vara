@@ -1,0 +1,28 @@
+{% import "../templates/vara/macros/button.j2" button %}
+{% import "../templates/vara/macros/component-layout.j2" component_container %}
+
+{% set container = props.container|default:"lg" %}
+{% set background = props.background|default:"base-100" %}
+{% set layout = props.layout|default:"centered" %}
+{% set heading_level = props.heading_level|default:"2" %}
+
+<section class="bg-{{ background }} py-10 desk:py-20{% if props.class %} {{ props.class }}{% endif %}">
+  <div class="mx-auto w-full {{ component_container(container) }} px-4">
+    <div class="rounded-lg border border-base-400 bg-base-200 p-5{% if layout == 'inline' %} desk:flex desk:items-center desk:justify-between desk:gap-8{% else %} text-center{% endif %} desk:p-8">
+      <div class="{% if layout != 'inline' %}mx-auto flex max-w-3xl flex-col items-center{% else %}max-w-3xl{% endif %}">
+        {% if props.eyebrow %}<p class="text-xs font-medium uppercase tracking-[0.24em] text-content-muted">{{ props.eyebrow }}</p>{% endif %}
+        {% if props.title %}
+          {% if heading_level == "3" %}<h3 class="{% if props.eyebrow %}mt-3 {% endif %}text-3xl font-semibold tracking-tight text-content desk:text-4xl">{{ props.title }}</h3>{% else %}<h2 class="{% if props.eyebrow %}mt-3 {% endif %}text-3xl font-semibold tracking-tight text-content desk:text-4xl">{{ props.title }}</h2>{% endif %}
+        {% endif %}
+        {% if props.description %}<p class="mt-4 text-base leading-7 text-content-muted desk:text-lg">{{ props.description }}</p>{% endif %}
+      </div>
+      {% if props.primary_label and props.primary_href %}
+        <div class="mt-6 flex w-full shrink-0 flex-col justify-center gap-3{% if layout == 'inline' %} desk:mt-0 desk:w-auto{% else %} desk:mx-auto desk:w-fit desk:flex-row{% endif %}">
+          {{ button(props.primary_label, props.primary_href, props.primary_target|default:"", props.primary_icon|default:"", "", "lg", "md", props.primary_variant|default:"solid", props.primary_color|default:"neutral", "true", "false", "button", "desk:w-auto") }}
+          {% if props.secondary_label and props.secondary_href %}{{ button(props.secondary_label, props.secondary_href, props.secondary_target|default:"", props.secondary_icon|default:"", "", "lg", "md", props.secondary_variant|default:"outline", props.secondary_color|default:"neutral", "true", "false", "button", "desk:w-auto") }}{% endif %}
+        </div>
+      {% endif %}
+      {% if props.caption %}<p class="mt-4 text-sm leading-6 text-content-muted">{{ props.caption }}</p>{% endif %}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,81 @@
+{% import "../templates/vara/macros/button.j2" button %}
+{% import "../templates/vara/macros/component-layout.j2" component_container %}
+
+{% set container = props.container|default:"lg" %}
+{% set title = props.title|default:vara_site_setting("title")|default:"Vara" %}
+{% set logo_light = props.logo_light|default:vara_site_setting("logo_light") %}
+{% set logo_dark = props.logo_dark|default:vara_site_setting("logo_dark") %}
+{% set logo_alt = props.logo_alt|default:title %}
+{% set home_href = props.home_href|default:"/" %}
+{% set links = props.links|default:"" %}
+{% set link_items = links|split:"," %}
+{% set has_navigation = links or props.cta_label and props.cta_href %}
+{% set show_title = props.show_title|default:"true" %}
+{% set show_theme = props.show_theme|default:"true" %}
+{% set sticky = props.sticky|default:"false" %}
+
+<header class="z-30 shrink-0 border-b border-base-400 bg-base-100/95 backdrop-blur{% if sticky == 'true' %} sticky top-0{% endif %}{% if props.class %} {{ props.class }}{% endif %}" x-data="{ open: false }" x-id="['vara-header-navigation']" x-on:keydown.escape.window="open = false" x-on:click.outside="open = false">
+  <div class="mx-auto w-full {{ component_container(container) }} px-4">
+    <div class="flex h-14 items-center justify-between gap-3 desk:grid desk:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
+      <div class="flex min-w-0 items-center justify-start">
+        <a href="{{ url(home_href) }}" class="group flex min-w-0 items-center gap-2 overflow-hidden whitespace-nowrap no-underline">
+          {% if logo_light and logo_dark and logo_light == logo_dark %}
+            <span class="flex h-6 min-w-0 shrink items-center overflow-hidden">
+              <img src="{{ url(logo_light) }}" class="h-6 w-auto max-w-full object-contain" alt="{% if show_title == 'false' %}{{ logo_alt }}{% endif %}">
+            </span>
+          {% elif logo_light or logo_dark %}
+            {% set logo_light_src = logo_light|default:logo_dark %}
+            {% set logo_dark_src = logo_dark|default:logo_light %}
+            <span class="flex h-6 min-w-0 shrink items-center overflow-hidden">
+              <img src="{{ url(logo_light_src) }}" class="h-6 w-auto max-w-full object-contain dark:hidden" alt="{% if show_title == 'false' %}{{ logo_alt }}{% endif %}">
+              <img src="{{ url(logo_dark_src) }}" class="hidden h-6 w-auto max-w-full object-contain dark:block" alt="{% if show_title == 'false' %}{{ logo_alt }}{% endif %}">
+            </span>
+          {% endif %}
+          {% if show_title != "false" %}<span class="min-w-0 truncate text-sm font-semibold text-content transition-colors group-hover:text-info desk:text-base">{{ title }}</span>{% endif %}
+        </a>
+      </div>
+
+      {% if links %}
+        <nav class="hidden items-center justify-center gap-1 desk:flex" aria-label="Primary navigation">
+          {% for link in link_items %}
+            {% set parts = link|vara_trim|split:"|" %}
+            {% if parts|length == 2 %}<a href="{{ url(parts[1]|vara_trim) }}" class="inline-flex h-8 items-center rounded-md px-3 text-sm font-medium text-content-muted no-underline transition-colors hover:bg-base-200 hover:text-content focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-content">{{ parts[0]|vara_trim }}</a>{% endif %}
+          {% endfor %}
+        </nav>
+      {% else %}
+        <div class="hidden desk:block"></div>
+      {% endif %}
+
+      <div class="flex shrink-0 items-center justify-end gap-1">
+        {% if props.cta_label and props.cta_href %}<div class="hidden desk:block">{{ button(props.cta_label, props.cta_href, "", "", "", "sm", "md", props.cta_variant|default:"solid", props.cta_color|default:"neutral") }}</div>{% endif %}
+        {% if show_theme != "false" %}
+          <button type="button" class="inline-flex size-9 cursor-pointer items-center justify-center rounded-md border border-transparent text-content-muted transition-colors hover:bg-base-200 hover:text-content focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-content" x-data="theme" x-on:click="cycleTheme()" x-bind:aria-label="'Theme: ' + theme + '. Change theme'" x-bind:title="'Theme: ' + theme">
+            <span x-show="theme === 'system'" x-cloak aria-hidden="true">{{ vara_icon("sun-moon", "size-4")|safe }}</span>
+            <span x-show="theme === 'light'" x-cloak aria-hidden="true">{{ vara_icon("sun", "size-4")|safe }}</span>
+            <span x-show="theme === 'dark'" x-cloak aria-hidden="true">{{ vara_icon("moon", "size-4")|safe }}</span>
+          </button>
+        {% endif %}
+        {% if has_navigation %}
+          <button type="button" class="inline-flex size-9 cursor-pointer items-center justify-center rounded-md border border-transparent text-content-muted transition-colors hover:bg-base-200 hover:text-content focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-content desk:hidden" x-on:click="open = !open" x-bind:aria-expanded="open.toString()" x-bind:aria-controls="$id('vara-header-navigation')" aria-label="Toggle navigation">
+            <span x-show="!open" aria-hidden="true">{{ vara_icon("menu", "size-5")|safe }}</span>
+            <span x-show="open" x-cloak aria-hidden="true">{{ vara_icon("x", "size-5")|safe }}</span>
+          </button>
+        {% endif %}
+      </div>
+    </div>
+
+    {% if has_navigation %}
+      <div x-bind:id="$id('vara-header-navigation')" class="border-t border-base-400 py-3 desk:hidden" x-show="open" x-cloak>
+        <nav class="grid gap-1" aria-label="Mobile navigation">
+          {% if links %}
+            {% for link in link_items %}
+              {% set parts = link|vara_trim|split:"|" %}
+              {% if parts|length == 2 %}<a href="{{ url(parts[1]|vara_trim) }}" class="rounded-md px-3 py-2 text-sm font-medium text-content-muted no-underline transition-colors hover:bg-base-200 hover:text-content focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-content">{{ parts[0]|vara_trim }}</a>{% endif %}
+            {% endfor %}
+          {% endif %}
+          {% if props.cta_label and props.cta_href %}<div class="pt-2">{{ button(props.cta_label, props.cta_href, "", "", "", "sm", "md", props.cta_variant|default:"solid", props.cta_color|default:"neutral", "true") }}</div>{% endif %}
+        </nav>
+      </div>
+    {% endif %}
+  </div>
+</header>
