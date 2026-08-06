@@ -10,6 +10,7 @@ public/_vara/js/
 ├── src/
 │   ├── head/       ← High-priority scripts injected before </head> on every page
 │   ├── landing/    ← Alpine and shared runtime for landing pages
+│   ├── components/ ← Shared behavior for public interactive components
 │   ├── theme/      ← Theme logic
 │   ├── docs/       ← Documentation behavior and support modules
 │   └── docs-search/ ← Optional documentation search entry point
@@ -37,6 +38,10 @@ Theme logic split into two files:
 ### `landing/`
 
 Runtime used by landing pages. It starts Alpine and registers the shared theme controls used by public landing components such as `<vara-header>`.
+
+### `components/`
+
+Shared Alpine behavior for public interactive components. `carousel.js` registers the `varaCarousel` state used by `<vara-carousel>`; it is imported by both the landing and docs entry points.
 
 ### `docs/`
 

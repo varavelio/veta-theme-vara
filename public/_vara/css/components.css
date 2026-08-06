@@ -1,0 +1,25 @@
+/* Generic carousel: every direct child of the track is one slide. */
+.vara-carousel-track {
+  scrollbar-width: none;
+}
+
+.vara-carousel-track::-webkit-scrollbar {
+  display: none;
+}
+
+.vara-carousel-track > * {
+  flex: 0 0 100%;
+  min-width: 0;
+  scroll-snap-align: start;
+}
+
+/* Two and three slides per view are resolved at the desk breakpoint only. */
+@media (min-width: 64rem) {
+  .vara-carousel-track[data-slides-per-view="2"] > * {
+    flex-basis: calc((100% - 1rem) / 2);
+  }
+
+  .vara-carousel-track[data-slides-per-view="3"] > * {
+    flex-basis: calc((100% - 2rem) / 3);
+  }
+}
