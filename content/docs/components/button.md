@@ -17,8 +17,10 @@ icon: "mouse-pointer-click"
 
 ## Preview
 
-<vara-button label="Read the guide" href="/docs/" icon_end="arrow-right" />
-<vara-button label="Secondary action" variant="outline" />
+<div class="not-prose flex flex-wrap items-center gap-3">
+  <vara-button label="Read the guide" href="/docs/" icon_end="arrow-right" />
+  <vara-button label="Secondary action" variant="outline" />
+</div>
 
 ## Props
 

@@ -43,6 +43,7 @@ Vara's generators render Markdown first and then resolve components. Paired comp
 - [Stats](./stats/) - semantic metrics in cards or a strip.
 - [FAQ](./faq/) - native accordion or static grid.
 - [Testimonial](./testimonial/) - a focused customer quote.
+- [Carousel](./carousel/) - a generic slider for any collection of slides.
 - [Call to action](./cta/) - centered or inline conversion panel.
 - [Footer](./footer/) - site metadata and secondary navigation.
 
