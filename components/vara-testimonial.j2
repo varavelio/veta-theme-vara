@@ -7,36 +7,39 @@
 {% if container == "xs" %}{% set container_cls = "max-w-md" %}{% elif container == "sm" %}{% set container_cls = "max-w-3xl" %}{% elif container == "md" %}{% set container_cls = "max-w-6xl" %}{% elif container == "xl" %}{% set container_cls = "max-w-[120rem]" %}{% elif container == "full" %}{% set container_cls = "max-w-full" %}{% else %}{% set container_cls = "max-w-7xl" %}{% endif %}
 
 <section class="not-prose bg-{{ background }} py-10 desk:py-20{% if props.class %} {{ props.class }}{% endif %}">
-  <div class="mx-auto w-full {{ container_cls }} px-4">
-    <figure class="grid gap-6 rounded-lg border border-base-400 bg-base-200 p-5 desk:grid-cols-[minmax(0,1fr)_minmax(12rem,0.35fr)] desk:items-end desk:p-8">
-      {% if props.author %}
-        <figcaption class="order-2 flex items-center gap-3 border-t border-base-400 pt-5 desk:col-start-1">
-          {% if props.avatar_src %}<img src="{{ url(props.avatar_src) }}" alt="{{ props.avatar_alt|default:'' }}" class="size-10 rounded-full border border-base-400 object-cover" loading="lazy" decoding="async"{% if props.avatar_width %} width="{{ props.avatar_width }}"{% endif %}{% if props.avatar_height %} height="{{ props.avatar_height }}"{% endif %}>{% endif %}
-          <div class="min-w-0">
-            {% if author_href %}
-              <a href="{{ url(author_href) }}"{% if author_href_target %} target="{{ author_href_target }}"{% endif %}{% if author_href_target == "_blank" %} rel="noopener noreferrer"{% endif %} class="rounded-sm font-medium text-content no-underline outline-content transition-colors hover:text-info focus-visible:outline-2 focus-visible:outline-offset-2">{{ props.author }}</a>
-            {% else %}
-              <p class="font-medium text-content">{{ props.author }}</p>
-            {% endif %}
-            {% if props.author_role %}<p class="text-sm text-content-muted">{{ props.author_role }}</p>{% endif %}
-          </div>
-        </figcaption>
+  <div class="mx-auto w-full {{ container_cls }}">
+    <figure class="rounded-lg border border-base-400 bg-base-200 p-6 desk:p-8">
+      <span class="flex size-10 items-center justify-center rounded-md border border-base-400 bg-base-100" aria-hidden="true">{{ vara_icon("quote", "size-5 text-content")|safe }}</span>
+      {% if props.quote %}<blockquote class="mt-6 text-2xl font-medium leading-tight tracking-tight text-content desk:text-4xl">{{ props.quote }}</blockquote>{% endif %}
+      {% if quote_href %}
+        <a href="{{ url(quote_href) }}" class="mt-4 inline-flex items-center gap-1.5 rounded-sm text-sm font-medium text-content-muted no-underline outline-content transition-colors hover:text-content focus-visible:outline-2 focus-visible:outline-offset-2" target="_blank" rel="noopener noreferrer">
+          {{ quote_label }}
+          <span aria-hidden="true">{{ vara_icon("external-link", "size-3.5")|safe }}</span>
+        </a>
       {% endif %}
-      <div class="order-1 min-w-0 desk:col-start-1">
-        <span class="flex size-10 items-center justify-center rounded-md border border-base-400 bg-base-100" aria-hidden="true">{{ vara_icon("quote", "size-5 text-content")|safe }}</span>
-        {% if props.quote %}<blockquote class="mt-6 text-2xl font-medium leading-tight tracking-tight text-content desk:text-4xl">{{ props.quote }}</blockquote>{% endif %}
-        {% if quote_href %}
-          <a href="{{ url(quote_href) }}" class="mt-4 inline-flex items-center gap-1.5 rounded-sm text-sm font-medium text-content-muted no-underline outline-content transition-colors hover:text-content focus-visible:outline-2 focus-visible:outline-offset-2" target="_blank" rel="noopener noreferrer">
-            {{ quote_label }}
-            <span aria-hidden="true">{{ vara_icon("external-link", "size-3.5")|safe }}</span>
-          </a>
-        {% endif %}
-      </div>
-      {% if props.result_value and props.result_label %}
-        <dl class="order-3 rounded-md border border-base-400 bg-base-100 p-4 desk:col-start-2 desk:row-span-2 desk:row-start-1">
-          <dt class="text-sm leading-6 text-content-muted">{{ props.result_label }}</dt>
-          <dd class="mt-2 font-mono text-4xl font-semibold text-content">{{ props.result_value }}</dd>
-        </dl>
+
+      {% if props.author or props.result_value and props.result_label %}
+        <figcaption class="mt-6 flex flex-col gap-4 border-t border-base-400 pt-5 desk:flex-row desk:items-center desk:justify-between">
+          {% if props.author %}
+            <div class="flex min-w-0 items-center gap-3">
+              {% if props.avatar_src %}<img src="{{ url(props.avatar_src) }}" alt="{{ props.avatar_alt|default:'' }}" class="size-10 shrink-0 rounded-full border border-base-400 object-cover" loading="lazy" decoding="async"{% if props.avatar_width %} width="{{ props.avatar_width }}"{% endif %}{% if props.avatar_height %} height="{{ props.avatar_height }}"{% endif %}>{% endif %}
+              <div class="min-w-0">
+                {% if author_href %}
+                  <a href="{{ url(author_href) }}"{% if author_href_target %} target="{{ author_href_target }}"{% endif %}{% if author_href_target == "_blank" %} rel="noopener noreferrer"{% endif %} class="rounded-sm font-medium text-content no-underline outline-content transition-colors hover:text-info focus-visible:outline-2 focus-visible:outline-offset-2">{{ props.author }}</a>
+                {% else %}
+                  <p class="font-medium text-content">{{ props.author }}</p>
+                {% endif %}
+                {% if props.author_role %}<p class="text-sm text-content-muted">{{ props.author_role }}</p>{% endif %}
+              </div>
+            </div>
+          {% endif %}
+          {% if props.result_value and props.result_label %}
+            <dl class="flex shrink-0 items-baseline gap-2 desk:justify-end">
+              <dt class="text-sm leading-6 text-content-muted">{{ props.result_label }}</dt>
+              <dd class="font-mono text-2xl font-semibold text-content">{{ props.result_value }}</dd>
+            </dl>
+          {% endif %}
+        </figcaption>
       {% endif %}
     </figure>
   </div>

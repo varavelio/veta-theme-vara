@@ -2,4 +2,4 @@
 {% set label = props.label|default:"" %}
 {% set class = props.class|default:"" %}
 
-{% if label %}<span class="inline-flex" role="img" aria-label="{{ label }}">{{ vara_icon(name, class)|safe }}</span>{% else %}<span class="inline-flex" aria-hidden="true">{{ vara_icon(name, class)|safe }}</span>{% endif %}
+{% if label %}<span class="not-prose inline-flex" role="img" aria-label="{{ label }}">{{ vara_icon(name, class)|safe }}</span>{% else %}<span class="not-prose inline-flex" aria-hidden="true">{{ vara_icon(name, class)|safe }}</span>{% endif %}

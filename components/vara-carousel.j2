@@ -7,7 +7,7 @@
 {% if container == "xs" %}{% set container_cls = "max-w-md" %}{% elif container == "sm" %}{% set container_cls = "max-w-3xl" %}{% elif container == "md" %}{% set container_cls = "max-w-6xl" %}{% elif container == "xl" %}{% set container_cls = "max-w-[120rem]" %}{% elif container == "full" %}{% set container_cls = "max-w-full" %}{% else %}{% set container_cls = "max-w-7xl" %}{% endif %}
 
 <section class="not-prose bg-{{ background }} py-10 desk:py-20{% if props.class %} {{ props.class }}{% endif %}">
-  <div class="mx-auto w-full {{ container_cls }} px-4">
+  <div class="mx-auto w-full {{ container_cls }}">
     <div class="relative" x-data="varaCarousel" role="region" aria-roledescription="carousel" aria-label="{{ label }}">
       <div
         x-ref="track"

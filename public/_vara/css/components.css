@@ -11,6 +11,13 @@
   flex: 0 0 100%;
   min-width: 0;
   scroll-snap-align: start;
+  /* The carousel owns the vertical rhythm; slides drop their own spacing. */
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-block: 0;
+  padding-block: 0;
 }
 
 /* Two and three slides per view are resolved at the desk breakpoint only. */
