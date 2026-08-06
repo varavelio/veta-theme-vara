@@ -17,7 +17,7 @@ test("vara_icon injects classes while preserving optimized SVG attributes", () =
     "size-4 text-content",
   );
 
-  assert.match(output, /^<svg class="vara-icon size-4 text-content"\s/);
+  assert.match(output, /^<svg class="vara-icon size-4 text-content" aria-hidden="true" focusable="false"\s/);
   assert.match(output, /fill="none"/);
   assert.match(output, /stroke="currentColor"/);
 });

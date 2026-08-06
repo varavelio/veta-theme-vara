@@ -6,8 +6,10 @@
  * - `className`: optional CSS classes appended after `vara-icon`.
  *
  * Invalid or missing icons render a red alert fallback instead of failing the
- * build. Existing SVG attributes are preserved; only `class` is injected on the
- * opening `<svg>` tag.
+ * build. Existing SVG attributes are preserved. Icons are decorative by
+ * default, so the helper injects `class`, `aria-hidden`, and `focusable` on the
+ * opening `<svg>` tag. Callers that need a meaningful icon provide the
+ * accessible name on a wrapping element.
  *
  * Usage:
  *   {{ vara_icon("check") | safe }}
@@ -28,6 +30,8 @@ function fallback(className) {
   return `
     <svg
       class="${escapeAttr(className)} text-red-500!"
+      aria-hidden="true"
+      focusable="false"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -58,5 +62,8 @@ export default function({ files }, name, className) {
     return fallback(resolvedClassName);
   }
 
-  return svg.replace("<svg", `<svg class="${escapeAttr(resolvedClassName)}"`);
+  return svg.replace(
+    "<svg",
+    `<svg class="${escapeAttr(resolvedClassName)}" aria-hidden="true" focusable="false"`,
+  );
 }
