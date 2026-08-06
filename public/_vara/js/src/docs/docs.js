@@ -309,15 +309,29 @@ export function resolveBackToTopState({
   previousScrollTop,
   upwardScrollDistance,
   threshold = BACK_TO_TOP_SCROLL_THRESHOLD,
+  programmaticScroll = false,
 }) {
   const current = Math.max(0, currentScrollTop);
   const previous = Math.max(0, previousScrollTop);
+
+  if (programmaticScroll) {
+    const reachedTop = current <= 0;
+    const scrolledDown = current > previous;
+
+    return {
+      showBackToTop: false,
+      upwardScrollDistance: 0,
+      previousScrollTop: current,
+      programmaticScroll: !(reachedTop || scrolledDown),
+    };
+  }
 
   if (current <= 0) {
     return {
       showBackToTop: false,
       upwardScrollDistance: 0,
       previousScrollTop: 0,
+      programmaticScroll: false,
     };
   }
 
@@ -326,6 +340,7 @@ export function resolveBackToTopState({
       showBackToTop: false,
       upwardScrollDistance: 0,
       previousScrollTop: current,
+      programmaticScroll: false,
     };
   }
 
@@ -336,6 +351,7 @@ export function resolveBackToTopState({
       showBackToTop: nextUpwardScrollDistance >= threshold,
       upwardScrollDistance: nextUpwardScrollDistance,
       previousScrollTop: current,
+      programmaticScroll: false,
     };
   }
 
@@ -343,6 +359,7 @@ export function resolveBackToTopState({
     showBackToTop: false,
     upwardScrollDistance,
     previousScrollTop: current,
+    programmaticScroll: false,
   };
 }
 
@@ -439,7 +456,6 @@ function registerAlpineVarapressDocs(tocAvailable) {
 
     backToTopRoot: null,
     backToTopFrame: null,
-    backToTopResetTimer: null,
     markdownCopyResetTimer: null,
     promptCopyResetTimer: null,
     backToTopProgrammaticScroll: false,
@@ -592,22 +608,14 @@ function registerAlpineVarapressDocs(tocAvailable) {
     updateBackToTop() {
       if (!this.backToTopRoot) return;
 
-      const currentScrollTop = this.backToTopRoot.scrollTop;
-
-      if (this.backToTopProgrammaticScroll) {
-        this.showBackToTop = false;
-        this.upwardScrollDistance = 0;
-        this.previousScrollTop = currentScrollTop;
-        if (currentScrollTop <= 0) this.backToTopProgrammaticScroll = false;
-        return;
-      }
-
       const state = resolveBackToTopState({
-        currentScrollTop,
+        currentScrollTop: this.backToTopRoot.scrollTop,
         previousScrollTop: this.previousScrollTop,
         upwardScrollDistance: this.upwardScrollDistance,
+        programmaticScroll: this.backToTopProgrammaticScroll,
       });
 
+      this.backToTopProgrammaticScroll = state.programmaticScroll;
       this.showBackToTop = state.showBackToTop;
       this.upwardScrollDistance = state.upwardScrollDistance;
       this.previousScrollTop = state.previousScrollTop;
@@ -620,14 +628,6 @@ function registerAlpineVarapressDocs(tocAvailable) {
       this.upwardScrollDistance = 0;
       this.previousScrollTop = this.backToTopRoot.scrollTop;
       this.backToTopProgrammaticScroll = true;
-
-      if (this.backToTopResetTimer) clearTimeout(this.backToTopResetTimer);
-      this.backToTopResetTimer = setTimeout(() => {
-        this.backToTopProgrammaticScroll = false;
-        this.previousScrollTop = this.backToTopRoot
-          ? this.backToTopRoot.scrollTop
-          : 0;
-      }, 800);
 
       this.backToTopRoot.scrollTo({ top: 0, behavior: "smooth" });
     },

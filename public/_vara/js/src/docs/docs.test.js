@@ -145,6 +145,63 @@ test("hides back-to-top at the top of the main scroll container", () => {
   assert.equal(state.previousScrollTop, 0);
 });
 
+test("keeps back-to-top hidden during a programmatic scroll to top", () => {
+  const state = resolveBackToTopState({
+    currentScrollTop: 500,
+    previousScrollTop: 1200,
+    upwardScrollDistance: 0,
+    programmaticScroll: true,
+  });
+
+  assert.equal(state.showBackToTop, false);
+  assert.equal(state.upwardScrollDistance, 0);
+  assert.equal(state.programmaticScroll, true);
+});
+
+test("releases the programmatic scroll once the top is reached", () => {
+  const state = resolveBackToTopState({
+    currentScrollTop: 0,
+    previousScrollTop: 40,
+    upwardScrollDistance: 0,
+    programmaticScroll: true,
+  });
+
+  assert.equal(state.showBackToTop, false);
+  assert.equal(state.programmaticScroll, false);
+  assert.equal(state.previousScrollTop, 0);
+});
+
+test("releases the programmatic scroll when the user scrolls down", () => {
+  const state = resolveBackToTopState({
+    currentScrollTop: 950,
+    previousScrollTop: 900,
+    upwardScrollDistance: 0,
+    programmaticScroll: true,
+  });
+
+  assert.equal(state.showBackToTop, false);
+  assert.equal(state.programmaticScroll, false);
+  assert.equal(state.previousScrollTop, 950);
+});
+
+test("only shows back-to-top again after scrolling down and then up", () => {
+  const afterScrollDown = resolveBackToTopState({
+    currentScrollTop: 900,
+    previousScrollTop: 0,
+    upwardScrollDistance: 0,
+  });
+
+  assert.equal(afterScrollDown.showBackToTop, false);
+
+  const afterScrollUp = resolveBackToTopState({
+    currentScrollTop: 550,
+    previousScrollTop: 900,
+    upwardScrollDistance: afterScrollDown.upwardScrollDistance,
+  });
+
+  assert.equal(afterScrollUp.showBackToTop, true);
+});
+
 test("fetches markdown on demand and writes it to the clipboard", async () => {
   let fetchOptions;
   const clipboard = {
