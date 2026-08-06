@@ -4,6 +4,7 @@ import test from "node:test";
 import {
   copyAskAiPromptToClipboard,
   copyMarkdownFromUrl,
+  isInsideNotProse,
   resolveAskAiPrompt,
   resolveAskAiUrl,
   resolveBackToTopState,
@@ -40,6 +41,25 @@ test("builds h2 and h3 entries while assigning unique heading ids", () => {
   ]);
   assert.equal(headings[0].id, "guide");
   assert.equal(headings[4].id, "details");
+});
+
+test("detects headings inside a not-prose subtree", () => {
+  assert.equal(
+    isInsideNotProse({ closest: () => ({}) }),
+    true,
+  );
+});
+
+test("keeps headings outside not-prose subtrees", () => {
+  assert.equal(
+    isInsideNotProse({ closest: () => null }),
+    false,
+  );
+});
+
+test("ignores missing heading elements", () => {
+  assert.equal(isInsideNotProse(null), false);
+  assert.equal(isInsideNotProse(undefined), false);
 });
 
 test("resolves encoded heading ids from URL hashes", () => {

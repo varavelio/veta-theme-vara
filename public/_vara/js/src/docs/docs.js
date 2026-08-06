@@ -74,8 +74,23 @@ function navigateToHeading(id) {
   return scrollToHash(url.hash);
 }
 
+/**
+ * Returns whether an element lives in (or is) a `.not-prose` subtree.
+ *
+ * Prose-level features such as anchor links and table-of-contents entries
+ * must skip those elements so opt-out content stays untouched.
+ *
+ * @param {Element | null} element - The element to check.
+ * @returns {boolean} True when the element is inside a `.not-prose` subtree.
+ */
+export function isInsideNotProse(element) {
+  return Boolean(element?.closest(".not-prose"));
+}
+
 function initTableOfContents() {
-  const headings = document.querySelectorAll(".prose :is(h1, h2, h3, h4, h5, h6)");
+  const headings = Array.from(
+    document.querySelectorAll(".prose :is(h1, h2, h3, h4, h5, h6)"),
+  ).filter((heading) => !isInsideNotProse(heading));
   const items = resolveTableOfContents(headings);
   if (items.length === 0) return false;
 
@@ -114,6 +129,7 @@ function injectAnchorLinks() {
   document
     .querySelectorAll(".prose :is(h1, h2, h3, h4, h5, h6)")
     .forEach((heading) => {
+      if (isInsideNotProse(heading)) return;
       if (heading.id && !heading.querySelector("a.anchor-link")) {
         const anchor = document.createElement("a");
         anchor.className = "anchor-link";

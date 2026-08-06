@@ -29,8 +29,10 @@
   }
 }
 
-/* Anchor link on prose headings */
-.prose :is(h1, h2, h3, h4, h5, h6) > a.anchor-link {
+/* Anchor link on prose headings, skipped inside `.not-prose` subtrees. */
+.prose
+  :is(h1, h2, h3, h4, h5, h6)
+  > a.anchor-link:not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   display: inline;
   opacity: 0;
   transition: opacity 0.15s ease-in-out;
@@ -40,19 +42,30 @@
   vertical-align: baseline;
 }
 
-.prose :is(h1, h2, h3, h4, h5, h6):hover > a.anchor-link,
-.prose :is(h1, h2, h3, h4, h5, h6) > a.anchor-link:focus-visible {
+.prose
+  :is(h1, h2, h3, h4, h5, h6):hover
+  > a.anchor-link:not(:where([class~="not-prose"], [class~="not-prose"] *)),
+.prose
+  :is(h1, h2, h3, h4, h5, h6)
+  > a.anchor-link:not(:where([class~="not-prose"], [class~="not-prose"]
+    *)):focus-visible {
   opacity: 1;
   pointer-events: auto;
 }
 
-.prose :is(h1, h2, h3, h4, h5, h6) > a.anchor-link:focus-visible {
+.prose
+  :is(h1, h2, h3, h4, h5, h6)
+  > a.anchor-link:not(:where([class~="not-prose"], [class~="not-prose"]
+    *)):focus-visible {
   outline: 2px solid var(--color-info);
   outline-offset: 2px;
   border-radius: var(--radius-sm);
 }
 
-.prose :is(h1, h2, h3, h4, h5, h6) > a.anchor-link svg {
+.prose
+  :is(h1, h2, h3, h4, h5, h6)
+  > a.anchor-link:not(:where([class~="not-prose"], [class~="not-prose"] *))
+  svg {
   width: 0.85em;
   height: 0.85em;
   display: inline-block;
@@ -61,6 +74,10 @@
   transition: color 0.15s ease-in-out;
 }
 
-.prose :is(h1, h2, h3, h4, h5, h6) > a.anchor-link:hover svg {
+.prose
+  :is(h1, h2, h3, h4, h5, h6)
+  > a.anchor-link:not(:where([class~="not-prose"], [class~="not-prose"]
+    *)):hover
+  svg {
   color: var(--color-info);
 }

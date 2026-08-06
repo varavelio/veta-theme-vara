@@ -15,39 +15,50 @@
   --vara-shiki-copy-content: #e6edf3;
 }
 
-.prose.vara-shiki-enabled pre:has(> code[class*="language-"]) {
+/* All `.prose` rules below skip elements inside `.not-prose` subtrees. */
+.prose.vara-shiki-enabled
+  pre:not(:where([class~="not-prose"], [class~="not-prose"]
+    *)):has(> code[class*="language-"]) {
   background-color: var(--vara-shiki-background);
 }
 
 .prose.vara-shiki-enabled
   pre:not([data-vara-shiki-ready])
-  > code[class*="language-"] {
+  > code[class*="language-"]:not(:where([class~="not-prose"], [class~="not-prose"]
+    *)) {
   visibility: hidden;
 }
 
-.prose .vara-shiki-block {
+.prose
+  .vara-shiki-block:not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   position: relative;
 }
 
-.prose .shiki {
+.prose .shiki:not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   color: var(--shiki-light, inherit);
   background-color: var(--vara-shiki-background);
 }
 
-.prose .shiki span {
+.prose .shiki span:not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   color: var(--shiki-light, inherit);
   background-color: transparent;
 }
 
-:where(.dark, [data-theme="dark"]) .prose .shiki {
+:where(.dark, [data-theme="dark"])
+  .prose
+  .shiki:not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   color: var(--shiki-dark, inherit);
 }
 
-:where(.dark, [data-theme="dark"]) .prose .shiki span {
+:where(.dark, [data-theme="dark"])
+  .prose
+  .shiki
+  span:not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   color: var(--shiki-dark, inherit);
 }
 
-.prose .vara-shiki-copy {
+.prose
+  .vara-shiki-copy:not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   position: absolute;
   top: 0.75rem;
   right: 0.75rem;
@@ -72,36 +83,54 @@
   transition: background-color 0.15s ease-in-out, opacity 0.15s ease-in-out;
 }
 
-.prose .vara-shiki-block:hover > .vara-shiki-copy {
+.prose
+  .vara-shiki-block:hover
+  > .vara-shiki-copy:not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   opacity: 1;
   pointer-events: auto;
 }
 
-.prose .vara-shiki-copy:hover {
+.prose
+  .vara-shiki-copy:not(:where([class~="not-prose"], [class~="not-prose"]
+    *)):hover {
   background-color: var(--vara-shiki-copy-background-hover);
 }
 
-.prose .vara-shiki-copy:focus-visible {
+.prose
+  .vara-shiki-copy:not(:where([class~="not-prose"], [class~="not-prose"]
+    *)):focus-visible {
   outline: 2px solid var(--color-info);
   outline-offset: 2px;
 }
 
-.prose .vara-shiki-copy .ready::before {
+.prose
+  .vara-shiki-copy:not(:where([class~="not-prose"], [class~="not-prose"] *))
+  .ready::before {
   content: "Copy";
 }
 
-.prose .vara-shiki-copy .success {
+.prose
+  .vara-shiki-copy:not(:where([class~="not-prose"], [class~="not-prose"] *))
+  .success {
   display: none;
 }
 
-.prose .vara-shiki-copy .success::before {
+.prose
+  .vara-shiki-copy:not(:where([class~="not-prose"], [class~="not-prose"] *))
+  .success::before {
   content: "Copied";
 }
 
-.prose .vara-shiki-copy.copied .ready {
+.prose
+  .vara-shiki-copy:not(:where([class~="not-prose"], [class~="not-prose"]
+    *)).copied
+  .ready {
   display: none;
 }
 
-.prose .vara-shiki-copy.copied .success {
+.prose
+  .vara-shiki-copy:not(:where([class~="not-prose"], [class~="not-prose"]
+    *)).copied
+  .success {
   display: inline;
 }
