@@ -4,7 +4,7 @@
 {% set show_credit = props.show_credit|default:"true" %}
 {% if container == "xs" %}{% set container_cls = "max-w-md" %}{% elif container == "sm" %}{% set container_cls = "max-w-3xl" %}{% elif container == "md" %}{% set container_cls = "max-w-6xl" %}{% elif container == "xl" %}{% set container_cls = "max-w-[120rem]" %}{% elif container == "full" %}{% set container_cls = "max-w-full" %}{% else %}{% set container_cls = "max-w-7xl" %}{% endif %}
 
-<footer class="not-prose shrink-0 border-t border-base-400 bg-base-100{% if props.class %} {{ props.class }}{% endif %}">
+<footer class="not-prose shrink-0 border-t mt-10 desk:mt-20 border-base-400 bg-base-100{% if props.class %} {{ props.class }}{% endif %}">
   <div class="mx-auto w-full {{ container_cls }} px-4">
     <div class="flex flex-col gap-4 py-6 desk:flex-row desk:items-center desk:justify-between">
       <div class="max-w-2xl">
