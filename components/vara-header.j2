@@ -1,4 +1,5 @@
 {% import "../templates/vara/macros/button.j2" button %}
+{% import "../templates/vara/macros/theme-picker.j2" theme_picker %}
 
 {% set container = props.container|default:"lg" %}
 {% if container == "xs" %}{% set container_cls = "max-w-md" %}{% elif container == "sm" %}{% set container_cls = "max-w-3xl" %}{% elif container == "md" %}{% set container_cls = "max-w-6xl" %}{% elif container == "xl" %}{% set container_cls = "max-w-[120rem]" %}{% elif container == "full" %}{% set container_cls = "max-w-full" %}{% else %}{% set container_cls = "max-w-7xl" %}{% endif %}
@@ -49,11 +50,7 @@
       <div class="flex shrink-0 items-center justify-end gap-1">
         {% if props.cta_label and props.cta_href %}<div class="hidden desk:block">{{ button(props.cta_label, props.cta_href, "", "", "", "sm", "md", props.cta_variant|default:"solid", props.cta_color|default:"neutral") }}</div>{% endif %}
         {% if show_theme != "false" %}
-          <button type="button" class="inline-flex size-9 cursor-pointer items-center justify-center rounded-md border border-transparent text-content-muted transition-colors hover:bg-base-200 hover:text-content focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-content" x-data="theme" x-on:click="cycleTheme()" x-bind:aria-label="'Theme: ' + theme + '. Change theme'" x-bind:title="'Theme: ' + theme">
-            <span x-show="theme === 'system'" x-cloak aria-hidden="true">{{ vara_icon("sun-moon", "size-4")|safe }}</span>
-            <span x-show="theme === 'light'" x-cloak aria-hidden="true">{{ vara_icon("sun", "size-4")|safe }}</span>
-            <span x-show="theme === 'dark'" x-cloak aria-hidden="true">{{ vara_icon("moon", "size-4")|safe }}</span>
-          </button>
+          {{ theme_picker("Theme") }}
         {% endif %}
         {% if has_navigation %}
           <button type="button" class="inline-flex size-9 cursor-pointer items-center justify-center rounded-md border border-transparent text-content-muted transition-colors hover:bg-base-200 hover:text-content focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-content desk:hidden" x-on:click="open = !open" x-bind:aria-expanded="open.toString()" x-bind:aria-controls="$id('vara-header-navigation')" aria-label="Toggle navigation">
