@@ -9,6 +9,7 @@ public/_vara/js/
 ├── build/          ← Bundled output (only folders with index.js produce a file here)
 ├── src/
 │   ├── head/       ← High-priority scripts injected before </head> on every page
+│   ├── landing/    ← Alpine and shared runtime for landing pages
 │   ├── theme/      ← Theme logic
 │   ├── docs/       ← Documentation behavior and support modules
 │   └── docs-search/ ← Optional documentation search entry point
@@ -32,6 +33,10 @@ Theme logic split into two files:
 
 - **`head.js`** — Loaded by the `head/` entry point. It exports `headInitTheme()`, which runs before render to prevent FOUC.
 - **`runtime.js`** — Designed to be imported from other JavaScript modules at runtime.
+
+### `landing/`
+
+Runtime used by landing pages. It starts Alpine and registers the shared theme controls used by public landing components such as `<vara-header>`.
 
 ### `docs/`
 
