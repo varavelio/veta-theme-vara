@@ -2,18 +2,15 @@
 {% set links = props.links|default:"" %}
 {% set link_items = links|split:"," %}
 {% set show_credit = props.show_credit|default:"true" %}
-{% set site_title = vara_site_setting("title")|default:"Vara" %}
-{% set year = props.year|default:"" %}
-{% if not year %}{% set year = vara_site_setting("year") %}{% endif %}
 {% if container == "xs" %}{% set container_cls = "max-w-md" %}{% elif container == "sm" %}{% set container_cls = "max-w-3xl" %}{% elif container == "md" %}{% set container_cls = "max-w-6xl" %}{% elif container == "xl" %}{% set container_cls = "max-w-[120rem]" %}{% elif container == "full" %}{% set container_cls = "max-w-full" %}{% else %}{% set container_cls = "max-w-7xl" %}{% endif %}
 
 <footer class="not-prose shrink-0 border-t border-base-400 bg-base-100{% if props.class %} {{ props.class }}{% endif %}">
   <div class="mx-auto w-full {{ container_cls }} px-4">
     <div class="flex flex-col gap-4 py-6 desk:flex-row desk:items-center desk:justify-between">
-      <p class="max-w-2xl text-sm leading-6 text-content-muted">
-        {% if props.copyright %}{{ props.copyright }}{% else %}&copy; {% if year %}{{ year }} {% endif %}{{ site_title }}.{% endif %}
-        {% if show_credit != "false" %} Built with <a href="https://veta.varavel.com" class="rounded-sm font-medium text-content no-underline outline-content transition-colors hover:text-info focus-visible:outline-2 focus-visible:outline-offset-2">Veta</a> and <a href="https://github.com/varavelio/veta-theme-vara" class="rounded-sm font-medium text-content no-underline outline-content transition-colors hover:text-info focus-visible:outline-2 focus-visible:outline-offset-2">Vara</a>.{% endif %}
-      </p>
+      <div class="max-w-2xl">
+        {% if props.copyright %}<p class="text-sm leading-6 text-content-muted">{{ vara_component_footer_copyright(props.copyright)|safe }}</p>{% endif %}
+        {% if show_credit != "false" %}<p class="text-sm leading-6 text-content-muted">Built with <a href="https://github.com/varavelio/veta" target="_blank" rel="noopener noreferrer" class="rounded-sm font-medium text-content no-underline outline-content transition-colors hover:text-info focus-visible:outline-2 focus-visible:outline-offset-2">veta</a> and <a href="https://github.com/varavelio/veta-theme-vara" target="_blank" rel="noopener noreferrer" class="rounded-sm font-medium text-content no-underline outline-content transition-colors hover:text-info focus-visible:outline-2 focus-visible:outline-offset-2">veta-theme-vara</a>.</p>{% endif %}
+      </div>
 
       {% if links or props.github_href %}
         <nav class="flex flex-wrap items-center gap-x-4 gap-y-2" aria-label="Footer navigation">
