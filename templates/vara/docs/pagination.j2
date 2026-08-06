@@ -1,8 +1,7 @@
 {% import "./pager-link.j2" pager_link %}
-{% set docs_pagination = vara_docs_pagination(docs_root_permalink) %}
 
 {% if docs_pagination.previous or docs_pagination.next %}
-  <nav class="{% if docs_footer_links and docs_footer_links|length > 0 %}mt-8{% else %}mt-12{% endif %} border-t border-base-400 pt-8" aria-label="Previous and next navigation">
+  <nav class="{% if docs_footer_links and docs_footer_links|length > 0 %}mt-8{% else %}mt-12{% endif %} border-t border-base-400 pt-8 pb-8" aria-label="Previous and next navigation">
     <div class="grid grid-cols-1 gap-3 desk:grid-cols-2 desk:gap-4">
       {% if docs_pagination.previous %}{{ pager_link(docs_pagination.previous, "previous", "flex") }}{% endif %}
       {% if docs_pagination.next %}{{ pager_link(docs_pagination.next, "next", "flex") }}{% endif %}

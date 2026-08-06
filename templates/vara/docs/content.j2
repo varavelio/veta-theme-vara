@@ -43,6 +43,8 @@
     </div>
   </div>
 
+  {% set docs_pagination = vara_docs_pagination(docs_root_permalink) %}
+
   {% if page.content|vara_trim %}
     <article class="prose dark:prose-invert max-w-none{% if docs_shiki %} vara-shiki-enabled{% endif %}">
       {{ page.content|safe }}
@@ -51,6 +53,10 @@
     {% set docs_footer_links = vara_docs_footer_links(page.docs_footer_links) %}
     {% include "./footer-links.j2" %}
     {% include "./pagination.j2" %}
+  {% endif %}
+
+  {% if docs_credits_footer %}
+    {% include "./footer.j2" %}
   {% endif %}
 
   <button
