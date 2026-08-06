@@ -1,5 +1,9 @@
 {% extends "./vara/base/main.j2" %}
 
+{% block head_extra %}
+  <script src="{{ url('/_vara/js/build/landing.js') }}" defer></script>
+{% endblock %}
+
 {% block body %}
   <div class="size-full overflow-y-auto">
     {{ page.content | safe }}

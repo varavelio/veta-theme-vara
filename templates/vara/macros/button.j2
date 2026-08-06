@@ -18,7 +18,7 @@
 {% endcomment %}
 
 {% macro button(text, href="", target="", icon_left="", icon_right="", size="md", radius="md", variant="solid", color="neutral", wide="false", disabled="false", type="button", class="") export %}
-  {% set base_classes = "relative inline-flex items-center gap-2 border font-medium transition-all duration-75 cursor-pointer select-none no-underline focus-visible:outline-2" %}
+  {% set base_classes = "relative inline-flex items-center justify-center gap-2 border font-medium transition-all duration-75 cursor-pointer select-none no-underline focus-visible:outline-2" %}
 
   {% if disabled == "true" %}
     {% set state_classes = "cursor-not-allowed opacity-50" %}
@@ -54,19 +54,7 @@
   {% endif %}
 
   {# Variant + Color #}
-  {% if variant == "solid" %}
-    {% if color == "info" %}
-      {% set variant_classes = "border-info bg-info text-white outline-info hover:bg-info/80 focus-visible:outline-offset-2" %}
-    {% elif color == "success" %}
-      {% set variant_classes = "border-success bg-success text-white outline-success hover:bg-success/80 focus-visible:outline-offset-2" %}
-    {% elif color == "warning" %}
-      {% set variant_classes = "border-warning bg-warning text-white outline-warning hover:bg-warning/80 focus-visible:outline-offset-2" %}
-    {% elif color == "error" %}
-      {% set variant_classes = "border-error bg-error text-white outline-error hover:bg-error/80 focus-visible:outline-offset-2" %}
-    {% else %}
-      {% set variant_classes = "border-content bg-content text-base-100 outline-content hover:bg-content/80 focus-visible:outline-offset-2" %}
-    {% endif %}
-  {% elif variant == "outline" %}
+  {% if variant == "outline" %}
     {% if color == "info" %}
       {% set variant_classes = "border-info/30 bg-transparent text-info outline-info hover:bg-info/10" %}
     {% elif color == "success" %}
@@ -90,6 +78,18 @@
     {% else %}
       {% set variant_classes = "border-transparent bg-transparent text-content outline-content hover:bg-base-300" %}
     {% endif %}
+  {% else %}
+    {% if color == "info" %}
+      {% set variant_classes = "border-info bg-info text-white outline-info hover:bg-info/80 focus-visible:outline-offset-2" %}
+    {% elif color == "success" %}
+      {% set variant_classes = "border-success bg-success text-white outline-success hover:bg-success/80 focus-visible:outline-offset-2" %}
+    {% elif color == "warning" %}
+      {% set variant_classes = "border-warning bg-warning text-white outline-warning hover:bg-warning/80 focus-visible:outline-offset-2" %}
+    {% elif color == "error" %}
+      {% set variant_classes = "border-error bg-error text-white outline-error hover:bg-error/80 focus-visible:outline-offset-2" %}
+    {% else %}
+      {% set variant_classes = "border-content bg-content text-base-100 outline-content hover:bg-content/80 focus-visible:outline-offset-2" %}
+    {% endif %}
   {% endif %}
 
   {# Create final classes #}
@@ -101,20 +101,24 @@
   {# Render the button #}
   {% if href %}
     {% if disabled == "true" %}
-      <a aria-disabled="true" class="{{ all_classes }}">{{ text }}</a>
+      <span aria-disabled="true" class="{{ all_classes }}">
+        {% if icon_left %}<span class="contents" aria-hidden="true">{{ vara_icon(icon_left, "size-4 shrink-0")|safe }}</span>{% endif %}
+        {{ text }}
+        {% if icon_right %}<span class="contents" aria-hidden="true">{{ vara_icon(icon_right, "size-4 shrink-0")|safe }}</span>{% endif %}
+      </span>
     {% else %}
       <a
         class="{{ all_classes }}"
-        href="{{ href }}"
+        href="{{ url(href) }}"
         {% if target %} target="{{ target }}" {% endif %}
         {% if target == "_blank" %} rel="noopener noreferrer" {% endif %}
       >
         {% if icon_left %}
-          {{ vara_icon(icon_left, "size-4 shrink-0") | safe }}
+          <span class="contents" aria-hidden="true">{{ vara_icon(icon_left, "size-4 shrink-0")|safe }}</span>
         {% endif %}
         {{ text }}
         {% if icon_right %}
-          {{ vara_icon(icon_right, "size-4 shrink-0") | safe }}
+          <span class="contents" aria-hidden="true">{{ vara_icon(icon_right, "size-4 shrink-0")|safe }}</span>
         {% endif %}
       </a>
     {% endif %}
@@ -125,11 +129,11 @@
       {% if disabled == "true" %} disabled {% endif %}
     >
       {% if icon_left %}
-        {{ vara_icon(icon_left, "size-4 shrink-0") | safe }}
+        <span class="contents" aria-hidden="true">{{ vara_icon(icon_left, "size-4 shrink-0")|safe }}</span>
       {% endif %}
       {{ text }}
       {% if icon_right %}
-        {{ vara_icon(icon_right, "size-4 shrink-0") | safe }}
+        <span class="contents" aria-hidden="true">{{ vara_icon(icon_right, "size-4 shrink-0")|safe }}</span>
       {% endif %}
     </button>
   {% endif %}
