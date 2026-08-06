@@ -27,7 +27,7 @@
         aria-haspopup="menu"
         aria-label="{{ label }}"
       >
-        <span x-show="theme === 'system'" x-cloak>{{ vara_icon("sun-moon", "size-4 shrink-0")|safe }}</span>
+        <span x-show="theme === 'system'" x-cloak>{{ vara_icon("palette", "size-4 shrink-0")|safe }}</span>
         <span x-show="theme === 'light'" x-cloak>{{ vara_icon("sun", "size-4 shrink-0")|safe }}</span>
         <span x-show="theme === 'dark'" x-cloak>{{ vara_icon("moon", "size-4 shrink-0")|safe }}</span>
         <span class="hidden desk:inline">{{ label }}</span>
@@ -63,7 +63,7 @@
           x-on:keydown.arrow-up.prevent="$refs.dark.focus()"
         >
           <span class="flex size-4 shrink-0 items-center justify-center">
-            {{ vara_icon("sun-moon", "size-4")|safe }}
+            {{ vara_icon("palette", "size-4")|safe }}
           </span>
           <span>System</span>
           <span class="ml-auto" x-show="theme === 'system'" x-cloak>
