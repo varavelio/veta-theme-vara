@@ -30,6 +30,8 @@ You MUST follow the following instructions:
 
 - `templates/` contains Pongo page templates. The supported page templates are `templates/vara-landing.j2`, `templates/vara-docs.j2`, `templates/vara-docs-raw.j2`, `templates/vara-docs-search-index.j2`, `templates/vara-docs-llms-txt.j2`, `templates/vara-docs-llms-full-txt.j2`, `templates/vara-sitemap-xml.j2`, and `templates/vara-404.j2`.
 - `components/` contains Veta components. Every component filename and tag must use the `vara-` prefix and kebab-case (for example, `vara-alert.j2` and `<vara-alert>`).
+- Keep the public component collection small and general-purpose; domain-specific recipes belong in consuming projects. Every public component must have a matching rendered page in `content/docs/components/`; `tests/components_docs.test.js` enforces catalog parity and example coverage.
+- Component attributes are strings. Use quoted `"true"`/`"false"` booleans, consistent `*_label`/`*_href` action pairs, and `item_N_*` families for bounded records. Resolve internal links and assets with `url()`.
 - `filters/` contains distributable JS filters. Every filter filename and template filter name must use the `vara_` prefix because these ship in the consuming project's global namespace.
 - `functions/` contains JS template functions. Every function filename and template function name must use the `vara_` prefix because these ship in the consuming project's global namespace.
 - `data/site_default.js` contains theme defaults. `data/site.yaml` is the showcase override. In Pongo templates and components, resolve these values with `vara_site_setting("specific_key", "fallback_key")`; it checks each key in `data.site` and then `data.site_default`. Keep literal defaults in the template with the `default` filter.
@@ -54,6 +56,7 @@ You MUST follow the following instructions:
 - Before modifying or adding any JavaScript under `public/_vara/js/`, read `public/_vara/js/README.md` first. It explains the directory layout, bundling rules, and the role of each module.
 - Keep Shiki loading-state, theme, code-block, and copy-button styles centralized in `public/_vara/css/shiki.css`.
 - JS source modules under `public/_vara/js/src/` use modern ES syntax (esbuild handles transpilation).
+- `vara-landing` loads the `landing` bundle, which starts Alpine and registers shared theme controls for interactive public components.
 - JS source inside `pages/*.js`, `data/*.js`, `filters/*.js`, `functions/*.js` are constrained by Goja and are synchronous only.
 
 ## Operational Commands
