@@ -11,13 +11,13 @@ icon: "circle-question-mark"
 
 ## Usage
 
-```md
+```html
 <vara-faq
-title="Frequently asked questions"
-item_1_question="Does this require a frontend framework?"
-item_1_answer="No. Vara ships ready-to-use theme assets."
-item_2_question="Can projects add components?"
-item_2_answer="Yes. Project components extend or override the theme."
+  title="Frequently asked questions"
+  item_1_question="Does this require a frontend framework?"
+  item_1_answer="No. Vara ships ready-to-use theme assets."
+  item_2_question="Can projects add components?"
+  item_2_answer="Yes. Project components extend or override the theme."
 />
 ```
 

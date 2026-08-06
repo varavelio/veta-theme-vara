@@ -11,7 +11,7 @@ icon: "shapes"
 
 ## Usage
 
-```md
+```html
 <vara-icon name="rocket" label="Deployment" class="size-6 text-info" />
 ```
 

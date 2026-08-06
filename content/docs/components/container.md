@@ -11,9 +11,12 @@ icon: "panel-top"
 
 ## Usage
 
-```md
-<vara-container size="xs" class="rounded-lg border border-base-400 bg-base-200 py-6">
-Contained content stays readable at every viewport size.
+```html
+<vara-container
+  size="xs"
+  class="rounded-lg border border-base-400 bg-base-200 py-6"
+>
+  Contained content stays readable at every viewport size.
 </vara-container>
 ```
 

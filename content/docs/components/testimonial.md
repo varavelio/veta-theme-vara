@@ -11,15 +11,15 @@ icon: "quote"
 
 ## Usage
 
-```md
+```html
 <vara-testimonial
-quote="We published a coherent documentation site without maintaining a frontend app."
-author="Alex Morgan"
-author_role="Documentation lead"
-author_href="https://example.com/alex"
-quote_href="https://example.com/blog/launch"
-result_label="Time to first deployment"
-result_value="1 day"
+  quote="We published a coherent documentation site without maintaining a frontend app."
+  author="Alex Morgan"
+  author_role="Documentation lead"
+  author_href="https://example.com/alex"
+  quote_href="https://example.com/blog/launch"
+  result_label="Time to first deployment"
+  result_value="1 day"
 />
 ```
 

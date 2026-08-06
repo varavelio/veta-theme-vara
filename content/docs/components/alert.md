@@ -11,8 +11,12 @@ Use `<vara-alert>` for notes, guidance, warnings, and status feedback. It is sta
 
 ## Usage
 
-```md
-<vara-alert title="Heads up" description="This action cannot be undone." color="warning" />
+```html
+<vara-alert
+  title="Heads up"
+  description="This action cannot be undone."
+  color="warning"
+/>
 ```
 
 ## Preview
@@ -43,8 +47,13 @@ Use `<vara-alert>` for notes, guidance, warnings, and status feedback. It is sta
 
 Pass any icon name from the Lucide or Simple Icons sets:
 
-```md
-<vara-alert title="Deploy" description="Production deploy started." icon="rocket" color="success" />
+```html
+<vara-alert
+  title="Deploy"
+  description="Production deploy started."
+  icon="rocket"
+  color="success"
+/>
 ```
 
 For richer content, use a paired tag. Its body is rendered as Markdown before it reaches the component.

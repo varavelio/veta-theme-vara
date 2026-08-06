@@ -11,14 +11,14 @@ icon: "megaphone"
 
 ## Usage
 
-```md
+```html
 <vara-cta
-title="Ready to publish?"
-description="Start with the installation guide."
-primary_label="Install Vara"
-primary_href="/docs/getting-started/installation"
-secondary_label="View GitHub"
-secondary_href="https://github.com/varavelio/veta-theme-vara"
+  title="Ready to publish?"
+  description="Start with the installation guide."
+  primary_label="Install Vara"
+  primary_href="/docs/getting-started/installation"
+  secondary_label="View GitHub"
+  secondary_href="https://github.com/varavelio/veta-theme-vara"
 />
 ```
 

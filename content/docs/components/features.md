@@ -11,16 +11,16 @@ icon: "layout-grid"
 
 ## Usage
 
-```md
+```html
 <vara-features
-title="Built for publishing"
-columns="3"
-item_1_icon="file-text"
-item_1_title="Markdown first"
-item_1_description="Keep content readable and portable."
-item_2_icon="smartphone"
-item_2_title="Responsive"
-item_2_description="Every layout works from mobile to desktop."
+  title="Built for publishing"
+  columns="3"
+  item_1_icon="file-text"
+  item_1_title="Markdown first"
+  item_1_description="Keep content readable and portable."
+  item_2_icon="smartphone"
+  item_2_title="Responsive"
+  item_2_description="Every layout works from mobile to desktop."
 />
 ```
 

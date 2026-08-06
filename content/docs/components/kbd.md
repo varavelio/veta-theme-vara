@@ -11,7 +11,7 @@ Use `<vara-kbd>` for key names in shortcut instructions. It renders the semantic
 
 ## Usage
 
-```md
+```html
 Press <vara-kbd text="Ctrl" /> + <vara-kbd text="K" /> to search.
 ```
 

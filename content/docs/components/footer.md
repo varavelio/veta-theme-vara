@@ -11,11 +11,11 @@ icon: "panel-bottom"
 
 ## Usage
 
-```md
+```html
 <vara-footer
-links="Docs|/docs,Company|/company,Privacy|/privacy"
-github_href="https://github.com/example/project"
-github_label="Project on GitHub"
+  links="Docs|/docs,Company|/company,Privacy|/privacy"
+  github_href="https://github.com/example/project"
+  github_label="Project on GitHub"
 />
 ```
 

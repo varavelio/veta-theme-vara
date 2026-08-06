@@ -11,7 +11,7 @@ icon: "gallery-horizontal-end"
 
 ## Usage
 
-```md
+```html
 <vara-carousel label="Customer stories">
   <vara-testimonial quote="First quote" author="Alex Morgan" />
   <vara-testimonial quote="Second quote" author="Sam Rivera" />

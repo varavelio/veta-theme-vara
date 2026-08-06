@@ -11,12 +11,12 @@ icon: "panel-top"
 
 ## Usage
 
-```md
+```html
 <vara-header
-title="Acme"
-links="Product|/product,Docs|/docs,Company|/company"
-cta_label="Get started"
-cta_href="/docs/getting-started"
+  title="Acme"
+  links="Product|/product,Docs|/docs,Company|/company"
+  cta_label="Get started"
+  cta_href="/docs/getting-started"
 />
 ```
 

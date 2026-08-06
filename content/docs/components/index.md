@@ -13,7 +13,7 @@ Vara includes a deliberately small set of components for documentation content a
 
 Use components as custom HTML tags in Markdown content:
 
-```md
+```html
 <vara-alert title="Note" description="This is important." color="info" />
 ```
 

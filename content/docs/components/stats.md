@@ -11,16 +11,16 @@ Use `<vara-stats>` for a small set of measurable outcomes. The component uses a 
 
 ## Usage
 
-```md
+```html
 <vara-stats
-title="At a glance"
-columns="3"
-stat_1_label="Lighthouse score"
-stat_1_value="100"
-stat_2_label="Frontend installs"
-stat_2_value="0"
-stat_3_label="Deploy targets"
-stat_3_value="Any"
+  title="At a glance"
+  columns="3"
+  stat_1_label="Lighthouse score"
+  stat_1_value="100"
+  stat_2_label="Frontend installs"
+  stat_2_value="0"
+  stat_3_label="Deploy targets"
+  stat_3_value="Any"
 />
 ```
 

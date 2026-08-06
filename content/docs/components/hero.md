@@ -11,17 +11,17 @@ icon: "gallery-horizontal-end"
 
 ## Usage
 
-```md
+```html
 <vara-hero
-eyebrow="Release 2.0"
-title="Ship a clearer product story"
-description="A focused foundation for a fast, accessible landing page."
-primary_label="Get started"
-primary_href="/docs/"
-panel_title="Everything important, nothing excessive"
-panel_description="Compose the page directly from Markdown."
-item_1="Responsive by default"
-item_2="Deployment-aware links"
+  eyebrow="Release 2.0"
+  title="Ship a clearer product story"
+  description="A focused foundation for a fast, accessible landing page."
+  primary_label="Get started"
+  primary_href="/docs/"
+  panel_title="Everything important, nothing excessive"
+  panel_description="Compose the page directly from Markdown."
+  item_1="Responsive by default"
+  item_2="Deployment-aware links"
 />
 ```
 

@@ -11,7 +11,7 @@ icon: "mouse-pointer-click"
 
 ## Usage
 
-```md
+```html
 <vara-button label="Read the guide" href="/docs/" icon_end="arrow-right" />
 ```
 

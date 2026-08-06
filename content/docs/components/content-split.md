@@ -11,16 +11,16 @@ Use `<vara-content-split>` for product explanations, benefits, workflows, and ot
 
 ## Usage
 
-```md
+```html
 <vara-content-split
-eyebrow="Workflow"
-title="Keep content and presentation separate"
-description="Authors work in Markdown while Vara owns the visual system."
-item_1="Readable source files"
-item_2="Consistent responsive layout"
-panel_icon="file-text"
-panel_title="Content stays portable"
-panel_description="Move or extend it without rebuilding a frontend application."
+  eyebrow="Workflow"
+  title="Keep content and presentation separate"
+  description="Authors work in Markdown while Vara owns the visual system."
+  item_1="Readable source files"
+  item_2="Consistent responsive layout"
+  panel_icon="file-text"
+  panel_title="Content stays portable"
+  panel_description="Move or extend it without rebuilding a frontend application."
 />
 ```
 

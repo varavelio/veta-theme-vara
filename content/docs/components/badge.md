@@ -11,7 +11,7 @@ The `<vara-badge>` component renders a compact status label.
 
 ## Usage
 
-```md
+```html
 <vara-badge text="New" color="info" />
 ```
 
