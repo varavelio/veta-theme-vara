@@ -25,6 +25,7 @@ export default function() {
     docs_sidebar_collapsed: false,
     docs_llms: true,
     docs_llms_index: true,
+    docs_credits_footer: true,
     docs_root_permalink: "/docs/",
     docs_search: true,
     docs_search_index_permalink: "/docs/vara-docs-search-index.json",
