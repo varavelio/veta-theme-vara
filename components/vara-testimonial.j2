@@ -1,16 +1,23 @@
-{% import "../templates/vara/macros/component-layout.j2" component_container %}
-
 {% set container = props.container|default:"lg" %}
 {% set background = props.background|default:"base-100" %}
+{% set author_href = props.author_href|default:"" %}
+{% set author_href_target = props.author_href_target|default:"_blank" %}
+{% set quote_href = props.quote_href|default:"" %}
+{% set quote_label = props.quote_label|default:"View original quote" %}
+{% if container == "xs" %}{% set container_cls = "max-w-md" %}{% elif container == "sm" %}{% set container_cls = "max-w-3xl" %}{% elif container == "md" %}{% set container_cls = "max-w-6xl" %}{% elif container == "xl" %}{% set container_cls = "max-w-[120rem]" %}{% elif container == "full" %}{% set container_cls = "max-w-full" %}{% else %}{% set container_cls = "max-w-7xl" %}{% endif %}
 
-<section class="bg-{{ background }} py-10 desk:py-20{% if props.class %} {{ props.class }}{% endif %}">
-  <div class="mx-auto w-full {{ component_container(container) }} px-4">
+<section class="not-prose bg-{{ background }} py-10 desk:py-20{% if props.class %} {{ props.class }}{% endif %}">
+  <div class="mx-auto w-full {{ container_cls }} px-4">
     <figure class="grid gap-6 rounded-lg border border-base-400 bg-base-200 p-5 desk:grid-cols-[minmax(0,1fr)_minmax(12rem,0.35fr)] desk:items-end desk:p-8">
       {% if props.author %}
         <figcaption class="order-2 flex items-center gap-3 border-t border-base-400 pt-5 desk:col-start-1">
           {% if props.avatar_src %}<img src="{{ url(props.avatar_src) }}" alt="{{ props.avatar_alt|default:'' }}" class="size-10 rounded-full border border-base-400 object-cover" loading="lazy" decoding="async"{% if props.avatar_width %} width="{{ props.avatar_width }}"{% endif %}{% if props.avatar_height %} height="{{ props.avatar_height }}"{% endif %}>{% endif %}
           <div class="min-w-0">
-            <p class="font-medium text-content">{{ props.author }}</p>
+            {% if author_href %}
+              <a href="{{ url(author_href) }}"{% if author_href_target %} target="{{ author_href_target }}"{% endif %}{% if author_href_target == "_blank" %} rel="noopener noreferrer"{% endif %} class="rounded-sm font-medium text-content no-underline outline-content transition-colors hover:text-info focus-visible:outline-2 focus-visible:outline-offset-2">{{ props.author }}</a>
+            {% else %}
+              <p class="font-medium text-content">{{ props.author }}</p>
+            {% endif %}
             {% if props.author_role %}<p class="text-sm text-content-muted">{{ props.author_role }}</p>{% endif %}
           </div>
         </figcaption>
@@ -18,6 +25,12 @@
       <div class="order-1 min-w-0 desk:col-start-1">
         <span class="flex size-10 items-center justify-center rounded-md border border-base-400 bg-base-100" aria-hidden="true">{{ vara_icon("quote", "size-5 text-content")|safe }}</span>
         {% if props.quote %}<blockquote class="mt-6 text-2xl font-medium leading-tight tracking-tight text-content desk:text-4xl">{{ props.quote }}</blockquote>{% endif %}
+        {% if quote_href %}
+          <a href="{{ url(quote_href) }}" class="mt-4 inline-flex items-center gap-1.5 rounded-sm text-sm font-medium text-content-muted no-underline outline-content transition-colors hover:text-content focus-visible:outline-2 focus-visible:outline-offset-2" target="_blank" rel="noopener noreferrer">
+            {{ quote_label }}
+            <span aria-hidden="true">{{ vara_icon("external-link", "size-3.5")|safe }}</span>
+          </a>
+        {% endif %}
       </div>
       {% if props.result_value and props.result_label %}
         <dl class="order-3 rounded-md border border-base-400 bg-base-100 p-4 desk:col-start-2 desk:row-span-2 desk:row-start-1">

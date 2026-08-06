@@ -1,5 +1,3 @@
-{% import "../templates/vara/macros/component-layout.j2" component_container %}
-
 {% set container = props.container|default:"lg" %}
 {% set links = props.links|default:"" %}
 {% set link_items = links|split:"," %}
@@ -7,9 +5,10 @@
 {% set site_title = vara_site_setting("title")|default:"Vara" %}
 {% set year = props.year|default:"" %}
 {% if not year %}{% set year = vara_site_setting("year") %}{% endif %}
+{% if container == "xs" %}{% set container_cls = "max-w-md" %}{% elif container == "sm" %}{% set container_cls = "max-w-3xl" %}{% elif container == "md" %}{% set container_cls = "max-w-6xl" %}{% elif container == "xl" %}{% set container_cls = "max-w-[120rem]" %}{% elif container == "full" %}{% set container_cls = "max-w-full" %}{% else %}{% set container_cls = "max-w-7xl" %}{% endif %}
 
-<footer class="shrink-0 border-t border-base-400 bg-base-100{% if props.class %} {{ props.class }}{% endif %}">
-  <div class="mx-auto w-full {{ component_container(container) }} px-4">
+<footer class="not-prose shrink-0 border-t border-base-400 bg-base-100{% if props.class %} {{ props.class }}{% endif %}">
+  <div class="mx-auto w-full {{ container_cls }} px-4">
     <div class="flex flex-col gap-4 py-6 desk:flex-row desk:items-center desk:justify-between">
       <p class="max-w-2xl text-sm leading-6 text-content-muted">
         {% if props.copyright %}{{ props.copyright }}{% else %}&copy; {% if year %}{{ year }} {% endif %}{{ site_title }}.{% endif %}

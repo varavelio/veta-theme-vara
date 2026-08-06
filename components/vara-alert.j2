@@ -2,9 +2,10 @@
 {% set icon = props.icon|default:"" %}
 {% set title = props.title|default:"" %}
 {% set description = props.description|default:"" %}
+{% set slot_content = props.content|default:""|vara_trim %}
 {% set role = props.role|default:"" %}
 {% set heading_level = props.heading_level|default:"3" %}
-{% set base = "relative rounded-lg border p-4" %}
+{% set base = "not-prose relative my-3 rounded-lg border p-4" %}
 {% if color == "info" %}
   {% set color_cls = "border-info/40 bg-info/2 text-info" %}
   {% set default_icon = "info" %}
@@ -31,13 +32,11 @@
   {% set all = all + " " + props.class %}
 {% endif %}
 <aside class="{{ all }}"{% if role == "alert" or role == "status" %} role="{{ role }}"{% endif %}>
-  <div class="flex gap-3">
+  <div class="flex items-start gap-3">
     <span class="mt-0.5 shrink-0" aria-hidden="true">{{ vara_icon(resolved_icon, "size-5")|safe }}</span>
     <div class="min-w-0 flex-1">
-      {% if title %}
-        {% if heading_level == "4" %}<h4 class="font-medium">{{ title }}</h4>{% else %}<h3 class="font-medium">{{ title }}</h3>{% endif %}
-      {% endif %}
-      {% if props.content %}<div class="text-sm leading-relaxed opacity-90{% if title %} mt-1{% endif %}">{{ props.content|safe }}</div>{% elif description %}<p class="text-sm leading-relaxed opacity-90{% if title %} mt-1{% endif %}">{{ description }}</p>{% endif %}
+      {% if title %}{% if heading_level == "4" %}<h4 class="text-sm font-medium leading-6">{{ title }}</h4>{% else %}<h3 class="text-sm font-medium leading-6">{{ title }}</h3>{% endif %}{% endif %}
+      {% if description %}<p class="text-sm leading-6 opacity-90{% if title %} mt-1{% endif %}">{{ description }}</p>{% elif slot_content %}<div class="text-sm leading-6 opacity-90{% if title %} mt-1{% endif %}">{{ slot_content|safe }}</div>{% endif %}
     </div>
   </div>
 </aside>

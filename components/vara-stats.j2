@@ -1,9 +1,8 @@
-{% import "../templates/vara/macros/component-layout.j2" component_container, section_heading %}
-
 {% set container = props.container|default:"lg" %}
 {% set background = props.background|default:"base-100" %}
 {% set columns = props.columns|default:"4" %}
 {% set variant = props.variant|default:"cards" %}
+{% if container == "xs" %}{% set container_cls = "max-w-md" %}{% elif container == "sm" %}{% set container_cls = "max-w-3xl" %}{% elif container == "md" %}{% set container_cls = "max-w-6xl" %}{% elif container == "xl" %}{% set container_cls = "max-w-[120rem]" %}{% elif container == "full" %}{% set container_cls = "max-w-full" %}{% else %}{% set container_cls = "max-w-7xl" %}{% endif %}
 
 {% macro stat(value, label, description) %}
   {% if value and label %}
@@ -15,10 +14,16 @@
   {% endif %}
 {% endmacro %}
 
-<section class="bg-{{ background }} py-10 desk:py-20{% if props.class %} {{ props.class }}{% endif %}">
-  <div class="mx-auto w-full {{ component_container(container) }} px-4">
+<section class="not-prose bg-{{ background }} py-10 desk:py-20{% if props.class %} {{ props.class }}{% endif %}">
+  <div class="mx-auto w-full {{ container_cls }} px-4">
     <div class="space-y-8 desk:space-y-10">
-      {{ section_heading(props.eyebrow, props.title, props.description, props.heading_level|default:"2") }}
+      {% if props.eyebrow or props.title or props.description %}
+        <div class="mx-auto flex max-w-3xl flex-col gap-3 text-center">
+          {% if props.eyebrow %}<p class="text-xs font-medium uppercase tracking-[0.24em] text-content-muted">{{ props.eyebrow }}</p>{% endif %}
+          {% if props.title %}{% if props.heading_level == "3" %}<h3 class="text-3xl font-semibold tracking-tight text-content desk:text-4xl">{{ props.title }}</h3>{% else %}<h2 class="text-3xl font-semibold tracking-tight text-content desk:text-4xl">{{ props.title }}</h2>{% endif %}{% endif %}
+          {% if props.description %}<p class="text-base leading-7 text-content-muted desk:text-lg">{{ props.description }}</p>{% endif %}
+        </div>
+      {% endif %}
       <dl class="grid grid-cols-1{% if variant == 'strip' %} border-y border-base-400{% else %} gap-4 desk:gap-5{% endif %}{% if columns == '2' %} desk:grid-cols-2{% elif columns == '3' %} desk:grid-cols-3{% else %} desk:grid-cols-4{% endif %}">
         {{ stat(props.stat_1_value, props.stat_1_label, props.stat_1_description) }}
         {{ stat(props.stat_2_value, props.stat_2_label, props.stat_2_description) }}

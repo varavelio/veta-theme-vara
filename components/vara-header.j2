@@ -1,7 +1,7 @@
 {% import "../templates/vara/macros/button.j2" button %}
-{% import "../templates/vara/macros/component-layout.j2" component_container %}
 
 {% set container = props.container|default:"lg" %}
+{% if container == "xs" %}{% set container_cls = "max-w-md" %}{% elif container == "sm" %}{% set container_cls = "max-w-3xl" %}{% elif container == "md" %}{% set container_cls = "max-w-6xl" %}{% elif container == "xl" %}{% set container_cls = "max-w-[120rem]" %}{% elif container == "full" %}{% set container_cls = "max-w-full" %}{% else %}{% set container_cls = "max-w-7xl" %}{% endif %}
 {% set title = props.title|default:vara_site_setting("title")|default:"Vara" %}
 {% set logo_light = props.logo_light|default:vara_site_setting("logo_light") %}
 {% set logo_dark = props.logo_dark|default:vara_site_setting("logo_dark") %}
@@ -14,8 +14,8 @@
 {% set show_theme = props.show_theme|default:"true" %}
 {% set sticky = props.sticky|default:"false" %}
 
-<header class="z-30 shrink-0 border-b border-base-400 bg-base-100/95 backdrop-blur{% if sticky == 'true' %} sticky top-0{% endif %}{% if props.class %} {{ props.class }}{% endif %}" x-data="{ open: false }" x-id="['vara-header-navigation']" x-on:keydown.escape.window="open = false" x-on:click.outside="open = false">
-  <div class="mx-auto w-full {{ component_container(container) }} px-4">
+<header class="not-prose z-30 shrink-0 border-b border-base-400 bg-base-100/95 backdrop-blur{% if sticky == 'true' %} sticky top-0{% endif %}{% if props.class %} {{ props.class }}{% endif %}" x-data="{ open: false }" x-id="['vara-header-navigation']" x-on:keydown.escape.window="open = false" x-on:click.outside="open = false">
+  <div class="mx-auto w-full {{ container_cls }} px-4">
     <div class="flex h-14 items-center justify-between gap-3 desk:grid desk:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
       <div class="flex min-w-0 items-center justify-start">
         <a href="{{ url(home_href) }}" class="group flex min-w-0 items-center gap-2 overflow-hidden whitespace-nowrap no-underline">

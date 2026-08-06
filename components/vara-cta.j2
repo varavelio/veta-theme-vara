@@ -1,13 +1,13 @@
 {% import "../templates/vara/macros/button.j2" button %}
-{% import "../templates/vara/macros/component-layout.j2" component_container %}
 
 {% set container = props.container|default:"lg" %}
 {% set background = props.background|default:"base-100" %}
 {% set layout = props.layout|default:"centered" %}
 {% set heading_level = props.heading_level|default:"2" %}
+{% if container == "xs" %}{% set container_cls = "max-w-md" %}{% elif container == "sm" %}{% set container_cls = "max-w-3xl" %}{% elif container == "md" %}{% set container_cls = "max-w-6xl" %}{% elif container == "xl" %}{% set container_cls = "max-w-[120rem]" %}{% elif container == "full" %}{% set container_cls = "max-w-full" %}{% else %}{% set container_cls = "max-w-7xl" %}{% endif %}
 
-<section class="bg-{{ background }} py-10 desk:py-20{% if props.class %} {{ props.class }}{% endif %}">
-  <div class="mx-auto w-full {{ component_container(container) }} px-4">
+<section class="not-prose bg-{{ background }} py-10 desk:py-20{% if props.class %} {{ props.class }}{% endif %}">
+  <div class="mx-auto w-full {{ container_cls }} px-4">
     <div class="rounded-lg border border-base-400 bg-base-200 p-5{% if layout == 'inline' %} desk:flex desk:items-center desk:justify-between desk:gap-8{% else %} text-center{% endif %} desk:p-8">
       <div class="{% if layout != 'inline' %}mx-auto flex max-w-3xl flex-col items-center{% else %}max-w-3xl{% endif %}">
         {% if props.eyebrow %}<p class="text-xs font-medium uppercase tracking-[0.24em] text-content-muted">{{ props.eyebrow }}</p>{% endif %}

@@ -1,5 +1,4 @@
 {% import "../templates/vara/macros/button.j2" button %}
-{% import "../templates/vara/macros/component-layout.j2" component_container %}
 
 {% set container = props.container|default:"lg" %}
 {% set layout = props.layout|default:"split" %}
@@ -7,6 +6,7 @@
 {% set heading_level = props.heading_level|default:"1" %}
 {% set media_position = props.media_position|default:"end" %}
 {% set has_media = props.image_src or props.panel_title or props.panel_description or props.item_1 or props.item_2 or props.item_3 %}
+{% if container == "xs" %}{% set container_cls = "max-w-md" %}{% elif container == "sm" %}{% set container_cls = "max-w-3xl" %}{% elif container == "md" %}{% set container_cls = "max-w-6xl" %}{% elif container == "xl" %}{% set container_cls = "max-w-[120rem]" %}{% elif container == "full" %}{% set container_cls = "max-w-full" %}{% else %}{% set container_cls = "max-w-7xl" %}{% endif %}
 
 {% macro hero_actions() %}
   {% if props.primary_label and props.primary_href %}
@@ -21,8 +21,8 @@
   {% if text %}<li class="flex items-start gap-3 text-sm leading-6 text-content-muted"><span class="mt-1 shrink-0 text-content" aria-hidden="true">{{ vara_icon("check", "size-4")|safe }}</span><span>{{ text }}</span></li>{% endif %}
 {% endmacro %}
 
-<section class="bg-{{ background }} py-12 desk:py-24{% if props.class %} {{ props.class }}{% endif %}">
-  <div class="mx-auto w-full {{ component_container(container) }} px-4">
+<section class="not-prose bg-{{ background }} py-12 desk:py-24{% if props.class %} {{ props.class }}{% endif %}">
+  <div class="mx-auto w-full {{ container_cls }} px-4">
     <div class="{% if layout == 'centered' or not has_media %}mx-auto flex max-w-4xl flex-col items-center text-center{% else %}grid items-center gap-8 desk:grid-cols-2 desk:gap-12{% endif %}">
       <div class="flex min-w-0 flex-col{% if layout == 'centered' or not has_media %} items-center{% else %} items-start{% if media_position == 'start' %} desk:order-2{% endif %}{% endif %}">
         {% if props.eyebrow %}<p class="mb-4 inline-flex rounded-full border border-base-400 bg-base-200 px-3 py-1.5 text-xs font-medium uppercase tracking-[0.18em] text-content-muted">{{ props.eyebrow }}</p>{% endif %}
@@ -35,15 +35,17 @@
       </div>
 
       {% if layout != "centered" and has_media %}
-        <div class="min-w-0 rounded-lg border border-base-400 bg-base-200 p-4 desk:p-6{% if media_position == 'start' %} desk:order-1{% endif %}">
+        <div class="min-w-0{% if media_position == 'start' %} desk:order-1{% endif %}">
           {% if props.image_src %}
-            <img src="{{ url(props.image_src) }}" alt="{{ props.image_alt|default:'' }}" class="aspect-[4/3] w-full rounded-md border border-base-400 object-cover" loading="eager" fetchpriority="high"{% if props.image_width %} width="{{ props.image_width }}"{% endif %}{% if props.image_height %} height="{{ props.image_height }}"{% endif %}>
+            <img src="{{ url(props.image_src) }}" alt="{{ props.image_alt|default:'' }}" class="aspect-[4/3] w-full rounded-xl border border-base-400 object-cover" loading="eager" fetchpriority="high"{% if props.image_width %} width="{{ props.image_width }}"{% endif %}{% if props.image_height %} height="{{ props.image_height }}"{% endif %}>
           {% else %}
-            <div class="rounded-md border border-base-400 bg-base-100 p-5 desk:p-6">
-              <div class="flex size-10 items-center justify-center rounded-md border border-base-400 bg-base-200" aria-hidden="true">{{ vara_icon(props.panel_icon|default:"panels-top-left", "size-5 text-content")|safe }}</div>
-              {% if props.panel_title %}{% if heading_level == "2" %}<h3 class="mt-5 text-xl font-medium tracking-tight text-content">{{ props.panel_title }}</h3>{% else %}<h2 class="mt-5 text-xl font-medium tracking-tight text-content">{{ props.panel_title }}</h2>{% endif %}{% endif %}
-              {% if props.panel_description %}<p class="mt-3 text-sm leading-6 text-content-muted">{{ props.panel_description }}</p>{% endif %}
-              {% if props.item_1 or props.item_2 or props.item_3 %}<ul class="mt-5 grid gap-3">{{ panel_item(props.item_1) }}{{ panel_item(props.item_2) }}{{ panel_item(props.item_3) }}</ul>{% endif %}
+            <div class="rounded-xl bg-base-200 p-6 desk:p-8">
+              {% if props.panel_icon or props.panel_title %}
+                <div class="flex size-11 items-center justify-center rounded-lg bg-base-100" aria-hidden="true">{{ vara_icon(props.panel_icon|default:"panels-top-left", "size-5 text-content")|safe }}</div>
+              {% endif %}
+              {% if props.panel_title %}{% if heading_level == "2" %}<h3 class="mt-5 text-xl font-medium tracking-tight text-content desk:text-2xl">{{ props.panel_title }}</h3>{% else %}<h2 class="mt-5 text-xl font-medium tracking-tight text-content desk:text-2xl">{{ props.panel_title }}</h2>{% endif %}{% endif %}
+              {% if props.panel_description %}<p class="mt-3 text-sm leading-6 text-content-muted desk:text-base">{{ props.panel_description }}</p>{% endif %}
+              {% if props.item_1 or props.item_2 or props.item_3 %}<ul class="mt-6 space-y-3">{{ panel_item(props.item_1) }}{{ panel_item(props.item_2) }}{{ panel_item(props.item_3) }}</ul>{% endif %}
             </div>
           {% endif %}
         </div>
