@@ -12,8 +12,12 @@ The `<vara-badge>` component renders a compact status label.
 ## Usage
 
 ```html
-<vara-badge text="New" color="info" />
+<vara-badge text="Beta" color="info" />
 ```
+
+## Preview
+
+<vara-badge text="Beta" color="info" />
 
 ## Props
 
@@ -24,8 +28,6 @@ The `<vara-badge>` component renders a compact status label.
 | `variant` | string | `"soft"`    | One of: soft, solid, outline.                   |
 | `color`   | string | `"neutral"` | One of: neutral, info, success, warning, error. |
 | `class`   | string | `""`        | Additional CSS classes.                         |
-
-## Preview
 
 ## Variants
 
@@ -50,3 +52,11 @@ The `<vara-badge>` component renders a compact status label.
 <vara-badge text="Small" size="sm" color="info" />
 <vara-badge text="Medium" size="md" color="info" />
 <vara-badge text="Large" size="lg" color="info" />
+
+## With a slot
+
+Provide a `text` prop or put the label between the tags. Both are equivalent:
+
+```html
+<vara-badge color="success">New</vara-badge>
+```

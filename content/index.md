@@ -1,6 +1,6 @@
 ---
 title: "Vara"
-description: "A clean, fast, and responsive theme for Veta — documentation and landing pages from Markdown, without a frontend build."
+description: "A clean, fast, and responsive theme for Veta - documentation and landing pages from Markdown, without a frontend build."
 ---
 
 <vara-header

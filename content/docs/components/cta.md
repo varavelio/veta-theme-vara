@@ -13,24 +13,24 @@ icon: "megaphone"
 
 ```html
 <vara-cta
-  title="Ready to publish?"
-  description="Start with the installation guide."
-  primary_label="Install Vara"
-  primary_href="/docs/getting-started/installation"
-  secondary_label="View GitHub"
-  secondary_href="https://github.com/varavelio/veta-theme-vara"
+  title="Ready to get started?"
+  description="Create your account in a couple of minutes."
+  primary_label="Sign up"
+  primary_href="/signup"
+  secondary_label="Talk to sales"
+  secondary_href="/contact"
 />
 ```
 
 ## Preview
 
 <vara-cta
-title="Ready to publish?"
-description="Start with the installation guide."
-primary_label="Install Vara"
-primary_href="/docs/getting-started/installation"
-secondary_label="View GitHub"
-secondary_href="https://github.com/varavelio/veta-theme-vara"
+title="Ready to get started?"
+description="Create your account in a couple of minutes."
+primary_label="Sign up"
+primary_href="/signup"
+secondary_label="Talk to sales"
+secondary_href="/contact"
 heading_level="3"
 />
 
@@ -45,3 +45,17 @@ heading_level="3"
 | `background`, `container`, `class`           | Surface and layout customization.                                        |
 
 Actions are omitted unless both label and destination are present, preventing placeholder links from reaching production.
+
+## Inline layout
+
+For a compact panel that sits beside longer content:
+
+```html
+<vara-cta
+  layout="inline"
+  title="Questions about pricing?"
+  description="Our team answers within one business day."
+  primary_label="Contact us"
+  primary_href="/contact"
+/>
+```

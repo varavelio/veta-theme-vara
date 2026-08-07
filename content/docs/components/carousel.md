@@ -22,32 +22,52 @@ icon: "gallery-horizontal-end"
 
 <vara-carousel label="Customer stories">
   <vara-testimonial
-    quote="We published a coherent documentation site without maintaining a frontend app."
+    quote="The team shipped the new release two weeks early, without cutting any corners."
     author="Alex Morgan"
-    author_role="Documentation lead"
+    author_role="Head of product"
   />
   <vara-testimonial
-    quote="The components compose cleanly and the defaults keep every page coherent."
+    quote="The onboarding flow is the smoothest we have ever put in front of customers."
     author="Sam Rivera"
     author_role="Engineering manager"
   />
   <vara-testimonial
-    quote="One focused theme covered both our marketing page and the full product documentation."
+    quote="Support tickets dropped noticeably after we published the new guides."
     author="Priya Nair"
-    author_role="Product designer"
+    author_role="Customer success lead"
   />
 </vara-carousel>
 
 ## Props
 
-| Prop              | Default      | Description                                 |
-| ----------------- | ------------ | ------------------------------------------- |
-| `label`           | `"Carousel"` | Accessible region label.                    |
-| `slides_per_view` | `"1"`        | One, two, or three slides per view at desk. |
-| `show_controls`   | `"true"`     | Show the previous and next buttons.         |
-| `show_dots`       | `"true"`     | Show the slide indicator dots.              |
-| `background`      | `"base-100"` | Section surface.                            |
-| `container`       | `"lg"`       | xs, sm, md, lg, xl, or full.                |
-| `class`           | `""`         | Additional section classes.                 |
+| Prop              | Type   | Default      | Description                                       |
+| ----------------- | ------ | ------------ | ------------------------------------------------- |
+| `label`           | string | `"Carousel"` | Accessible region label.                          |
+| `slides_per_view` | string | `"1"`        | One, two, or three slides per view at desk width. |
+| `show_controls`   | string | `"true"`     | Show the previous and next buttons.               |
+| `show_dots`       | string | `"true"`     | Show the slide indicator dots.                    |
+| `background`      | string | `"base-100"` | Section surface.                                  |
+| `container`       | string | `"lg"`       | One of: xs, sm, md, lg, xl, full.                 |
+| `class`           | string | `""`         | Additional section classes.                       |
 
-The track uses native scroll snapping and works with touch, trackpad, and keyboard. Controls and dots update from the scroll position. Dots only render when the carousel has more than one slide.
+## Behavior
+
+The track uses native scroll snapping and works with touch, trackpad, and keyboard. Controls and dots update from the scroll position, and dots only render when the carousel has more than one slide.
+
+Slides per view above one is applied at the desk breakpoint only; on smaller screens each slide stays full width.
+
+## Multiple slides per view
+
+```html
+<vara-carousel label="Featured articles" slides_per_view="2" show_dots="false">
+  <article class="rounded-lg border border-base-400 bg-base-200 p-5">
+    First article
+  </article>
+  <article class="rounded-lg border border-base-400 bg-base-200 p-5">
+    Second article
+  </article>
+  <article class="rounded-lg border border-base-400 bg-base-200 p-5">
+    Third article
+  </article>
+</vara-carousel>
+```

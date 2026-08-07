@@ -13,33 +13,33 @@ icon: "layout-grid"
 
 ```html
 <vara-features
-  title="Built for publishing"
+  title="Everything included"
   columns="3"
-  item_1_icon="file-text"
-  item_1_title="Markdown first"
-  item_1_description="Keep content readable and portable."
-  item_2_icon="smartphone"
-  item_2_title="Responsive"
-  item_2_description="Every layout works from mobile to desktop."
+  item_1_icon="shield-check"
+  item_1_title="Secure by default"
+  item_1_description="A sentence about how this capability helps the reader."
+  item_2_icon="zap"
+  item_2_title="Fast to set up"
+  item_2_description="A sentence about how this capability helps the reader."
 />
 ```
 
 ## Preview
 
 <vara-features
-title="Built for publishing"
-description="A small set of reliable defaults covers the common path."
+title="Everything included"
+description="A short introduction to the capabilities on this page."
 columns="3"
-item_1_icon="file-text"
-item_1_title="Markdown first"
-item_1_description="Keep content readable and portable."
-item_1_badge="Content"
-item_2_icon="smartphone"
-item_2_title="Responsive"
-item_2_description="Every layout works from mobile to desktop."
-item_3_icon="accessibility"
-item_3_title="Accessible"
-item_3_description="Semantics, focus states, and readable contrast are built in."
+item_1_icon="shield-check"
+item_1_title="Secure by default"
+item_1_description="A sentence about how this capability helps the reader."
+item_1_badge="Security"
+item_2_icon="zap"
+item_2_title="Fast to set up"
+item_2_description="A sentence about how this capability helps the reader."
+item_3_icon="users"
+item_3_title="Built for teams"
+item_3_description="A sentence about how this capability helps the reader."
 heading_level="3"
 />
 
@@ -59,3 +59,23 @@ heading_level="3"
 | `background`, `container`, `class` | varies         | Surface and layout customization.                        |
 
 Cards without links do not present hover behavior. Linked cards expose a visible keyboard focus state.
+
+## With links
+
+Give a card a destination and its own link label:
+
+```html
+<vara-features
+  columns="2"
+  item_1_icon="book-open-text"
+  item_1_title="Read the documentation"
+  item_1_description="Everything you need to get up and running."
+  item_1_href="/docs/"
+  item_1_link_label="Open the docs"
+  item_2_icon="message-circle"
+  item_2_title="Join the community"
+  item_2_description="Ask questions and share what you build."
+  item_2_href="/community"
+  item_2_link_label="Join the forum"
+/>
+```

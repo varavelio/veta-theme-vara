@@ -23,10 +23,25 @@ icon: "shapes"
 
 ## Props
 
-| Prop    | Default | Description                                       |
-| ------- | ------- | ------------------------------------------------- |
-| `name`  | `""`    | Bundled icon filename without `.svg`.             |
-| `label` | `""`    | Accessible name for a meaningful standalone icon. |
-| `class` | `""`    | Size, color, and positioning utilities.           |
+| Prop    | Type   | Default | Description                                       |
+| ------- | ------ | ------- | ------------------------------------------------- |
+| `name`  | string | `""`    | Bundled icon filename without `.svg`.             |
+| `label` | string | `""`    | Accessible name for a meaningful standalone icon. |
+| `class` | string | `""`    | Size, color, and positioning utilities.           |
 
-If an icon is missing, Vara renders a visible error glyph instead of failing the build. Decorative SVGs are hidden from assistive technology and cannot receive focus.
+## Accessibility
+
+Decorative SVGs are hidden from assistive technology and cannot receive focus. When an icon carries meaning on its own, add a `label` so screen readers announce it.
+
+## Brand icons
+
+The bundle includes both Lucide icons and Simple Icons brand marks. When a name exists in both sets, the brand version is prefixed with `si-`:
+
+```html
+<vara-icon name="si-github" class="size-8" />
+<vara-icon name="si-tailwindcss" class="size-8" />
+```
+
+## Missing icons
+
+If an icon is missing, Vara renders a visible error glyph instead of failing the build, so a typo never breaks your site.

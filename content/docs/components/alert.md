@@ -7,21 +7,21 @@ icon: "info"
 
 # Alert
 
-Use `<vara-alert>` for notes, guidance, warnings, and status feedback. It is static by default; set `role="status"` or `role="alert"` only for content that changes after page load.
+Use `<vara-alert>` for notes, guidance, warnings, and status feedback. It is static by default; set `role="status"` or `role="alert"` only for content that changes after the page loads.
 
 ## Usage
 
 ```html
 <vara-alert
   title="Heads up"
-  description="This action cannot be undone."
+  description="Your changes have not been saved yet."
   color="warning"
 />
 ```
 
 ## Preview
 
-<vara-alert title="Heads up" description="Review the generated output before deploying." color="warning" />
+<vara-alert title="Heads up" description="Your changes have not been saved yet." color="warning" />
 
 ## Props
 
@@ -35,25 +35,36 @@ Use `<vara-alert>` for notes, guidance, warnings, and status feedback. It is sta
 | `heading_level` | string | `"3"`       | Semantic title level: 3 or 4.                   |
 | `class`         | string | `""`        | Additional CSS classes.                         |
 
+The `description` prop takes precedence over the paired body. If you omit it, the component renders its inner content instead.
+
 ## Colors
 
-<vara-alert title="Information" description="The index updates during every build." color="info" />
+<vara-alert title="Information" description="The report will refresh on the next run." color="info" />
 
-<vara-alert title="Success" description="The deployment completed." color="success" />
+<vara-alert title="Success" description="Your profile was updated." color="success" />
 
-<vara-alert title="Error" description="The configuration could not be loaded." color="error" />
+<vara-alert title="Error" description="The file could not be uploaded." color="error" />
 
 ## Custom icon
 
-Pass any icon name from the Lucide or Simple Icons sets:
+Pass any icon name from the bundled icon set to replace the default one:
 
 ```html
 <vara-alert
-  title="Deploy"
-  description="Production deploy started."
+  title="Deployment finished"
+  description="The latest build is now live."
   icon="rocket"
   color="success"
 />
 ```
 
-For richer content, use a paired tag. Its body is rendered as Markdown before it reaches the component.
+## Richer content
+
+For more than a title and a description, use a paired tag. Its body is rendered as Markdown before it reaches the component:
+
+```html
+<vara-alert title="Before you continue" color="info">
+  Make sure you have read the [introduction](/docs/). If you already have an
+  account, you can **skip this step**.
+</vara-alert>
+```

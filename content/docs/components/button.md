@@ -24,20 +24,38 @@ icon: "mouse-pointer-click"
 
 ## Props
 
-| Prop         | Default      | Description                                               |
-| ------------ | ------------ | --------------------------------------------------------- |
-| `label`      | slot content | Visible action label.                                     |
-| `href`       | `""`         | Destination. Its presence selects anchor rendering.       |
-| `target`     | `""`         | Link target, such as `_blank`.                            |
-| `type`       | `"button"`   | Native button type.                                       |
-| `icon_start` | `""`         | Decorative icon before the label.                         |
-| `icon_end`   | `""`         | Decorative icon after the label.                          |
-| `size`       | `"md"`       | sm, md, or lg.                                            |
-| `variant`    | `"solid"`    | solid, outline, or ghost.                                 |
-| `color`      | `"neutral"`  | neutral, info, success, warning, or error.                |
-| `radius`     | `"md"`       | sm, md, lg, or full.                                      |
-| `full_width` | `"false"`    | Stretch to the available width.                           |
-| `disabled`   | `"false"`    | Disable native buttons or render links non-interactively. |
-| `class`      | `""`         | Additional CSS classes.                                   |
+| Prop         | Type   | Default      | Description                                               |
+| ------------ | ------ | ------------ | --------------------------------------------------------- |
+| `label`      | string | slot content | Visible action label.                                     |
+| `href`       | string | `""`         | Destination. Its presence selects anchor rendering.       |
+| `target`     | string | `""`         | Link target, such as `_blank`.                            |
+| `type`       | string | `"button"`   | Native button type.                                       |
+| `icon_start` | string | `""`         | Decorative icon before the label.                         |
+| `icon_end`   | string | `""`         | Decorative icon after the label.                          |
+| `size`       | string | `"md"`       | One of: sm, md, lg.                                       |
+| `variant`    | string | `"solid"`    | One of: solid, outline, ghost.                            |
+| `color`      | string | `"neutral"`  | One of: neutral, info, success, warning, error.           |
+| `radius`     | string | `"md"`       | One of: sm, md, lg, full.                                 |
+| `full_width` | string | `"false"`    | Stretch to the available width.                           |
+| `disabled`   | string | `"false"`    | Disable native buttons or render links non-interactively. |
+| `class`      | string | `""`         | Additional CSS classes.                                   |
 
 Root-relative `href` values are deployment-aware. New-tab links automatically receive `rel="noopener noreferrer"`.
+
+## Icons
+
+Decorative icons can sit on either side of the label:
+
+```html
+<vara-button label="Sign up" href="/signup" icon_start="user-plus" />
+<vara-button label="Next step" icon_end="arrow-right" />
+```
+
+## Variants
+
+<div class="not-prose flex flex-wrap items-center gap-3">
+  <vara-button label="Solid" />
+  <vara-button label="Outline" variant="outline" />
+  <vara-button label="Ghost" variant="ghost" />
+  <vara-button label="Disabled" disabled="true" />
+</div>
