@@ -33,7 +33,7 @@ Add the theme to your `veta.yaml`:
 
 ```yaml
 theme:
-  source: "varavelio/veta-theme-vara@v1.0.0"
+  source: "varavelio/veta-theme-vara@v1.0.1"
 ```
 
 Pin the `v1.0.0` to a release tag or commit when you want reproducible builds.

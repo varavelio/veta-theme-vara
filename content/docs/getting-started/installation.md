@@ -20,7 +20,7 @@ Pin the `ref` (recommended) to a release tag or a commit SHA when you want repro
 
 ```yaml
 theme:
-  source: "varavelio/veta-theme-vara@v1.0.0"
+  source: "varavelio/veta-theme-vara@v1.0.1"
 ```
 
 ## 2. Configure the stylesheet
