@@ -14,6 +14,11 @@ tasks:
     desc: List all available commands
     cmd: task --list-all
 
+  deps:
+    desc: Install dependencies the project
+    cmds:
+      - npm install
+
   ci:
     desc: Run full CI pipeline (format, lint, test, build)
     cmds:

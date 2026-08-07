@@ -19,3 +19,6 @@ chmod -R 777 /workspaces
 
 # Configure git
 git config core.fileMode false
+
+# Install project dependencies using the task runner
+task deps
