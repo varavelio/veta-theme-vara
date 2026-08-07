@@ -42,6 +42,15 @@ The bundle includes both Lucide icons and Simple Icons brand marks. When a name 
 <vara-icon name="si-tailwindcss" class="size-8" />
 ```
 
+## Where to find icon names
+
+The bundle follows the Lucide and Simple Icons catalogs, so you can look up icon names on their sites:
+
+- [Lucide icons](https://lucide.dev/icons/)
+- [Simple Icons](https://simpleicons.org/)
+
+Use the name as shown on the site. Remember to prefix a brand icon with `si-` when it shares a name with a Lucide icon.
+
 ## Missing icons
 
 If an icon is missing, Vara renders a visible error glyph instead of failing the build, so a typo never breaks your site.
