@@ -10,3 +10,4 @@ docs_github_repo: "varavelio/veta-theme-vara"
 docs_header_links:
   - title: "Icons"
     href: "/icons/"
+    icon: "shapes"

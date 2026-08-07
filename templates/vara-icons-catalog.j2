@@ -28,33 +28,41 @@
 {% block body %}
   {% set catalog = vara_icons_catalog() %}
   <div class="size-full overflow-y-auto">
-    <header class="sticky top-0 z-10 border-b border-base-400 bg-base-100/95 backdrop-blur">
-      <div class="mx-auto flex w-full max-w-[96rem] flex-col gap-4 px-6 py-4">
-        <div class="flex flex-wrap items-center justify-between gap-3">
-          <div class="flex flex-col gap-1">
-            <h1 class="text-xl font-semibold">Vara Icon Catalog</h1>
-            <p class="text-sm text-content-muted">
-              Icons are bundled from the
-              <a class="font-medium text-content underline underline-offset-2" href="{{ catalog.lucide.repo }}" target="_blank" rel="noopener noreferrer" title="Lucide {{ catalog.lucide.version }}">Lucide</a>
-              project (<a class="underline underline-offset-2" href="{{ catalog.lucide.license }}" target="_blank" rel="noopener noreferrer">see license</a>) and the
-              <a class="font-medium text-content underline underline-offset-2" href="{{ catalog.simple_icons.repo }}" target="_blank" rel="noopener noreferrer" title="Simple Icons {{ catalog.simple_icons.version }}">Simple Icons</a>
-              project (<a class="underline underline-offset-2" href="{{ catalog.simple_icons.license }}" target="_blank" rel="noopener noreferrer">see license</a>).
-            </p>
-            <p class="text-sm text-content-muted">Click any icon to copy its name.</p>
-          </div>
-          <p class="rounded-full border border-base-400 bg-base-200 px-3 py-1 text-xs font-medium text-content-muted" id="vara-catalog-count">{{ catalog.counts.total }} icons</p>
-        </div>
-        <div class="flex flex-wrap gap-3">
-          <input id="vara-catalog-search" type="search" placeholder="Search icons..." class="w-full max-w-md rounded-md border border-base-400 bg-base-100 px-3 py-2 text-sm outline-none placeholder:text-content-muted focus:border-content" autocomplete="off">
-          <select id="vara-catalog-provider" class="rounded-md border border-base-400 bg-base-100 px-3 py-2 text-sm outline-none focus:border-content">
-            <option value="">All providers</option>
-            <option value="lucide">Lucide</option>
-            <option value="simple-icons">Simple Icons</option>
-            <option value="varavel">Varavel</option>
-          </select>
+    <header class="mx-auto flex w-full max-w-[96rem] flex-col gap-4 px-6 py-4">
+      <div class="flex flex-wrap justify-center items-center gap-2" aria-label="Site navigation">
+        <a href="{{ url('/') }}" class="inline-flex h-8 items-center gap-1.5 rounded-md bg-transparent px-2.5 text-sm font-medium whitespace-nowrap text-content outline-content transition-colors hover:bg-base-300 focus-visible:outline-2">
+          {{ vara_icon("house", "size-4 shrink-0")|safe }}
+          Back to home
+        </a>
+        <a href="{{ url('/docs/') }}" class="inline-flex h-8 items-center gap-1.5 rounded-md bg-transparent px-2.5 text-sm font-medium whitespace-nowrap text-content outline-content transition-colors hover:bg-base-300 focus-visible:outline-2">
+          {{ vara_icon("book-open-text", "size-4 shrink-0")|safe }}
+          Back to docs
+        </a>
+      </div>
+      <div class="flex flex-wrap items-center justify-center text-center gap-3">
+        <div class="flex flex-col gap-1">
+          <h1 class="text-xl font-semibold">Browse {{ catalog.counts.total|vara_compact_number }} icons in the Vara catalog</h1>
+          <p class="text-sm text-content-muted">
+            Icons are bundled from the
+            <a class="font-medium text-content underline underline-offset-2" href="{{ catalog.lucide.repo }}" target="_blank" rel="noopener noreferrer" title="Lucide {{ catalog.lucide.version }}">Lucide</a>
+            project (<a class="underline underline-offset-2" href="{{ catalog.lucide.license }}" target="_blank" rel="noopener noreferrer">see license</a>) and the
+            <a class="font-medium text-content underline underline-offset-2" href="{{ catalog.simple_icons.repo }}" target="_blank" rel="noopener noreferrer" title="Simple Icons {{ catalog.simple_icons.version }}">Simple Icons</a>
+            project (<a class="underline underline-offset-2" href="{{ catalog.simple_icons.license }}" target="_blank" rel="noopener noreferrer">see license</a>).
+            Click any icon to copy its name.
+          </p>
         </div>
       </div>
+      <div class="flex flex-wrap justify-center items-center gap-3 mt-2">
+        <input id="vara-catalog-search" type="search" placeholder="Search icons..." class="w-full max-w-md rounded-md border border-base-400 bg-base-100 px-3 py-2 text-sm outline-none placeholder:text-content-muted focus:border-content" autocomplete="off">
+        <select id="vara-catalog-provider" class="rounded-md border border-base-400 bg-base-100 px-3 py-2 text-sm outline-none focus:border-content">
+          <option value="">All providers</option>
+          <option value="lucide">Lucide</option>
+          <option value="simple-icons">Simple Icons</option>
+          <option value="varavel">Varavel</option>
+        </select>
+      </div>
     </header>
+
     <main id="vara-catalog-grid" class="mx-auto flex w-full max-w-[96rem] flex-wrap justify-center gap-2 px-6 py-6">
       {% for icon in catalog.icons %}
         <button type="button" class="group flex w-36 shrink-0 cursor-pointer flex-col items-center gap-2 rounded-lg border border-base-400 bg-base-200 p-3 text-center transition-colors hover:bg-base-300" data-icon-name="{{ icon.name }}" data-icon-provider="{{ icon.provider }}" data-copy-icon="{{ icon.name }}" title="Copy {{ icon.name }}">
