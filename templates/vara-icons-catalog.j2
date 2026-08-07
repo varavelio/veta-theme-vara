@@ -32,14 +32,14 @@
         <div class="flex flex-wrap items-center justify-between gap-3">
           <div class="flex flex-col gap-1">
             <h1 class="text-xl font-semibold">Vara Icon Catalog</h1>
-            <p class="max-w-3xl text-sm text-content-muted">
+            <p class="text-sm text-content-muted">
               Icons are bundled from the
               <a class="font-medium text-content underline underline-offset-2" href="{{ catalog.lucide.repo }}" target="_blank" rel="noopener noreferrer" title="Lucide {{ catalog.lucide.version }}">Lucide</a>
               project (<a class="underline underline-offset-2" href="{{ catalog.lucide.license }}" target="_blank" rel="noopener noreferrer">see license</a>) and the
               <a class="font-medium text-content underline underline-offset-2" href="{{ catalog.simple_icons.repo }}" target="_blank" rel="noopener noreferrer" title="Simple Icons {{ catalog.simple_icons.version }}">Simple Icons</a>
               project (<a class="underline underline-offset-2" href="{{ catalog.simple_icons.license }}" target="_blank" rel="noopener noreferrer">see license</a>).
-              Click any icon to copy its name.
             </p>
+            <p class="text-sm text-content-muted">Click any icon to copy its name.</p>
           </div>
           <p class="rounded-full border border-base-400 bg-base-200 px-3 py-1 text-xs font-medium text-content-muted" id="vara-catalog-count">{{ catalog.counts.total }} icons</p>
         </div>
@@ -54,12 +54,12 @@
         </div>
       </div>
     </header>
-    <main id="vara-catalog-grid" class="mx-auto grid w-full max-w-[96rem] grid-cols-4 gap-2 px-6 py-6 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10">
+    <main id="vara-catalog-grid" class="mx-auto flex w-full max-w-[96rem] flex-wrap justify-center gap-2 px-6 py-6">
       {% for icon in catalog.icons %}
-        <button type="button" class="group flex cursor-pointer flex-col items-center gap-2 rounded-lg border border-base-400 bg-base-200 p-3 text-center transition-colors hover:bg-base-300" data-icon-name="{{ icon.name }}" data-icon-provider="{{ icon.provider }}" data-copy-icon="{{ icon.name }}" title="Copy {{ icon.name }}">
+        <button type="button" class="group flex w-36 shrink-0 cursor-pointer flex-col items-center gap-2 rounded-lg border border-base-400 bg-base-200 p-3 text-center transition-colors hover:bg-base-300" data-icon-name="{{ icon.name }}" data-icon-provider="{{ icon.provider }}" data-copy-icon="{{ icon.name }}" title="Copy {{ icon.name }}">
           {{ vara_icon(icon.name, "shrink-0")|safe }}
           <span class="w-full truncate font-mono text-[11px] text-content-muted group-hover:text-content">{{ icon.name }}</span>
-          <span class="vara-catalog-provider rounded-full border border-base-400 px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.18em]">{{ icon.provider }}</span>
+          <span class="vara-catalog-provider max-w-full truncate whitespace-nowrap rounded-full border border-base-400 px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.18em]">{{ icon.provider }}</span>
         </button>
       {% endfor %}
     </main>
