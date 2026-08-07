@@ -71,6 +71,8 @@ export default function({ files, parse }) {
 }
 ```
 
+This generator is intentionally short. The theme's reference generator goes further: it skips pages with `draft: true` in their frontmatter and passes `disable_search` through so a page can opt out of the index. See [Page generators](../fundamentals/page-generators/) for the full set of fields a docs page can carry.
+
 ## 4. Add a documentation page
 
 Create `content/docs/getting-started/hello.md`:

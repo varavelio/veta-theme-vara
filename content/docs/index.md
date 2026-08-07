@@ -15,5 +15,6 @@ Welcome to the **Vara** documentation. Vara is a clean, fast, and responsive the
 - **Fundamentals** - how the theme works: project structure, page generators, site settings, search, and customization.
 - **Templates** - every page template, what it does, and how to configure it.
 - **Components** - the catalog of building blocks available for your content.
+- **Troubleshooting** - quick fixes for the issues people run into most often.
 
 If you are new here, start with the [introduction](./introduction/), then follow the [installation guide](./getting-started/installation/). Each page has a table of contents on the right when it contains multiple headings.

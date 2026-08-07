@@ -11,6 +11,7 @@ This section walks you through adding Vara to a Veta project and creating your f
 
 - **[Installation](./installation/)** - add the theme, wire up the stylesheet, and verify the setup.
 - **[Quick Start](./quick-start/)** - create a landing page and a documentation page.
+- **[Composing a Landing Page](./composing-landing-page/)** - assemble a full landing page and add your own components.
 
 ## Prerequisites
 

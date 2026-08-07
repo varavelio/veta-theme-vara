@@ -41,17 +41,36 @@ heading_level="3"
 
 ## Props
 
-| Prop family                                      | Description                                                     |
-| ------------------------------------------------ | --------------------------------------------------------------- |
-| `eyebrow`, `title`, `description`                | Section introduction.                                           |
-| `item_1` through `item_4`                        | Semantic checklist items.                                       |
-| `primary_*`, `secondary_*`                       | Optional actions with the same naming as the hero.              |
-| `image_src`, `image_alt`                         | An image as the supporting media; `alt` is required for images. |
-| `image_width`, `image_height`                    | Optional intrinsic image dimensions.                            |
-| `panel_icon`, `panel_title`, `panel_description` | Text-panel alternative to an image.                             |
-| `media_position`                                 | `start` or `end`.                                               |
-| `heading_level`                                  | Section title level: 2 or 3.                                    |
-| `background`, `container`, `class`               | Surface and layout customization.                               |
+| Prop                                   | Default      | Description                                        |
+| -------------------------------------- | ------------ | -------------------------------------------------- |
+| `media_position`                       | `"end"`      | `start` or `end`.                                  |
+| `eyebrow`                              | `""`         | Small label above the title.                       |
+| `title`                                | `""`         | The section heading.                               |
+| `description`                          | `""`         | Supporting copy below the title.                   |
+| `heading_level`                        | `"2"`        | Section title level: 2 or 3.                       |
+| `item_1`, `item_2`, `item_3`, `item_4` | `""`         | Semantic checklist items.                          |
+| `primary_label`                        | `""`         | Primary action label. Requires `primary_href`.     |
+| `primary_href`                         | `""`         | Primary action destination.                        |
+| `primary_target`                       | `""`         | Primary action link target, such as `_blank`.      |
+| `primary_icon`                         | `""`         | Decorative icon on the primary action.             |
+| `primary_variant`                      | `"solid"`    | Primary action style.                              |
+| `primary_color`                        | `"neutral"`  | Primary action color.                              |
+| `secondary_label`                      | `""`         | Secondary action label. Requires `secondary_href`. |
+| `secondary_href`                       | `""`         | Secondary action destination.                      |
+| `secondary_target`                     | `""`         | Secondary action link target, such as `_blank`.    |
+| `secondary_icon`                       | `""`         | Decorative icon on the secondary action.           |
+| `secondary_variant`                    | `"outline"`  | Secondary action style.                            |
+| `secondary_color`                      | `"neutral"`  | Secondary action color.                            |
+| `image_src`                            | `""`         | An image as the supporting media.                  |
+| `image_alt`                            | `""`         | Required when `image_src` is set.                  |
+| `image_width`                          | `""`         | Optional intrinsic image width.                    |
+| `image_height`                         | `""`         | Optional intrinsic image height.                   |
+| `panel_icon`                           | `""`         | Icon for the text-panel media variant.             |
+| `panel_title`                          | `""`         | Panel heading.                                     |
+| `panel_description`                    | `""`         | Panel supporting copy.                             |
+| `background`                           | `"base-100"` | Section surface.                                   |
+| `container`                            | `"lg"`       | One of: xs, sm, md, lg, xl, full.                  |
+| `class`                                | `""`         | Additional section classes.                        |
 
 When no image or panel is supplied, the component becomes a single-column content section rather than rendering placeholder UI.
 

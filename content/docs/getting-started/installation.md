@@ -25,9 +25,7 @@ theme:
 
 ## 2. Configure the stylesheet
 
-You don't need to install Tailwind CSS because it's already included in the Veta binary. The only requirement to use this theme is to have Veta installed (it's a single binary).
-
-Vara's styles are built with Tailwind CSS. Reference the theme included entrypoint in your `veta.yaml`:
+Veta ships Tailwind CSS as part of the binary, so you don't need to install anything extra. Just point Veta at the theme's stylesheet in your `veta.yaml`:
 
 ```yaml
 tailwindcss:
@@ -36,20 +34,20 @@ tailwindcss:
   minify: true
 ```
 
-It is not necessary to create the `public/styles.css` file since the theme includes it; create it only when you need to customize the styles as indicated below.
+The theme provides `public/styles.css` for you, so there's nothing to create by hand. You'll only add that file when you want to extend the styles, as shown next.
 
 ### Extending styles
 
-If you want to extend or customize the default styles, just include the Vara internal styles and write your own tailwind styles:
+To add your own styles, create `public/styles.css` and import the theme's styles first, then write your own Tailwind CSS after them:
 
 ```css
 /* public/styles.css */
 @import "./styles_vara.css";
 
-/* your own styles can follow */
+/* your own styles go here */
 ```
 
-The theme expects styles to always be in `public/styles.css`, so if you decide to extend it you must use that same file; otherwise you can use the default file that the theme includes and it is not necessary to even create it.
+Vara always reads from `public/styles.css`. When that file doesn't exist, the theme's bundled version is used as-is.
 
 ## 3. Add your site settings
 

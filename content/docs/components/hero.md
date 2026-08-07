@@ -44,18 +44,38 @@ heading_level="2"
 
 ## Props
 
-| Prop family                                      | Description                                                              |
-| ------------------------------------------------ | ------------------------------------------------------------------------ |
-| `layout`                                         | `split` or `centered`.                                                   |
-| `eyebrow`, `title`, `description`, `caption`     | Introductory copy.                                                       |
-| `primary_*`, `secondary_*`                       | Actions using `label`, `href`, `target`, `icon`, `variant`, and `color`. |
-| `image_src`, `image_alt`                         | An image as the supporting media; `alt` is required for images.          |
-| `image_width`, `image_height`                    | Optional intrinsic image dimensions.                                     |
-| `panel_icon`, `panel_title`, `panel_description` | Text-panel alternative to an image.                                      |
-| `item_1` through `item_3`                        | Panel checklist items.                                                   |
-| `media_position`                                 | `start` or `end`.                                                        |
-| `heading_level`                                  | `1` by default; use `2` when embedded below another page heading.        |
-| `background`, `container`, `class`               | Surface and layout customization.                                        |
+| Prop                         | Default      | Description                                                       |
+| ---------------------------- | ------------ | ----------------------------------------------------------------- |
+| `layout`                     | `"split"`    | `split` or `centered`.                                            |
+| `eyebrow`                    | `""`         | Small label above the title.                                      |
+| `title`                      | `""`         | The main headline.                                                |
+| `description`                | `""`         | Supporting copy below the title.                                  |
+| `caption`                    | `""`         | Small text under the actions.                                     |
+| `heading_level`              | `"1"`        | Title level: 1 or 2. Use `2` when embedded below another heading. |
+| `primary_label`              | `""`         | Primary action label. Requires `primary_href`.                    |
+| `primary_href`               | `""`         | Primary action destination.                                       |
+| `primary_target`             | `""`         | Primary action link target, such as `_blank`.                     |
+| `primary_icon`               | `""`         | Decorative icon on the primary action.                            |
+| `primary_variant`            | `"solid"`    | Primary action style.                                             |
+| `primary_color`              | `"neutral"`  | Primary action color.                                             |
+| `secondary_label`            | `""`         | Secondary action label. Requires `secondary_href`.                |
+| `secondary_href`             | `""`         | Secondary action destination.                                     |
+| `secondary_target`           | `""`         | Secondary action link target, such as `_blank`.                   |
+| `secondary_icon`             | `""`         | Decorative icon on the secondary action.                          |
+| `secondary_variant`          | `"outline"`  | Secondary action style.                                           |
+| `secondary_color`            | `"neutral"`  | Secondary action color.                                           |
+| `image_src`                  | `""`         | An image as the supporting media.                                 |
+| `image_alt`                  | `""`         | Required when `image_src` is set.                                 |
+| `image_width`                | `""`         | Optional intrinsic image width.                                   |
+| `image_height`               | `""`         | Optional intrinsic image height.                                  |
+| `panel_icon`                 | `""`         | Icon for the text-panel media variant.                            |
+| `panel_title`                | `""`         | Panel heading.                                                    |
+| `panel_description`          | `""`         | Panel supporting copy.                                            |
+| `item_1`, `item_2`, `item_3` | `""`         | Panel checklist items.                                            |
+| `media_position`             | `"end"`      | `start` or `end`.                                                 |
+| `background`                 | `"base-100"` | Section surface.                                                  |
+| `container`                  | `"lg"`       | One of: xs, sm, md, lg, xl, full.                                 |
+| `class`                      | `""`         | Additional section classes.                                       |
 
 Actions render only when both their label and destination are present. Attribute text is escaped; use project components for deliberately rich hero copy.
 

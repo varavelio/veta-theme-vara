@@ -24,6 +24,20 @@ A documentation page is composed of:
 
 The template loads the docs JavaScript bundle, which handles the sidebar, TOC, anchor links, back-to-top button, and syntax highlighting.
 
+## Reading experience
+
+A few behaviors make long documentation pleasant to read, and they come ready out of the box:
+
+- **Table of contents** - on wide screens, the right rail lists the page's headings and highlights the section you are reading; on small screens it opens as a slide-over panel.
+- **Heading links** - every heading in the page body gets a small anchor link that appears on hover, so readers can copy a direct link to any section.
+- **Sidebar memory** - the sidebar keeps its scroll position between pages and remembers which groups you have expanded or collapsed.
+- **Back to top** - after scrolling down, a small button appears and glides you back to the top.
+- **Search shortcut** - press `Ctrl`/`Cmd` + `K` to open search from anywhere in the documentation.
+
+### Which headings make it into the TOC
+
+The table of contents is built from the page's `h2` and `h3` headings, and those are the only ones that get anchor links. Headings that live inside a component are excluded on purpose: components render with a `not-prose` marker, so anything you place inside them is treated as embedded content rather than part of the article. If you want a heading to be navigable, write it as a regular Markdown heading in the page body instead of nesting it in a component.
+
 ## Page fields
 
 | Field               | Purpose                                                                 |

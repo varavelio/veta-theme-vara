@@ -76,6 +76,10 @@ Component attributes are strings. Quote every value, use `"true"` / `"false"` fo
 
 Markdown inside a component's body is rendered before the component resolves it, so paired components receive real HTML, not raw Markdown. Set `class` on a component to extend it with your own utilities.
 
+### Headings inside components
+
+On documentation pages, headings only join the table of contents and receive anchor links when they live in the page's prose. Components render with a `not-prose` marker, so headings inside them stay out of the TOC on purpose - an accordion question or a card title is embedded content, not a section of the article. Use `class="not-prose"` on your own markup when you want the same opt-out. See [vara-docs](../templates/docs/) for details.
+
 ### Links and assets
 
 Use root-relative paths for internal links and assets. Vara resolves them with Veta's deployment-aware `url()` helper, so your site keeps working when deployed below a path prefix. When a link opens in a new tab, the theme adds `rel="noopener noreferrer"` automatically.
