@@ -44,7 +44,7 @@ jobs:
           sudo rm -rf node_modules
 
           # Deploy to Cloudflare Pages
-          OUTPUT=$(npx wrangler pages deploy ./public \
+          OUTPUT=$(npx wrangler pages deploy ./dist \
             --project-name=varavel-vara \
             --branch="${{ github.ref_name }}" \
             --commit-hash="${{ github.sha }}" \
