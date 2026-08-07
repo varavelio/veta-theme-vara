@@ -44,10 +44,7 @@ Components that take dynamic content or render interactive behavior use Alpine.j
 
 `filters/` and `functions/` contain the template helpers the theme uses. They carry the `vara_` prefix because they ship in the consuming project's namespace.
 
-You rarely need to call them directly, but they are there if you write your own templates:
-
-- **Functions** resolve site settings, build the sidebar, generate pagination, render icons, and more.
-- **Filters** trim values and format numbers for compact display.
+Most of them are internal plumbing for the theme's own templates, but a handful are worth reaching for in your own components. See [Functions and filters](./functions-and-filters/) for the curated list.
 
 ## Data
 

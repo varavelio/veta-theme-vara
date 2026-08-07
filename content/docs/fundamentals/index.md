@@ -14,5 +14,6 @@ This section explains how the theme works so you can use it confidently and exte
 - **[Site settings](./site-settings/)** - every setting the theme reads from `data/site.yaml`.
 - **[Search and LLM output](./search-and-llms/)** - client-side search, Markdown actions, and `llms.txt` files.
 - **[Customization](./customization/)** - colors, fonts, icons, dark mode, and overriding the theme.
+- **[Functions and filters](./functions-and-filters/)** - the template helpers worth using in your own components.
 
 You don't need to read all of these before writing content. Start with the ones that match your task, and come back when you want to dig deeper.
