@@ -5,7 +5,7 @@ description: "A clean, fast, and responsive theme for Veta - documentation and l
 
 <vara-header
 container="lg"
-links="Docs|/docs,Components|/docs/components,Getting Started|/docs/getting-started/installation,GitHub|https://github.com/varavelio/veta-theme-vara"
+links="Docs|/docs,Components|/docs/components,Icons|/icons,GitHub|https://github.com/varavelio/veta-theme-vara"
 cta_label="Install"
 cta_href="/docs/getting-started/installation"
 />

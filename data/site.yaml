@@ -6,3 +6,7 @@ logo_light: "https://cdn.jsdelivr.net/gh/varavelio/brand@v1.0.2/dist/logo-black.
 logo_dark: "https://cdn.jsdelivr.net/gh/varavelio/brand@v1.0.2/dist/logo-white.svg"
 
 docs_github_repo: "varavelio/veta-theme-vara"
+
+docs_header_links:
+  - title: "Icons"
+    href: "/icons/"
