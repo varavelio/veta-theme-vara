@@ -70,21 +70,20 @@ panel_description="Since Veta is a single binary and this theme requires no depe
 heading_level="3"
 />
 
-<vara-faq
-container="lg"
-title="Common questions"
-description="A few things people ask before starting."
-item_1_question="Does my project need a frontend build?"
-item_1_answer="No. Vara ships compiled styles and JavaScript. Your project is content, generators, and configuration."
-item_2_question="Do I have to use the bundled components?"
-item_2_answer="No. Components are opt-in. You can write plain HTML in your templates or add your own components to the project."
-item_3_question="Can I customize the look?"
-item_3_answer="Yes. The theme is built with Tailwind CSS and uses design tokens for colors, so you can override them and add your own styles."
-item_4_question="Does it work when deployed below a path?"
-item_4_answer="Yes. Internal links use Veta's deployment-aware URL helper, so the site keeps working under any prefix."
-open_first="true"
-heading_level="3"
-/>
+<vara-faq container="lg" title="Common questions" description="A few things people ask before starting." open_first="true" heading_level="3">
+<vara-faq-item id="frontend-build" question="Does my project need a frontend build?">
+No. Vara ships compiled styles and JavaScript. Your project is content, generators, and configuration.
+</vara-faq-item>
+<vara-faq-item id="components" question="Do I have to use the bundled components?">
+No. Components are opt-in. You can write plain HTML in your templates or add your own components to the project.
+</vara-faq-item>
+<vara-faq-item id="customize" question="Can I customize the look?">
+Yes. The theme is built with Tailwind CSS and uses design tokens for colors, so you can override them and add your own styles.
+</vara-faq-item>
+<vara-faq-item id="deploy-path" question="Does it work when deployed below a path?">
+Yes. Internal links use Veta's deployment-aware URL helper, so the site keeps working under any prefix.
+</vara-faq-item>
+</vara-faq>
 
 <vara-cta
 container="lg"

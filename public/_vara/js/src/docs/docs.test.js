@@ -5,6 +5,7 @@ import {
   copyAskAiPromptToClipboard,
   copyMarkdownFromUrl,
   isInsideNotProse,
+  isSidebarLinkOutOfView,
   resolveAskAiPrompt,
   resolveAskAiUrl,
   resolveBackToTopState,
@@ -15,7 +16,6 @@ import {
   resolveSidebarScrollTop,
   resolveTableOfContents,
   scrollToHash,
-  shouldCenterSidebarLink,
   slugifyTocHeading,
 } from "./docs.js";
 
@@ -356,9 +356,9 @@ test("ignores unavailable or invalid sidebar scroll positions", () => {
   assert.equal(resolveSidebarScrollTop("12px"), null);
 });
 
-test("does not center an already visible sidebar link", () => {
+test("does not scroll an already visible sidebar link", () => {
   assert.equal(
-    shouldCenterSidebarLink(
+    isSidebarLinkOutOfView(
       { top: 100, bottom: 500 },
       { top: 180, bottom: 220 },
     ),
@@ -366,9 +366,19 @@ test("does not center an already visible sidebar link", () => {
   );
 });
 
-test("centers a sidebar link outside the visible sidebar area", () => {
+test("does not scroll a partially visible sidebar link", () => {
   assert.equal(
-    shouldCenterSidebarLink(
+    isSidebarLinkOutOfView(
+      { top: 100, bottom: 500 },
+      { top: 480, bottom: 520 },
+    ),
+    false,
+  );
+});
+
+test("scrolls a sidebar link hidden outside the visible sidebar area", () => {
+  assert.equal(
+    isSidebarLinkOutOfView(
       { top: 100, bottom: 500 },
       { top: 520, bottom: 560 },
     ),

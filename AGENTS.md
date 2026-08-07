@@ -30,7 +30,7 @@ You MUST follow the following instructions:
 
 - `templates/` contains Pongo page templates. The supported page templates are `templates/vara-landing.j2`, `templates/vara-docs.j2`, `templates/vara-docs-raw.j2`, `templates/vara-docs-search-index.j2`, `templates/vara-docs-llms-txt.j2`, `templates/vara-docs-llms-full-txt.j2`, `templates/vara-sitemap-xml.j2`, and `templates/vara-404.j2`.
 - `components/` contains Veta components. Every component filename and tag must use the `vara-` prefix and kebab-case (for example, `vara-alert.j2` and `<vara-alert>`).
-- Keep the public component collection small and general-purpose; domain-specific recipes belong in consuming projects. Every public component must have a matching rendered page in `content/docs/components/`; `tests/components_docs.test.js` enforces catalog parity and example coverage.
+- Keep the public component collection small and general-purpose; domain-specific recipes belong in consuming projects. Every public component must be documented in `content/docs/components/`, either in its own page or within the page of a parent component; `tests/components_docs.test.js` enforces coverage, example, and catalog parity.
 - Component attributes are strings. Use quoted `"true"`/`"false"` booleans, consistent `*_label`/`*_href` action pairs, and `item_N_*` families for bounded records. Resolve internal links and assets with `url()`.
 - `filters/` contains distributable JS filters. Every filter filename and template filter name must use the `vara_` prefix because these ship in the consuming project's global namespace.
 - `functions/` contains JS template functions. Every function filename and template function name must use the `vara_` prefix because these ship in the consuming project's global namespace.

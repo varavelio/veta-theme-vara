@@ -61,7 +61,7 @@ Larger sections for composing landing pages:
 - [Content split](./content-split/) - explanatory copy with supporting media.
 - [Features](./features/) - reusable feature cards.
 - [Stats](./stats/) - semantic metrics in cards or a strip.
-- [FAQ](./faq/) - native accordion or static grid.
+- [FAQ](./faq/) - single-open accordion with composable items.
 - [Testimonial](./testimonial/) - a focused customer quote.
 - [Carousel](./carousel/) - a generic slider for any collection of slides.
 - [Call to action](./cta/) - centered or inline conversion panel.

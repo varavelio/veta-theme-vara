@@ -3,6 +3,11 @@
  */
 const BACK_TO_TOP_SCROLL_THRESHOLD = 300;
 
+/**
+ * Shared sidebar scroll storage so position survives navigation between pages.
+ */
+const SIDEBAR_SCROLL_STORAGE_KEY = "varapress.sidebar.scroll";
+
 export function slugifyTocHeading(value) {
   return String(value || "")
     .normalize("NFKD")
@@ -387,8 +392,8 @@ export function resolveSidebarGroupOpen(storedValue, hasActiveLink, defaultOpen 
   return defaultOpen;
 }
 
-export function shouldCenterSidebarLink(rootRect, linkRect) {
-  return linkRect.top < rootRect.top || linkRect.bottom > rootRect.bottom;
+export function isSidebarLinkOutOfView(rootRect, linkRect) {
+  return linkRect.top > rootRect.bottom || linkRect.bottom < rootRect.top;
 }
 
 export function resolveSidebarScrollTop(storedValue) {
@@ -476,7 +481,7 @@ function registerAlpineVarapressDocs(tocAvailable) {
     promptCopyResetTimer: null,
     backToTopProgrammaticScroll: false,
     sidebarScrollBeforeUnloadReady: false,
-    sidebarScrollRoots: {},
+    sidebarScrollRoot: null,
     previousScrollTop: 0,
     upwardScrollDistance: 0,
 
@@ -502,13 +507,12 @@ function registerAlpineVarapressDocs(tocAvailable) {
       this.tocOpen = !this.tocOpen;
     },
 
-    initSidebarScroll(root, id) {
+    initSidebarScroll(root) {
       if (!root || root.dataset.varapressSidebarScrollReady === "true") return;
 
       root.dataset.varapressSidebarScrollReady = "true";
 
-      const storageKey = `varapress.sidebar.scroll.${id}`;
-      const savedScrollTop = this.readSidebarScrollTop(storageKey);
+      const savedScrollTop = this.readSidebarScrollTop(SIDEBAR_SCROLL_STORAGE_KEY);
 
       if (savedScrollTop === null) {
         this.scrollActiveSidebarLink(root);
@@ -516,7 +520,7 @@ function registerAlpineVarapressDocs(tocAvailable) {
         root.scrollTop = savedScrollTop;
       }
 
-      this.sidebarScrollRoots[storageKey] = root;
+      this.sidebarScrollRoot = root;
       this.ensureSidebarScrollBeforeUnload();
     },
 
@@ -538,9 +542,9 @@ function registerAlpineVarapressDocs(tocAvailable) {
     },
 
     persistSidebarScrollPositions() {
-      Object.entries(this.sidebarScrollRoots).forEach(([storageKey, root]) => {
-        this.writeSidebarScrollTop(storageKey, root.scrollTop);
-      });
+      if (this.sidebarScrollRoot) {
+        this.writeSidebarScrollTop(SIDEBAR_SCROLL_STORAGE_KEY, this.sidebarScrollRoot.scrollTop);
+      }
     },
 
     writeSidebarScrollTop(storageKey, scrollTop) {
@@ -555,7 +559,7 @@ function registerAlpineVarapressDocs(tocAvailable) {
       const activeLink = root?.querySelector("[aria-current=\"page\"]");
       if (!activeLink) return;
 
-      if (!shouldCenterSidebarLink(root.getBoundingClientRect(), activeLink.getBoundingClientRect())) {
+      if (!isSidebarLinkOutOfView(root.getBoundingClientRect(), activeLink.getBoundingClientRect())) {
         return;
       }
 

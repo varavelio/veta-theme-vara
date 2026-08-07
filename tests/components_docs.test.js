@@ -12,16 +12,30 @@ const documentationNames = readdirSync("content/docs/components")
   .map((name) => name.slice(0, -".md".length))
   .sort();
 
-test("every public component has one documentation page", () => {
-  assert.deepEqual(documentationNames, componentNames);
+function documentationPageFor(name) {
+  if (documentationNames.includes(name)) return name;
+  return documentationNames.find((doc) => {
+    if (doc === name) return false;
+    return readFileSync(`content/docs/components/${doc}.md`, "utf8").includes(`<vara-${name}`);
+  });
+}
+
+test("every public component is documented", () => {
+  for (const name of componentNames) {
+    assert.ok(documentationPageFor(name), `${name} is missing documentation`);
+  }
 });
 
-test("every component page includes source and a rendered example", () => {
+test("every component documentation includes source and a rendered example", () => {
   for (const name of componentNames) {
-    const documentation = readFileSync(`content/docs/components/${name}.md`, "utf8");
+    const page = documentationPageFor(name);
+    const documentation = readFileSync(`content/docs/components/${page}.md`, "utf8");
     const invocationCount = documentation.split(`<vara-${name}`).length - 1;
 
-    assert.ok(invocationCount >= 2, `${name}.md must include source and a rendered example`);
+    assert.ok(
+      invocationCount >= 2,
+      `${name} must include source and a rendered example in ${page}.md`,
+    );
   }
 });
 
@@ -29,6 +43,7 @@ test("the component catalog links every public component", () => {
   const catalog = readFileSync("content/docs/components/index.md", "utf8");
 
   for (const name of componentNames) {
-    assert.match(catalog, new RegExp(`\\(\\./${name}/\\)`));
+    const page = documentationPageFor(name);
+    assert.match(catalog, new RegExp(`\\(\\./${page}/\\)`));
   }
 });

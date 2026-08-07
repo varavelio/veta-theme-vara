@@ -1,45 +1,21 @@
 {% set container = props.container|default:"lg" %}
 {% set background = props.background|default:"base-100" %}
-{% set variant = props.variant|default:"accordion" %}
 {% set open_first = props.open_first|default:"false" %}
+{% set heading_level = props.heading_level|default:"2" %}
 {% if container == "xs" %}{% set container_cls = "max-w-md" %}{% elif container == "sm" %}{% set container_cls = "max-w-3xl" %}{% elif container == "md" %}{% set container_cls = "max-w-6xl" %}{% elif container == "xl" %}{% set container_cls = "max-w-[120rem]" %}{% elif container == "full" %}{% set container_cls = "max-w-full" %}{% else %}{% set container_cls = "max-w-7xl" %}{% endif %}
-
-{% macro faq_item(question, answer, index) %}
-  {% if question %}
-    {% if variant == "grid" %}
-      <article class="rounded-lg border border-base-400 bg-base-200 p-5 desk:p-6">
-        {% if props.heading_level == "3" %}<h4 class="font-medium text-content">{{ question }}</h4>{% else %}<h3 class="font-medium text-content">{{ question }}</h3>{% endif %}
-        {% if answer %}<p class="mt-3 text-sm leading-7 text-content-muted desk:text-base">{{ answer }}</p>{% endif %}
-      </article>
-    {% else %}
-      <details class="group border-b border-base-400 last:border-b-0"{% if index == "1" and open_first == "true" %} open{% endif %}>
-        <summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-4 font-medium text-content outline-content marker:content-none focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2">
-          <span>{{ question }}</span>
-          <span class="shrink-0 text-content-muted transition-transform duration-200 group-open:rotate-180" aria-hidden="true">{{ vara_icon("chevron-down", "size-5")|safe }}</span>
-        </summary>
-        {% if answer %}<p class="pb-4 pr-8 text-sm leading-7 text-content-muted desk:text-base">{{ answer }}</p>{% endif %}
-      </details>
-    {% endif %}
-  {% endif %}
-{% endmacro %}
 
 <section class="not-prose bg-{{ background }} py-10 desk:py-20{% if props.class %} {{ props.class }}{% endif %}">
   <div class="mx-auto w-full {{ container_cls }} px-4">
-    <div class="mx-auto max-w-4xl space-y-8 desk:space-y-10">
+    <div class="space-y-8 desk:space-y-10">
       {% if props.eyebrow or props.title or props.description %}
         <div class="mx-auto flex max-w-3xl flex-col gap-3 text-center">
           {% if props.eyebrow %}<p class="text-xs font-medium uppercase tracking-[0.24em] text-content-muted">{{ props.eyebrow }}</p>{% endif %}
-          {% if props.title %}{% if props.heading_level == "3" %}<h3 class="text-3xl font-semibold tracking-tight text-content desk:text-4xl">{{ props.title }}</h3>{% else %}<h2 class="text-3xl font-semibold tracking-tight text-content desk:text-4xl">{{ props.title }}</h2>{% endif %}{% endif %}
+          {% if props.title %}{% if heading_level == "3" %}<h3 class="text-3xl font-semibold tracking-tight text-content desk:text-4xl">{{ props.title }}</h3>{% else %}<h2 class="text-3xl font-semibold tracking-tight text-content desk:text-4xl">{{ props.title }}</h2>{% endif %}{% endif %}
           {% if props.description %}<p class="text-base leading-7 text-content-muted desk:text-lg">{{ props.description }}</p>{% endif %}
         </div>
       {% endif %}
-      <div class="{% if variant == 'grid' %}grid gap-4 desk:grid-cols-2{% else %}w-full overflow-hidden rounded-lg border border-base-400 bg-base-200 px-5 desk:px-6{% endif %}">
-        {{ faq_item(props.item_1_question, props.item_1_answer, "1") }}
-        {{ faq_item(props.item_2_question, props.item_2_answer, "2") }}
-        {{ faq_item(props.item_3_question, props.item_3_answer, "3") }}
-        {{ faq_item(props.item_4_question, props.item_4_answer, "4") }}
-        {{ faq_item(props.item_5_question, props.item_5_answer, "5") }}
-        {{ faq_item(props.item_6_question, props.item_6_answer, "6") }}
+      <div class="w-full overflow-hidden rounded-lg border border-base-400 bg-base-200" x-data="varapressFaq('{{ open_first }}')">
+        {{ props.content|safe }}
       </div>
     </div>
   </div>
