@@ -30,5 +30,13 @@ export default function({ data, files, parse }) {
     template: "vara-sitemap-xml",
   });
 
+  pages.push({
+    permalink: "/icons/",
+    template: "vara-icons-catalog",
+    title: "Vara Icon Catalog",
+    description: "Every icon bundled with the Vara theme.",
+    sitemap: false,
+  });
+
   return pages;
 }
