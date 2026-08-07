@@ -18,6 +18,7 @@ export default function() {
     docs_favicon: "", // Docs only override
     docs_logo_light: "", // Docs only override
     docs_logo_dark: "", // Docs only override
+    docs_show_logo: true,
     docs_show_title: true,
     docs_github_repo: "", // In user/repo format
     docs_header_links: [],

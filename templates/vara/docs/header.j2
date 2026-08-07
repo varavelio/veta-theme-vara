@@ -12,37 +12,41 @@
       >
         {{ vara_icon("menu")|safe }}
       </button>
-      <div class="min-w-0 flex-1 overflow-hidden">
-        <a href="{{ url('/') }}" class="group flex min-w-0 items-center justify-start overflow-hidden whitespace-nowrap">
-          {% if docs_logo_light and docs_logo_dark and docs_logo_light == docs_logo_dark %}
-            <span class="mr-2 flex h-6 min-w-0 shrink items-center overflow-hidden">
-              <img src="{{ docs_logo_light }}" class="h-6 w-auto max-w-full object-contain" alt="{{ site_title }}">
-            </span>
-          {% elif docs_logo_light or docs_logo_dark %}
-            {% set logo_light_src = docs_logo_light|default:docs_logo_dark %}
-            {% set logo_dark_src = docs_logo_dark|default:docs_logo_light %}
-            <span class="mr-2 flex h-6 min-w-0 shrink items-center overflow-hidden" x-data="theme">
-              <img
-                x-show="resolvedTheme === 'light'"
-                src="{{ logo_light_src }}"
-                class="h-6 w-auto max-w-full object-contain"
-                alt="{{ site_title }}"
-              >
-              <img
-                x-show="resolvedTheme === 'dark'"
-                src="{{ logo_dark_src }}"
-                class="h-6 w-auto max-w-full object-contain"
-                alt="{{ site_title }}"
-              >
-            </span>
-          {% endif %}
-          {% if docs_show_title %}
-            <span class="min-w-0 truncate font-semibold text-content transition-colors group-hover:text-info">
-              {{ site_title }}
-            </span>
-          {% endif %}
-        </a>
-      </div>
+      {% if docs_show_logo or docs_show_title %}
+        <div class="min-w-0 flex-1 overflow-hidden">
+          <a href="{{ url('/') }}" class="group flex min-w-0 items-center justify-start overflow-hidden whitespace-nowrap">
+            {% if docs_show_logo %}
+              {% if docs_logo_light and docs_logo_dark and docs_logo_light == docs_logo_dark %}
+                <span class="mr-2 flex h-6 min-w-0 shrink items-center overflow-hidden">
+                  <img src="{{ docs_logo_light }}" class="h-6 w-auto max-w-full object-contain" alt="{{ site_title }}">
+                </span>
+              {% elif docs_logo_light or docs_logo_dark %}
+                {% set logo_light_src = docs_logo_light|default:docs_logo_dark %}
+                {% set logo_dark_src = docs_logo_dark|default:docs_logo_light %}
+                <span class="mr-2 flex h-6 min-w-0 shrink items-center overflow-hidden" x-data="theme">
+                  <img
+                    x-show="resolvedTheme === 'light'"
+                    src="{{ logo_light_src }}"
+                    class="h-6 w-auto max-w-full object-contain"
+                    alt="{{ site_title }}"
+                  >
+                  <img
+                    x-show="resolvedTheme === 'dark'"
+                    src="{{ logo_dark_src }}"
+                    class="h-6 w-auto max-w-full object-contain"
+                    alt="{{ site_title }}"
+                  >
+                </span>
+              {% endif %}
+            {% endif %}
+            {% if docs_show_title %}
+              <span class="min-w-0 truncate font-semibold text-content transition-colors group-hover:text-info">
+                {{ site_title }}
+              </span>
+            {% endif %}
+          </a>
+        </div>
+      {% endif %}
     </div>
 
     {% if docs_search %}

@@ -11,6 +11,7 @@
 {% set links = props.links|default:"" %}
 {% set link_items = links|split:"," %}
 {% set has_navigation = links or props.cta_label and props.cta_href %}
+{% set show_logo = props.show_logo|default:"true" %}
 {% set show_title = props.show_title|default:"true" %}
 {% set show_theme = props.show_theme|default:"true" %}
 {% set sticky = props.sticky|default:"false" %}
@@ -19,21 +20,25 @@
   <div class="mx-auto w-full {{ container_cls }} px-4">
     <div class="flex h-14 items-center justify-between gap-3 desk:grid desk:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
       <div class="flex min-w-0 items-center justify-start">
-        <a href="{{ url(home_href) }}" class="group flex min-w-0 items-center gap-2 overflow-hidden whitespace-nowrap no-underline">
-          {% if logo_light and logo_dark and logo_light == logo_dark %}
-            <span class="flex h-6 min-w-0 shrink items-center overflow-hidden">
-              <img src="{{ url(logo_light) }}" class="h-6 w-auto max-w-full object-contain" alt="{% if show_title == 'false' %}{{ logo_alt }}{% endif %}">
-            </span>
-          {% elif logo_light or logo_dark %}
-            {% set logo_light_src = logo_light|default:logo_dark %}
-            {% set logo_dark_src = logo_dark|default:logo_light %}
-            <span class="flex h-6 min-w-0 shrink items-center overflow-hidden">
-              <img src="{{ url(logo_light_src) }}" class="h-6 w-auto max-w-full object-contain dark:hidden" alt="{% if show_title == 'false' %}{{ logo_alt }}{% endif %}">
-              <img src="{{ url(logo_dark_src) }}" class="hidden h-6 w-auto max-w-full object-contain dark:block" alt="{% if show_title == 'false' %}{{ logo_alt }}{% endif %}">
-            </span>
-          {% endif %}
-          {% if show_title != "false" %}<span class="min-w-0 truncate text-sm font-semibold text-content transition-colors group-hover:text-info desk:text-base">{{ title }}</span>{% endif %}
-        </a>
+        {% if show_logo != "false" or show_title != "false" %}
+          <a href="{{ url(home_href) }}" class="group flex min-w-0 items-center gap-2 overflow-hidden whitespace-nowrap no-underline">
+            {% if show_logo != "false" %}
+              {% if logo_light and logo_dark and logo_light == logo_dark %}
+                <span class="flex h-6 min-w-0 shrink items-center overflow-hidden">
+                  <img src="{{ url(logo_light) }}" class="h-6 w-auto max-w-full object-contain" alt="{% if show_title == 'false' %}{{ logo_alt }}{% endif %}">
+                </span>
+              {% elif logo_light or logo_dark %}
+                {% set logo_light_src = logo_light|default:logo_dark %}
+                {% set logo_dark_src = logo_dark|default:logo_light %}
+                <span class="flex h-6 min-w-0 shrink items-center overflow-hidden">
+                  <img src="{{ url(logo_light_src) }}" class="h-6 w-auto max-w-full object-contain dark:hidden" alt="{% if show_title == 'false' %}{{ logo_alt }}{% endif %}">
+                  <img src="{{ url(logo_dark_src) }}" class="hidden h-6 w-auto max-w-full object-contain dark:block" alt="{% if show_title == 'false' %}{{ logo_alt }}{% endif %}">
+                </span>
+              {% endif %}
+            {% endif %}
+            {% if show_title != "false" %}<span class="min-w-0 truncate text-sm font-semibold text-content transition-colors group-hover:text-info desk:text-base">{{ title }}</span>{% endif %}
+          </a>
+        {% endif %}
       </div>
 
       {% if links %}

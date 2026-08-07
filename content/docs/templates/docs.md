@@ -75,7 +75,7 @@ Each entry needs `title` and `href`, and may have an `icon`. Links open in a new
 
 Most of the template's behavior is controlled by the `docs_*` site settings:
 
-- Branding and the GitHub button: `docs_favicon`, `docs_logo_light`, `docs_logo_dark`, `docs_show_title`, `docs_github_repo`, `docs_header_links`.
+- Branding and the GitHub button: `docs_favicon`, `docs_logo_light`, `docs_logo_dark`, `docs_show_logo`, `docs_show_title`, `docs_github_repo`, `docs_header_links`.
 - Sidebar: `docs_sidebar_sections`, `docs_sidebar_collapsed`.
 - Features: `docs_search`, `docs_llms`, `docs_credits_footer`, `docs_shiki`, `docs_root_permalink`.
 

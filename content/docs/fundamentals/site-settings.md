@@ -70,7 +70,10 @@ Documentation settings are namespaced with `docs_`. They only affect the `vara-d
 | `docs_favicon`    | site `favicon`    | Favicon used on documentation pages.                     |
 | `docs_logo_light` | site `logo_light` | Brand logo for light surfaces on documentation pages.    |
 | `docs_logo_dark`  | site `logo_dark`  | Brand logo for dark surfaces on documentation pages.     |
+| `docs_show_logo`  | `true`            | Show the brand logo in the docs header.                  |
 | `docs_show_title` | `true`            | Show the site title next to the logo in the docs header. |
+
+Set `docs_show_logo: false` when your documentation site has no logo, or `docs_show_title: false` when the logo artwork already includes the title. Setting both hides the brand link from the docs header.
 
 ### Header and GitHub
 

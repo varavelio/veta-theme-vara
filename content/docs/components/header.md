@@ -44,6 +44,7 @@ show_theme="false"
 | `cta_href`    | string | `""`        | Primary action destination.                            |
 | `cta_variant` | string | `"solid"`   | Primary action style.                                  |
 | `cta_color`   | string | `"neutral"` | Primary action color.                                  |
+| `show_logo`   | string | `"true"`    | Show the brand logo.                                   |
 | `show_title`  | string | `"true"`    | Show the visible brand title.                          |
 | `show_theme`  | string | `"true"`    | Show the theme picker control.                         |
 | `sticky`      | string | `"false"`   | Keep the header at the viewport top.                   |
@@ -55,6 +56,24 @@ show_theme="false"
 The mobile navigation closes on Escape and on outside clicks. Long logos and titles shrink safely instead of overflowing.
 
 The theme picker appears by default. Set `show_theme="false"` when you want a quiet header, and `sticky="true"` to keep the header at the top while scrolling.
+
+## Hiding the logo or the title
+
+Sites without a logo can hide it while keeping the title, and logos that already include the title as part of the artwork can hide the title instead:
+
+```html
+<vara-header title="Acme" show_logo="false" />
+```
+
+```html
+<vara-header
+  logo_light="/images/logo.svg"
+  logo_dark="/images/logo.svg"
+  show_title="false"
+/>
+```
+
+The logo keeps the `logo_alt` text as its accessible name whenever the title is hidden. When both are hidden the header renders without a brand link.
 
 ## With a logo
 
