@@ -2,7 +2,7 @@
 title: "Troubleshooting"
 weight: 6
 description: "Quick fixes for the issues people run into most often."
-icon: "circle-help"
+icon: "circle-question-mark"
 ---
 
 # Troubleshooting
