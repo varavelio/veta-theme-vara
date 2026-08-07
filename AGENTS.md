@@ -28,7 +28,7 @@ You MUST follow the following instructions:
 
 ## Theme Structure
 
-- `templates/` contains Pongo page templates. The supported page templates are `templates/vara-landing.j2`, `templates/vara-docs.j2`, `templates/vara-docs-raw.j2`, `templates/vara-docs-search-index.j2`, `templates/vara-docs-llms-txt.j2`, `templates/vara-docs-llms-full-txt.j2`, `templates/vara-sitemap-xml.j2`, and `templates/vara-404.j2`.
+- `templates/` contains Pongo page templates. The supported page templates are `templates/vara-landing.j2`, `templates/vara-docs.j2`, `templates/vara-docs-raw.j2`, `templates/vara-docs-search-index.j2`, `templates/vara-docs-llms-txt.j2`, `templates/vara-docs-llms-full-txt.j2`, `templates/vara-sitemap-xml.j2`, and `templates/vara-404.j2`. `templates/vara-icons-catalog.j2` is an internal-only catalog served at `/icons/` by the showcase `pages/pages.js`; it must never be documented or advertised, and its metadata comes from the generated `templates/vara/icons/icons.json` manifest.
 - `components/` contains Veta components. Every component filename and tag must use the `vara-` prefix and kebab-case (for example, `vara-alert.j2` and `<vara-alert>`).
 - Keep the public component collection small and general-purpose; domain-specific recipes belong in consuming projects. Every public component must be documented in `content/docs/components/`, either in its own page or within the page of a parent component; `tests/components_docs.test.js` enforces coverage, example, and catalog parity.
 - Component attributes are strings. Use quoted `"true"`/`"false"` booleans, consistent `*_label`/`*_href` action pairs, and `item_N_*` families for bounded records. Resolve internal links and assets with `url()`.

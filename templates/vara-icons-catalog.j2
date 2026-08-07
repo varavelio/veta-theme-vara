@@ -1,0 +1,150 @@
+{# Internal-use template: renders the icon catalog served at /icons/ by the showcase page generator. For theme maintainers only; must NOT be documented in the public documentation. #}
+{% extends "./vara/base/main.j2" %}
+
+{% block head_extra %}
+  <meta name="robots" content="noindex">
+  <style>
+    [hidden] { display: none !important; }
+    .vara-catalog-provider {
+      background-color: var(--color-base-100);
+      color: var(--color-content-muted);
+    }
+    [data-icon-provider="lucide"] .vara-catalog-provider {
+      background-color: color-mix(in srgb, var(--color-info) 12%, var(--color-base-100));
+      color: var(--color-info);
+    }
+    [data-icon-provider="simple-icons"] .vara-catalog-provider {
+      background-color: color-mix(in srgb, var(--color-success) 12%, var(--color-base-100));
+      color: var(--color-success);
+    }
+    [data-icon-provider="varavel"] .vara-catalog-provider {
+      background-color: color-mix(in srgb, var(--color-warning) 12%, var(--color-base-100));
+      color: var(--color-warning);
+    }
+  </style>
+{% endblock %}
+
+{% block body %}
+  {% set catalog = vara_icons_catalog() %}
+  <div class="size-full overflow-y-auto">
+    <header class="sticky top-0 z-10 border-b border-base-400 bg-base-100/95 backdrop-blur">
+      <div class="mx-auto flex w-full max-w-[96rem] flex-col gap-4 px-6 py-4">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div class="flex flex-col gap-1">
+            <h1 class="text-xl font-semibold">Vara Icon Catalog</h1>
+            <p class="max-w-3xl text-sm text-content-muted">
+              Icons are bundled from the
+              <a class="font-medium text-content underline underline-offset-2" href="{{ catalog.lucide.repo }}" target="_blank" rel="noopener noreferrer" title="Lucide {{ catalog.lucide.version }}">Lucide</a>
+              project (<a class="underline underline-offset-2" href="{{ catalog.lucide.license }}" target="_blank" rel="noopener noreferrer">see license</a>) and the
+              <a class="font-medium text-content underline underline-offset-2" href="{{ catalog.simple_icons.repo }}" target="_blank" rel="noopener noreferrer" title="Simple Icons {{ catalog.simple_icons.version }}">Simple Icons</a>
+              project (<a class="underline underline-offset-2" href="{{ catalog.simple_icons.license }}" target="_blank" rel="noopener noreferrer">see license</a>).
+              Click any icon to copy its name.
+            </p>
+          </div>
+          <p class="rounded-full border border-base-400 bg-base-200 px-3 py-1 text-xs font-medium text-content-muted" id="vara-catalog-count">{{ catalog.counts.total }} icons</p>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <input id="vara-catalog-search" type="search" placeholder="Search icons..." class="w-full max-w-md rounded-md border border-base-400 bg-base-100 px-3 py-2 text-sm outline-none placeholder:text-content-muted focus:border-content" autocomplete="off">
+          <select id="vara-catalog-provider" class="rounded-md border border-base-400 bg-base-100 px-3 py-2 text-sm outline-none focus:border-content">
+            <option value="">All providers</option>
+            <option value="lucide">Lucide</option>
+            <option value="simple-icons">Simple Icons</option>
+            <option value="varavel">Varavel</option>
+          </select>
+        </div>
+      </div>
+    </header>
+    <main id="vara-catalog-grid" class="mx-auto grid w-full max-w-[96rem] grid-cols-4 gap-2 px-6 py-6 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10">
+      {% for icon in catalog.icons %}
+        <button type="button" class="group flex cursor-pointer flex-col items-center gap-2 rounded-lg border border-base-400 bg-base-200 p-3 text-center transition-colors hover:bg-base-300" data-icon-name="{{ icon.name }}" data-icon-provider="{{ icon.provider }}" data-copy-icon="{{ icon.name }}" title="Copy {{ icon.name }}">
+          {{ vara_icon(icon.name, "shrink-0")|safe }}
+          <span class="w-full truncate font-mono text-[11px] text-content-muted group-hover:text-content">{{ icon.name }}</span>
+          <span class="vara-catalog-provider rounded-full border border-base-400 px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.18em]">{{ icon.provider }}</span>
+        </button>
+      {% endfor %}
+    </main>
+    <p id="vara-catalog-empty" class="px-6 py-16 text-center text-sm text-content-muted" hidden>No icons match your search.</p>
+    <div id="vara-catalog-toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 rounded-md bg-content px-4 py-2 text-sm text-base-100 shadow-lg" hidden></div>
+  </div>
+  <script>
+    (() => {
+      const grid = document.getElementById("vara-catalog-grid");
+      if (!grid) return;
+      const cards = Array.from(grid.querySelectorAll("[data-icon-name]"));
+      cards.forEach((card, index) => { card._varaIndex = index; });
+      const search = document.getElementById("vara-catalog-search");
+      const provider = document.getElementById("vara-catalog-provider");
+      const count = document.getElementById("vara-catalog-count");
+      const empty = document.getElementById("vara-catalog-empty");
+      const toast = document.getElementById("vara-catalog-toast");
+      const total = cards.length;
+
+      function relevance(name, query) {
+        if (name === query) return 0;
+        if (name.startsWith(query)) return 1;
+        return 2;
+      }
+
+      function applyFilters() {
+        const query = search.value.trim().toLowerCase();
+        const selected = provider.value;
+        const visible = [];
+
+        for (const card of cards) {
+          const matchesQuery = !query || card.dataset.iconName.includes(query);
+          const matchesProvider = !selected || card.dataset.iconProvider === selected;
+          if (matchesQuery && matchesProvider) visible.push(card);
+        }
+
+        visible.sort((a, b) => {
+          if (query) {
+            const order = relevance(a.dataset.iconName, query) - relevance(b.dataset.iconName, query);
+            if (order !== 0) return order;
+          }
+          return a._varaIndex - b._varaIndex;
+        });
+
+        const shown = new Set(visible);
+        for (const card of cards) card.hidden = !shown.has(card);
+        for (const card of visible) grid.appendChild(card);
+
+        count.textContent = visible.length === total ? `${total} icons` : `${visible.length} / ${total} icons`;
+        empty.hidden = visible.length !== 0;
+      }
+
+      search.addEventListener("input", applyFilters);
+      provider.addEventListener("change", applyFilters);
+
+      function copyText(text) {
+        if (navigator.clipboard && window.isSecureContext) {
+          return navigator.clipboard.writeText(text);
+        }
+        const textarea = document.createElement("textarea");
+        textarea.value = text;
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        textarea.remove();
+        return Promise.resolve();
+      }
+
+      function showToast(message) {
+        toast.textContent = message;
+        toast.hidden = false;
+        window.clearTimeout(showToast.timer);
+        showToast.timer = window.setTimeout(() => { toast.hidden = true; }, 1200);
+      }
+
+      grid.addEventListener("click", (event) => {
+        const card = event.target.closest("[data-copy-icon]");
+        if (!card) return;
+        const name = card.dataset.copyIcon;
+        copyText(name)
+          .then(() => showToast(`Copied "${name}"`))
+          .catch(() => showToast("Could not copy icon name"));
+      });
+    })();
+  </script>
+{% endblock %}
