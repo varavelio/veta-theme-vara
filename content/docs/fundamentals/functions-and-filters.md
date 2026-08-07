@@ -28,7 +28,7 @@ Renders one of the bundled SVG icons by name. Pass optional utility classes for 
 {{ vara_icon("check", "size-4 text-success")|safe }}
 ```
 
-Icon names come from the theme's icon set - the same names the `<vara-icon>` component accepts. Browse them on [Lucide icons](https://lucide.dev/icons/) and [Simple Icons](https://simpleicons.org/).
+Icon names come from the theme's icon set - the same names the `<vara-icon>` component accepts. Browse them in the [icon explorer](/icons/).
 
 Missing names render a visible warning glyph instead of failing the build.
 

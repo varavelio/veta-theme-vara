@@ -44,12 +44,11 @@ The bundle includes both Lucide icons and Simple Icons brand marks. When a name 
 
 ## Where to find icon names
 
-The bundle follows the Lucide and Simple Icons catalogs, so you can look up icon names on their sites:
+The bundle follows the Lucide and Simple Icons catalogs, and this site ships a searchable explorer of every bundled icon:
 
-- [Lucide icons](https://lucide.dev/icons/)
-- [Simple Icons](https://simpleicons.org/)
+- [Browse the icon explorer](/icons/)
 
-Use the name as shown on the site. Remember to prefix a brand icon with `si-` when it shares a name with a Lucide icon.
+Use the name as shown in the explorer. Remember to prefix a brand icon with `si-` when it shares a name with a Lucide icon.
 
 ## Missing icons
 
