@@ -52,6 +52,8 @@ export function resolveLanguageSources(languages, bundledLanguages, customLangua
       || PLAIN_TEXT_LANGUAGES.has(language)
     ) {
       sources.set(language, { type: "bundled", id: language });
+    } else {
+      sources.set(language, { type: "bundled", id: "text" });
     }
   }
 
@@ -275,8 +277,13 @@ export async function initShiki(options = {}) {
       return 0;
     }
 
+    const loadTargets = new Map();
+    for (const source of sources.values()) {
+      if (!loadTargets.has(source.id)) loadTargets.set(source.id, source);
+    }
+
     const loadedLanguages = new Set();
-    await Promise.all(Array.from(sources.values(), async (source) => {
+    await Promise.all(Array.from(loadTargets.values(), async (source) => {
       try {
         loadedLanguages.add(await loadLanguage(highlighter, source, fetcher));
       } catch (error) {
@@ -286,12 +293,13 @@ export async function initShiki(options = {}) {
 
     let highlightedCount = 0;
     await Promise.all(blocks.map(async (block) => {
-      if (!loadedLanguages.has(block.language)) return;
+      const source = sources.get(block.language);
+      if (!source || !loadedLanguages.has(source.id)) return;
 
       const codeText = block.code.textContent || "";
       try {
         const html = await highlighter.codeToHtml(codeText, {
-          lang: block.language,
+          lang: source.id,
           themes: SHIKI_THEMES,
           defaultColor: false,
           transformers,

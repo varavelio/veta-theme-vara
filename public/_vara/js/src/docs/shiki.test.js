@@ -41,7 +41,7 @@ test("resolves valid custom language definitions by exact id", () => {
   assert.equal(languages.has("VDL"), false);
 });
 
-test("prefers custom languages and resolves bundled aliases", () => {
+test("prefers custom languages, resolves bundled aliases, and falls back to plain text", () => {
   const customLanguages = new Map([
     ["vdl", { id: "vdl", url: "https://cdn.example/vdl.json" }],
     ["js", { id: "js", url: "https://cdn.example/custom-js.json" }],
@@ -56,10 +56,11 @@ test("prefers custom languages and resolves bundled aliases", () => {
     { type: "custom", id: "vdl", url: "https://cdn.example/vdl.json" },
     { type: "custom", id: "js", url: "https://cdn.example/custom-js.json" },
     { type: "bundled", id: "yaml" },
+    { type: "bundled", id: "text" },
   ]);
 });
 
-test("resolves plain-text languages even when missing from bundled languages", () => {
+test("resolves plain-text languages and falls back to plain text for unknown languages", () => {
   const sources = resolveLanguageSources(
     ["text", "txt", "plaintext", "unknown", "text"],
     {},
@@ -70,6 +71,7 @@ test("resolves plain-text languages even when missing from bundled languages", (
     { type: "bundled", id: "text" },
     { type: "bundled", id: "txt" },
     { type: "bundled", id: "plaintext" },
+    { type: "bundled", id: "text" },
   ]);
 });
 
