@@ -7,6 +7,7 @@ const SHIKI_THEMES = {
 const LANGUAGE_CLASS_PREFIX = "language-";
 const READY_ATTRIBUTE = "data-vara-shiki-ready";
 const COPY_RESET_DELAY = 2000;
+const PLAIN_TEXT_LANGUAGES = new Set(["text", "txt", "plaintext"]);
 
 export function getCodeBlockLanguage(code) {
   for (const className of code?.classList || []) {
@@ -46,7 +47,10 @@ export function resolveLanguageSources(languages, bundledLanguages, customLangua
     const customLanguage = customLanguages.get(language);
     if (customLanguage) {
       sources.set(language, { type: "custom", ...customLanguage });
-    } else if (Object.prototype.hasOwnProperty.call(bundledLanguages, language)) {
+    } else if (
+      Object.prototype.hasOwnProperty.call(bundledLanguages, language)
+      || PLAIN_TEXT_LANGUAGES.has(language)
+    ) {
       sources.set(language, { type: "bundled", id: language });
     }
   }

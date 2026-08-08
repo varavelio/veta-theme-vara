@@ -1,6 +1,7 @@
 /* Preserve code-block layout while client-side highlighting is loading. */
 :root {
   --vara-shiki-background: #eef2f6;
+  --vara-shiki-code: #24292e;
   --vara-shiki-copy-background: #ffffff;
   --vara-shiki-copy-background-hover: #f6f8fa;
   --vara-shiki-copy-border: #afb8c1;
@@ -9,6 +10,7 @@
 
 :root:where(.dark, [data-theme="dark"]) {
   --vara-shiki-background: #111827;
+  --vara-shiki-code: #e6edf3;
   --vara-shiki-copy-background: #21262d;
   --vara-shiki-copy-background-hover: #30363d;
   --vara-shiki-copy-border: #57606a;
@@ -20,6 +22,12 @@
   pre:not(:where([class~="not-prose"], [class~="not-prose"]
     *)):has(> code[class*="language-"]) {
   background-color: var(--vara-shiki-background);
+}
+
+.prose.vara-shiki-enabled
+  pre:not(.shiki):not(:where([class~="not-prose"], [class~="not-prose"]
+    *)):has(> code[class*="language-"]) {
+  color: var(--vara-shiki-code);
 }
 
 .prose.vara-shiki-enabled

@@ -59,6 +59,20 @@ test("prefers custom languages and resolves bundled aliases", () => {
   ]);
 });
 
+test("resolves plain-text languages even when missing from bundled languages", () => {
+  const sources = resolveLanguageSources(
+    ["text", "txt", "plaintext", "unknown", "text"],
+    {},
+    new Map(),
+  );
+
+  assert.deepEqual(Array.from(sources.values()), [
+    { type: "bundled", id: "text" },
+    { type: "bundled", id: "txt" },
+    { type: "bundled", id: "plaintext" },
+  ]);
+});
+
 test("configures the copy transformer with accessible button metadata", () => {
   let options;
   const transformer = createCopyButtonTransformer((value) => {
