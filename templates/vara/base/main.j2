@@ -2,6 +2,8 @@
 {% set site_description = vara_site_setting("description") %}
 {% set site_favicon = vara_site_setting("favicon") %}
 {% set page_url = vara_absolute_url(page.permalink) %}
+{% set stylesheet_path = "/styles.css" %}
+{% set head_script_path = "/_vara/js/build/head.js" %}
 
 <!DOCTYPE html>
 <html lang='{{ page.lang | default:"en" }}'>
@@ -44,8 +46,13 @@
       {% endif %}
     {% endblock %}
 
-    <link rel="stylesheet" href="{{ url('/styles.css') }}">
-    <script src="{{ url('/_vara/js/build/head.js') }}"></script>
+    {# Theme head assets. Templates that hosts may serve from an arbitrary URL #}
+    {# depth (such as the 404 fallback) override this block and resolve the paths #}
+    {# with `vara_absolute_url`. #}
+    {% block head_assets %}
+      <link rel="stylesheet" href="{{ url(stylesheet_path) }}">
+      <script src="{{ url(head_script_path) }}"></script>
+    {% endblock %}
 
     {% block head_extra %}
     {% endblock %}

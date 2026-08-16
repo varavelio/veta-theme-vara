@@ -2,6 +2,12 @@
 
 {% set site_title = vara_site_setting("title") %}
 
+{% block head_assets %}
+  {# Static hosts serve this page from any missing URL depth, so theme assets resolve absolutely from `site_url` instead of Veta's relative `url()`. #}
+  <link rel="stylesheet" href="{{ vara_absolute_url(stylesheet_path) }}">
+  <script src="{{ vara_absolute_url(head_script_path) }}"></script>
+{% endblock %}
+
 {% block title %}
   <title>Page not found - {{ site_title }}</title>
 {% endblock %}
@@ -54,9 +60,9 @@
             {% endif %}
 
             {% if link.primary %}
-              {{ button(link.title, url(link.href), target, link.icon, icon_right, "md", "md", "solid", "neutral", "false", "false", "button", "max-w-full") }}
+              {{ button(link.title, vara_absolute_url(link.href), target, link.icon, icon_right, "md", "md", "solid", "neutral", "false", "false", "button", "max-w-full") }}
             {% else %}
-              {{ button(link.title, url(link.href), target, link.icon, icon_right, "md", "md", "outline", "neutral", "false", "false", "button", "max-w-full") }}
+              {{ button(link.title, vara_absolute_url(link.href), target, link.icon, icon_right, "md", "md", "outline", "neutral", "false", "false", "button", "max-w-full") }}
             {% endif %}
           {% endfor %}
         </nav>
