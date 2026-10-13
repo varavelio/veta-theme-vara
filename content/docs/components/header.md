@@ -23,11 +23,11 @@ icon: "panel-top"
 ## Preview
 
 <vara-header
-title="Acme"
-links="Product|/product,Docs|/docs,Company|/company"
-cta_label="Get started"
-cta_href="/signup"
-show_theme="false"
+  title="Acme"
+  links="Product|/product,Docs|/docs,Company|/company"
+  cta_label="Get started"
+  cta_href="/signup"
+  show_theme="false"
 />
 
 ## Props

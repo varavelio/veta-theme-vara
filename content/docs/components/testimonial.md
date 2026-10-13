@@ -26,13 +26,13 @@ icon: "quote"
 ## Preview
 
 <vara-testimonial
-quote="The product paid for itself within the first month of use."
-author="Alex Morgan"
-author_role="Head of product, Northwind"
-author_href="https://example.com/alex"
-quote_href="https://example.com/blog/customer-story"
-result_label="Time saved per week"
-result_value="6h"
+  quote="The product paid for itself within the first month of use."
+  author="Alex Morgan"
+  author_role="Head of product, Northwind"
+  author_href="https://example.com/alex"
+  quote_href="https://example.com/blog/customer-story"
+  result_label="Time saved per week"
+  result_value="6h"
 />
 
 ## Props

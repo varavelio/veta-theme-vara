@@ -23,7 +23,7 @@ icon: "panel-top"
 ## Preview
 
 <vara-container size="xs" class="rounded-lg border border-base-400 bg-base-200 py-6 text-center">
-Contained content stays readable at every viewport size.
+  Contained content stays readable at every viewport size.
 </vara-container>
 
 ## Props

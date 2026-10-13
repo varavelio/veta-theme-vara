@@ -27,16 +27,16 @@ Use `<vara-content-split>` for product explanations, benefits, workflows, and ot
 ## Preview
 
 <vara-content-split
-eyebrow="Why it matters"
-title="The benefits at a glance"
-description="A short paragraph that summarizes the section so readers can decide whether to keep reading."
-item_1="The first key point"
-item_2="The second key point"
-item_3="The third key point"
-panel_icon="workflow"
-panel_title="A supporting panel"
-panel_description="Optional extra context that reinforces the copy on the other side."
-heading_level="3"
+  eyebrow="Why it matters"
+  title="The benefits at a glance"
+  description="A short paragraph that summarizes the section so readers can decide whether to keep reading."
+  item_1="The first key point"
+  item_2="The second key point"
+  item_3="The third key point"
+  panel_icon="workflow"
+  panel_title="A supporting panel"
+  panel_description="Optional extra context that reinforces the copy on the other side."
+  heading_level="3"
 />
 
 ## Props

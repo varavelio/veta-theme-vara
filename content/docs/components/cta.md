@@ -25,13 +25,13 @@ icon: "megaphone"
 ## Preview
 
 <vara-cta
-title="Ready to get started?"
-description="Create your account in a couple of minutes."
-primary_label="Sign up"
-primary_href="/signup"
-secondary_label="Talk to sales"
-secondary_href="/contact"
-heading_level="3"
+  title="Ready to get started?"
+  description="Create your account in a couple of minutes."
+  primary_label="Sign up"
+  primary_href="/signup"
+  secondary_label="Talk to sales"
+  secondary_href="/contact"
+  heading_level="3"
 />
 
 ## Props

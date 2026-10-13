@@ -21,7 +21,11 @@ Use `<vara-alert>` for notes, guidance, warnings, and status feedback. It is sta
 
 ## Preview
 
-<vara-alert title="Heads up" description="Your changes have not been saved yet." color="warning" />
+<vara-alert
+  title="Heads up"
+  description="Your changes have not been saved yet."
+  color="warning"
+/>
 
 ## Props
 
@@ -39,11 +43,23 @@ The `description` prop takes precedence over the paired body. If you omit it, th
 
 ## Colors
 
-<vara-alert title="Information" description="The report will refresh on the next run." color="info" />
+<vara-alert
+  title="Information"
+  description="The report will refresh on the next run."
+  color="info"
+/>
 
-<vara-alert title="Success" description="Your profile was updated." color="success" />
+<vara-alert
+  title="Success"
+  description="Your profile was updated."
+  color="success"
+/>
 
-<vara-alert title="Error" description="The file could not be uploaded." color="error" />
+<vara-alert
+  title="Error"
+  description="The file could not be uploaded."
+  color="error"
+/>
 
 ## Custom icon
 

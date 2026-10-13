@@ -27,18 +27,18 @@ Use `<vara-stats>` for a small set of measurable outcomes. The component uses a 
 ## Preview
 
 <vara-stats
-title="Numbers that matter"
-columns="3"
-stat_1_label="Active users"
-stat_1_value="12k"
-stat_1_description="Accounts active in the last 30 days."
-stat_2_label="Average response time"
-stat_2_value="1.4s"
-stat_2_description="Measured across the public API."
-stat_3_label="Support rating"
-stat_3_value="4.9"
-stat_3_description="Based on 2,300 responses."
-heading_level="3"
+  title="Numbers that matter"
+  columns="3"
+  stat_1_label="Active users"
+  stat_1_value="12k"
+  stat_1_description="Accounts active in the last 30 days."
+  stat_2_label="Average response time"
+  stat_2_value="1.4s"
+  stat_2_description="Measured across the public API."
+  stat_3_label="Support rating"
+  stat_3_value="4.9"
+  stat_3_description="Based on 2,300 responses."
+  heading_level="3"
 />
 
 ## Props

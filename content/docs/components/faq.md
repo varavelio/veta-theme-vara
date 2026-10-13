@@ -25,15 +25,15 @@ icon: "circle-question-mark"
 ## Preview
 
 <vara-faq title="Frequently asked questions" description="A few common questions before you get started." open_first="true" heading_level="3">
-<vara-faq-item id="plan" question="Is there a free plan?">
-Yes. The free plan covers a single project with the core features.
-</vara-faq-item>
-<vara-faq-item id="cancel" question="Can I cancel anytime?">
-You can cancel or downgrade from the billing settings.
-</vara-faq-item>
-<vara-faq-item id="teams" question="Do you offer team pricing?">
-Team pricing starts at ten seats and includes shared billing.
-</vara-faq-item>
+  <vara-faq-item id="plan" question="Is there a free plan?">
+    Yes. The free plan covers a single project with the core features.
+  </vara-faq-item>
+  <vara-faq-item id="cancel" question="Can I cancel anytime?">
+    You can cancel or downgrade from the billing settings.
+  </vara-faq-item>
+  <vara-faq-item id="teams" question="Do you offer team pricing?">
+    Team pricing starts at ten seats and includes shared billing.
+  </vara-faq-item>
 </vara-faq>
 
 ## FAQ items

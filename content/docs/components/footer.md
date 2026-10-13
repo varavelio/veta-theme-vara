@@ -23,11 +23,11 @@ icon: "panel-bottom"
 ## Preview
 
 <vara-footer
-copyright="Acme Inc. &copy; %year%"
-links="Docs|/docs,About|/about,Privacy|/privacy"
-github_href="https://github.com/example/project"
-github_label="Project on GitHub"
-show_credit="false"
+  copyright="Acme Inc. &copy; %year%"
+  links="Docs|/docs,About|/about,Privacy|/privacy"
+  github_href="https://github.com/example/project"
+  github_label="Project on GitHub"
+  show_credit="false"
 />
 
 ## Props

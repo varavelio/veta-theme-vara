@@ -28,18 +28,18 @@ icon: "panels-top-left"
 ## Preview
 
 <vara-hero
-eyebrow="New release"
-title="A headline that says what you do"
-description="One or two sentences that explain the value clearly and simply."
-primary_label="Get started"
-primary_href="/signup"
-secondary_label="Learn more"
-secondary_href="/features"
-panel_title="What makes it different"
-panel_description="A short list or summary that supports the headline."
-item_1="The first differentiator"
-item_2="The second differentiator"
-heading_level="2"
+  eyebrow="New release"
+  title="A headline that says what you do"
+  description="One or two sentences that explain the value clearly and simply."
+  primary_label="Get started"
+  primary_href="/signup"
+  secondary_label="Learn more"
+  secondary_href="/features"
+  panel_title="What makes it different"
+  panel_description="A short list or summary that supports the headline."
+  item_1="The first differentiator"
+  item_2="The second differentiator"
+  heading_level="2"
 />
 
 ## Props
