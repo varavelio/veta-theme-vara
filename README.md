@@ -6,22 +6,37 @@
 
 <p align="center">
   <a href="https://github.com/varavelio/veta-theme-vara/actions">
-    <img src="https://github.com/varavelio/veta-theme-vara/actions/workflows/ci.yaml/badge.svg" alt="CI status"/>
+    <img
+      src="https://github.com/varavelio/veta-theme-vara/actions/workflows/ci.yaml/badge.svg"
+      alt="CI status"
+    />
   </a>
   <a href="https://github.com/varavelio/veta-theme-vara/releases/latest">
-    <img src="https://img.shields.io/github/release/varavelio/veta-theme-vara.svg" alt="Release Version"/>
+    <img
+      src="https://img.shields.io/github/release/varavelio/veta-theme-vara.svg"
+      alt="Release Version"
+    />
   </a>
   <a href="https://github.com/varavelio/veta-theme-vara/blob/main/LICENSE">
-    <img src="https://img.shields.io/github/license/varavelio/veta-theme-vara.svg" alt="License"/>
+    <img
+      src="https://img.shields.io/github/license/varavelio/veta-theme-vara.svg"
+      alt="License"
+    />
   </a>
   <a href="https://github.com/varavelio/veta-theme-vara">
-    <img src="https://img.shields.io/github/stars/varavelio/veta-theme-vara?style=flat&label=github+stars" alt="GitHub Stars"/>
+    <img
+      src="https://img.shields.io/github/stars/varavelio/veta-theme-vara?style=flat&label=github+stars"
+      alt="GitHub Stars"
+    />
   </a>
 </p>
 
 <p align="center">
   <a href="https://varavel.com">
-    <img src="https://cdn.jsdelivr.net/gh/varavelio/brand@1.0.1/dist/badges/project.svg" alt="A Varavel project"/>
+    <img
+      src="https://cdn.jsdelivr.net/gh/varavelio/brand@1.0.1/dist/badges/project.svg"
+      alt="A Varavel project"
+    />
   </a>
 </p>
 
@@ -33,10 +48,10 @@ Add the theme to your `veta.yaml`:
 
 ```yaml
 theme:
-  source: "varavelio/veta-theme-vara@v1.0.1"
+  source: "varavelio/veta-theme-vara@latest"
 ```
 
-Pin the `v1.0.0` to a release tag or commit when you want reproducible builds.
+Pin the `latest` to a release tag or commit when you want reproducible builds.
 
 Then declare the styles in your `veta.yaml`:
 
