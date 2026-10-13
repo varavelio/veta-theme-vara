@@ -48,10 +48,10 @@ Add the theme to your `veta.yaml`:
 
 ```yaml
 theme:
-  source: "varavelio/veta-theme-vara@latest"
+  source: "varavelio/veta-theme-vara@<version>"
 ```
 
-Pin the `latest` to a release tag or commit when you want reproducible builds.
+Change the `<version>` to a release tag for reproducible builds.
 
 Then declare the styles in your `veta.yaml`:
 
