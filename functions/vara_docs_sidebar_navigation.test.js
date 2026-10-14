@@ -31,6 +31,7 @@ test("builds weighted sidebar sections from generated documentation pages", () =
         links: [
           {
             active: true,
+            children: [],
             external: false,
             href: "/docs/guide/install/",
             icon: "download",
@@ -38,6 +39,7 @@ test("builds weighted sidebar sections from generated documentation pages", () =
             new_tab: false,
             title: "Install",
             weight: 2,
+            storage_id: "section:/docs/guide/install/",
           },
         ],
         storage_id: "section:/docs/guide/",
@@ -100,6 +102,7 @@ test("merges configured metadata and links into a generated section", () => {
   assert.deepEqual(section.links, [
     {
       active: true,
+      children: [],
       external: false,
       href: "/docs/guide/install/",
       icon: "package",
@@ -107,9 +110,11 @@ test("merges configured metadata and links into a generated section", () => {
       new_tab: false,
       title: "Install Vara",
       weight: 2,
+      storage_id: "section:/docs/guide/install/",
     },
     {
       active: false,
+      children: [],
       external: true,
       href: "https://veta.varavel.com",
       icon: "external-link",
@@ -150,6 +155,7 @@ test("creates standalone configured sections and preserves zero weights", () => 
     links: [
       {
         active: true,
+        children: [],
         external: false,
         href: "/community/",
         icon: "messages-square",
@@ -206,6 +212,115 @@ test("supports a documentation tree at the generated site root", () => {
   assert.equal(result.root.href, "/");
   assert.equal(result.sections[0].href, "/guide/");
   assert.equal(result.sections[0].links[0].href, "/guide/install/");
+});
+
+test("nests documentation pages at any depth with recursive sorting", () => {
+  const pages = [
+    docsPage("/docs/", "Docs", 0),
+    docsPage("/docs/guide/", "Guide", 10),
+    docsPage("/docs/guide/advanced/", "Advanced", 5),
+    docsPage("/docs/guide/advanced/topic/", "Topic", 2),
+    docsPage("/docs/guide/advanced/appendix/", "Appendix", 1),
+    docsPage("/docs/guide/advanced/topic/deep/", "Deep", 1),
+    docsPage("/docs/guide/start/", "Start", 1),
+  ];
+
+  const result = resolveDocsSidebarNavigation(pages, "/docs/", [], "/docs/guide/advanced/topic/deep/");
+
+  assert.equal(result.sections.length, 1);
+  const section = result.sections[0];
+  assert.equal(section.id, "guide");
+  assert.deepEqual(section.links.map(link => link.title), ["Start", "Advanced"]);
+
+  const advanced = section.links.find(link => link.title === "Advanced");
+  assert.ok(advanced);
+  assert.equal(advanced.href, "/docs/guide/advanced/");
+  assert.equal(advanced.storage_id, "section:/docs/guide/advanced/");
+  assert.deepEqual(advanced.children.map(link => link.title), ["Appendix", "Topic"]);
+
+  const topic = advanced.children.find(link => link.title === "Topic");
+  assert.ok(topic);
+  assert.equal(topic.children.length, 1);
+  assert.equal(topic.children[0].title, "Deep");
+  assert.equal(topic.children[0].href, "/docs/guide/advanced/topic/deep/");
+  assert.equal(topic.children[0].active, true);
+  assert.equal(topic.active, false);
+  assert.equal(advanced.active, false);
+});
+
+test("keeps empty structural pages as branches but hides empty leaves", () => {
+  const pages = [
+    docsPage("/docs/", "Docs", 0),
+    docsPage("/docs/guide/", "Guide", 10),
+    docsPage("/docs/guide/group/", "Group", 1, "", ""),
+    docsPage("/docs/guide/group/child/", "Child", 1),
+    docsPage("/docs/guide/lonely/", "Lonely", 2, "", ""),
+  ];
+
+  const result = resolveDocsSidebarNavigation(pages, "/docs/", [], "/docs/guide/group/child/");
+  const section = result.sections[0];
+
+  assert.deepEqual(section.links.map(link => link.title), ["Group"]);
+  const group = section.links[0];
+  assert.equal(group.href, "");
+  assert.equal(group.children.length, 1);
+  assert.equal(group.children[0].title, "Child");
+  assert.equal(group.children[0].active, true);
+});
+
+test("attaches deep pages to the nearest existing ancestor", () => {
+  const pages = [
+    docsPage("/docs/", "Docs", 0),
+    docsPage("/docs/guide/", "Guide", 10),
+    docsPage("/docs/guide/a/b/c/", "Deep", 1),
+  ];
+
+  const result = resolveDocsSidebarNavigation(pages, "/docs/", [], "/docs/guide/a/b/c/");
+  const section = result.sections[0];
+
+  assert.equal(section.links.length, 1);
+  assert.equal(section.links[0].title, "Deep");
+  assert.equal(section.links[0].active, true);
+});
+
+test("ignores pages whose top-level section is missing", () => {
+  const pages = [
+    docsPage("/docs/", "Docs", 0),
+    docsPage("/docs/orphan/child/", "Orphan", 1),
+  ];
+
+  const result = resolveDocsSidebarNavigation(pages, "/docs/", [], "/docs/orphan/child/");
+  assert.deepEqual(result.sections, []);
+});
+
+test("merges configured links with generated links at any depth", () => {
+  const pages = [
+    docsPage("/docs/", "Docs", 0),
+    docsPage("/docs/guide/", "Guide", 10),
+    docsPage("/docs/guide/advanced/", "Advanced", 5),
+    docsPage("/docs/guide/advanced/topic/", "Topic", 20),
+  ];
+  const configured = [
+    {
+      id: "guide",
+      links: [
+        { title: "Renamed Topic", href: "/docs/guide/advanced/topic/", icon: "star", weight: 1 },
+        { title: "External", href: "https://example.com", weight: 99 },
+      ],
+    },
+  ];
+
+  const result = resolveDocsSidebarNavigation(pages, "/docs/", configured, "/docs/guide/advanced/topic/");
+  const advanced = result.sections[0].links[0];
+
+  assert.equal(advanced.title, "Advanced");
+  assert.equal(advanced.children.length, 1);
+  assert.equal(advanced.children[0].title, "Renamed Topic");
+  assert.equal(advanced.children[0].icon, "star");
+  assert.equal(advanced.children[0].weight, 1);
+  assert.equal(advanced.children[0].active, true);
+  assert.equal(advanced.children[0].storage_id, "section:/docs/guide/advanced/topic/");
+  assert.deepEqual(result.sections[0].links.map(link => link.title), ["Advanced", "External"]);
 });
 
 function docsPage(permalink, title, weight, icon = "", content = "# Content") {

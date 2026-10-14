@@ -101,7 +101,7 @@ docs_header_links:
 | `docs_sidebar_sections`  | `[]`    | Creates or extends sidebar sections. Sections merge with the generated ones by stable `id`; links with matching `href` values are merged instead of duplicated. |
 | `docs_sidebar_collapsed` | `false` | Collapse sidebar groups by default. The visitor's open/closed state is remembered.                                                                              |
 
-The sidebar is built from your documentation pages. The first segment of each permalink below the docs root becomes a section, and pages two levels deep become links within it.
+The sidebar is built from your documentation pages. The first segment of each permalink below the docs root becomes a section, and deeper pages nest as links at any depth.
 
 ```yaml
 docs_sidebar_sections:

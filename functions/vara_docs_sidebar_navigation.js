@@ -1,8 +1,12 @@
 /**
  * Builds the documentation sidebar from generated pages and configured sections.
  *
- * Configured sections merge with generated sections by `id`. Generated section
- * ids are the first permalink segment below the docs root.
+ * Generated pages nest at any depth below the docs root. The first segment
+ * becomes a section and deeper pages become nested links. Empty pages group
+ * descendants but stay hidden when they have no visible children.
+ *
+ * Configured sections merge with generated sections by `id`. Configured links
+ * merge with generated links by normalized `href` at any depth.
  *
  * Usage:
  *   {% set docs_sidebar = vara_docs_sidebar_navigation(docs_root_permalink, docs_sidebar_sections) %}
@@ -34,26 +38,118 @@ function resolveDocsSidebarNavigation(pages, rootPermalink, configuredSections, 
       storage_id: `section:${page.permalink}`,
       title: normalizeText(page.title) || "Untitled",
       weight: normalizeWeight(page.weight),
+      _relative: relativeSegments,
     });
   }
 
+  const linkNodes = new Map();
   for (const page of docsPages) {
     const relativeSegments = relativePermalinkSegments(page.permalink, rootSegments);
-    if (!relativeSegments || relativeSegments.length !== 2 || !hasContent(page)) continue;
+    if (!relativeSegments || relativeSegments.length < 2) continue;
 
-    const section = sections.get(relativeSegments[0]);
-    if (!section) continue;
-
-    section.links.push(normalizeGeneratedLink(page, currentPermalink));
+    const permalink = String(page.permalink);
+    linkNodes.set(permalink, {
+      active: samePermalink(permalink, currentPermalink),
+      children: [],
+      external: false,
+      href: hasContent(page) ? permalink : "",
+      icon: normalizeText(page.icon),
+      key: hrefIdentity(permalink),
+      new_tab: false,
+      title: normalizeText(page.title) || "Untitled",
+      weight: normalizeWeight(page.weight),
+      storage_id: `section:${permalink}`,
+      _relative: relativeSegments,
+      _hasContent: hasContent(page),
+      _permalink: permalink,
+    });
   }
+
+  const sortedNodes = Array.from(linkNodes.values()).sort(
+    (a, b) => a._relative.length - b._relative.length,
+  );
+  const placed = new Set();
+
+  for (const node of sortedNodes) {
+    const parent = findNearestParent(sections, placed, linkNodes, node);
+    if (!parent) continue;
+
+    if (parent.kind === "section") parent.section.links.push(node);
+    else parent.node.children.push(node);
+    placed.add(node._permalink);
+  }
+
+  for (const section of sections.values()) section.links = pruneLinks(section.links);
 
   mergeConfiguredSections(sections, configuredSections, currentPermalink);
 
   const normalizedSections = Array.from(sections.values());
-  for (const section of normalizedSections) section.links.sort(compareLinks);
+  for (const section of normalizedSections) sortLinksRecursive(section.links);
   normalizedSections.sort(compareSections);
+  for (const section of normalizedSections) stripSectionInternals(section);
 
   return { root, sections: normalizedSections };
+}
+
+function findNearestParent(sections, placed, linkNodes, node) {
+  let bestSection = null;
+  let bestSectionLength = -1;
+
+  for (const section of sections.values()) {
+    const relative = section._relative;
+    if (!relative || relative.length >= node._relative.length) continue;
+    if (!isPrefix(relative, node._relative)) continue;
+    if (relative.length > bestSectionLength) {
+      bestSection = section;
+      bestSectionLength = relative.length;
+    }
+  }
+
+  let bestNode = null;
+  let bestNodeLength = -1;
+
+  for (const permalink of placed) {
+    const candidate = linkNodes.get(permalink);
+    if (!candidate || candidate._relative.length >= node._relative.length) continue;
+    if (!isPrefix(candidate._relative, node._relative)) continue;
+    if (candidate._relative.length > bestNodeLength) {
+      bestNode = candidate;
+      bestNodeLength = candidate._relative.length;
+    }
+  }
+
+  if (bestNode && bestNodeLength >= bestSectionLength) return { kind: "link", node: bestNode };
+  if (bestSection) return { kind: "section", section: bestSection };
+  return null;
+}
+
+function pruneLinks(links) {
+  const kept = [];
+
+  for (const link of links) {
+    link.children = pruneLinks(link.children || []);
+    if (!link._hasContent && link.children.length === 0) continue;
+    kept.push(link);
+  }
+
+  return kept;
+}
+
+function sortLinksRecursive(links) {
+  links.sort(compareLinks);
+  for (const link of links) sortLinksRecursive(link.children || []);
+}
+
+function stripSectionInternals(section) {
+  delete section._relative;
+  for (const link of section.links) stripLinkInternals(link);
+}
+
+function stripLinkInternals(link) {
+  delete link._relative;
+  delete link._hasContent;
+  delete link._permalink;
+  for (const child of link.children || []) stripLinkInternals(child);
 }
 
 function resolveRoot(pages, rootSegments, currentPermalink) {
@@ -120,19 +216,20 @@ function mergeConfiguredLinks(links, configuredLinks, currentPermalink) {
     if (!title || !href) continue;
 
     const key = hrefIdentity(href);
-    const existing = links.find(link => link.key === key);
+    const existing = findLinkByKey(links, key);
 
     if (existing) {
       existing.title = title;
       if (hasOwn(configured, "icon")) existing.icon = normalizeText(configured.icon);
       if (hasOwn(configured, "new_tab")) existing.new_tab = Boolean(configured.new_tab);
       if (hasOwn(configured, "weight")) existing.weight = normalizeWeight(configured.weight);
-      existing.active = samePermalink(existing.href, currentPermalink);
+      existing.active = samePermalink(existing.href || href, currentPermalink);
       continue;
     }
 
     links.push({
       active: samePermalink(href, currentPermalink),
+      children: [],
       external: isExternalHref(href),
       href,
       icon: normalizeText(configured.icon),
@@ -144,19 +241,14 @@ function mergeConfiguredLinks(links, configuredLinks, currentPermalink) {
   }
 }
 
-function normalizeGeneratedLink(page, currentPermalink) {
-  const href = String(page.permalink);
+function findLinkByKey(links, key) {
+  for (const link of links) {
+    if (link.key === key) return link;
+    const found = findLinkByKey(link.children || [], key);
+    if (found) return found;
+  }
 
-  return {
-    active: samePermalink(href, currentPermalink),
-    external: false,
-    href,
-    icon: normalizeText(page.icon),
-    key: hrefIdentity(href),
-    new_tab: false,
-    title: normalizeText(page.title) || "Untitled",
-    weight: normalizeWeight(page.weight),
-  };
+  return null;
 }
 
 function compareSections(a, b) {
@@ -171,6 +263,10 @@ function compareLinks(a, b) {
 
   const titleDifference = a.title.localeCompare(b.title);
   return titleDifference || a.href.localeCompare(b.href);
+}
+
+function isPrefix(prefix, value) {
+  return prefix.every((segment, index) => segment === value[index]);
 }
 
 function relativePermalinkSegments(permalink, rootSegments) {
