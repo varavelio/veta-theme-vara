@@ -25,6 +25,7 @@ test("builds weighted sidebar sections from generated documentation pages", () =
     sections: [
       {
         active: false,
+        collapsed: null,
         href: "/docs/guide/",
         icon: "rocket",
         id: "guide",
@@ -32,6 +33,7 @@ test("builds weighted sidebar sections from generated documentation pages", () =
           {
             active: true,
             children: [],
+            collapsed: null,
             external: false,
             href: "/docs/guide/install/",
             icon: "download",
@@ -48,6 +50,7 @@ test("builds weighted sidebar sections from generated documentation pages", () =
       },
       {
         active: false,
+        collapsed: null,
         href: "/docs/reference/",
         icon: "braces",
         id: "reference",
@@ -103,6 +106,7 @@ test("merges configured metadata and links into a generated section", () => {
     {
       active: true,
       children: [],
+      collapsed: null,
       external: false,
       href: "/docs/guide/install/",
       icon: "package",
@@ -115,6 +119,7 @@ test("merges configured metadata and links into a generated section", () => {
     {
       active: false,
       children: [],
+      collapsed: null,
       external: true,
       href: "https://veta.varavel.com",
       icon: "external-link",
@@ -149,6 +154,7 @@ test("creates standalone configured sections and preserves zero weights", () => 
   assert.deepEqual(result.sections.map(section => section.id), ["community", "guide"]);
   assert.deepEqual(result.sections[0], {
     active: false,
+    collapsed: null,
     href: "",
     icon: "users",
     id: "community",
@@ -156,6 +162,7 @@ test("creates standalone configured sections and preserves zero weights", () => 
       {
         active: true,
         children: [],
+        collapsed: null,
         external: false,
         href: "/community/",
         icon: "messages-square",
@@ -323,6 +330,60 @@ test("merges configured links with generated links at any depth", () => {
   assert.deepEqual(result.sections[0].links.map(link => link.title), ["Advanced", "External"]);
 });
 
-function docsPage(permalink, title, weight, icon = "", content = "# Content") {
-  return { content, icon, permalink, template: "vara-docs", title, weight };
+function docsPage(permalink, title, weight, icon = "", content = "# Content", sidebar_collapsed = undefined) {
+  const page = { content, icon, permalink, template: "vara-docs", title, weight };
+  if (sidebar_collapsed !== undefined) page.sidebar_collapsed = sidebar_collapsed;
+  return page;
 }
+
+test("reads per-page collapsed defaults from page frontmatter", () => {
+  const pages = [
+    docsPage("/docs/", "Docs", 0),
+    docsPage("/docs/open/", "Open", 1, "", "# Content", false),
+    docsPage("/docs/shut/", "Shut", 2, "", "# Content", true),
+    docsPage("/docs/shut/child/", "Child", 1),
+    docsPage("/docs/quoted/", "Quoted", 3, "", "# Content", "true"),
+    docsPage("/docs/invalid/", "Invalid", 4, "", "# Content", "sometimes"),
+  ];
+
+  const result = resolveDocsSidebarNavigation(pages, "/docs/", [], "/docs/shut/child/");
+  const byId = Object.fromEntries(result.sections.map(section => [section.id, section]));
+
+  assert.equal(byId.open.collapsed, false);
+  assert.equal(byId.shut.collapsed, true);
+  assert.equal(byId.quoted.collapsed, true);
+  assert.equal(byId.invalid.collapsed, null);
+  assert.equal(byId.shut.links[0].collapsed, null);
+});
+
+test("merges configured collapsed overrides at section and link depth", () => {
+  const pages = [
+    docsPage("/docs/", "Docs", 0),
+    docsPage("/docs/guide/", "Guide", 10, "", "# Content", false),
+    docsPage("/docs/guide/advanced/", "Advanced", 5),
+    docsPage("/docs/guide/advanced/topic/", "Topic", 1),
+  ];
+  const configured = [
+    {
+      id: "guide",
+      collapsed: true,
+      links: [{ title: "Topic", href: "/docs/guide/advanced/topic/", collapsed: true }],
+    },
+  ];
+
+  const result = resolveDocsSidebarNavigation(pages, "/docs/", configured, "/docs/");
+  const section = result.sections[0];
+  const advanced = section.links[0];
+
+  assert.equal(section.collapsed, true);
+  assert.equal(advanced.collapsed, null);
+  assert.equal(advanced.children[0].collapsed, true);
+});
+
+test("keeps a null collapsed fallback when configuration is invalid", () => {
+  const pages = [docsPage("/docs/", "Docs", 0)];
+  const configured = [{ id: "custom", title: "Custom", collapsed: "sometimes", links: [] }];
+
+  const result = resolveDocsSidebarNavigation(pages, "/docs/", configured, "/docs/");
+  assert.equal(result.sections[0].collapsed, null);
+});

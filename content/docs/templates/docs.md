@@ -40,15 +40,16 @@ The table of contents is built from the page's `h2` and `h3` headings, and those
 
 ## Page fields
 
-| Field               | Purpose                                                                 |
-| ------------------- | ----------------------------------------------------------------------- |
-| `content`           | The rendered article body. Empty pages render as section landing pages. |
-| `title`             | Document title, sidebar label, and breadcrumb.                          |
-| `description`       | Meta description and search snippets.                                   |
-| `weight`            | Ordering in the sidebar, pager, and LLM indexes.                        |
-| `icon`              | An icon shown next to the page in the sidebar.                          |
-| `disable_search`    | Exclude the page from search when `true`.                               |
-| `docs_footer_links` | Optional links rendered between content and the pager.                  |
+| Field               | Purpose                                                                                                                |
+| ------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `content`           | The rendered article body. Empty pages render as section landing pages.                                                |
+| `title`             | Document title, sidebar label, and breadcrumb.                                                                         |
+| `description`       | Meta description and search snippets.                                                                                  |
+| `weight`            | Ordering in the sidebar, pager, and LLM indexes.                                                                       |
+| `icon`              | An icon shown next to the page in the sidebar.                                                                         |
+| `sidebar_collapsed` | Start this page's sidebar group collapsed (`true`) or expanded (`false`). Unset follows the section and site defaults. |
+| `disable_search`    | Exclude the page from search when `true`.                                                                              |
+| `docs_footer_links` | Optional links rendered between content and the pager.                                                                 |
 
 ### `docs_footer_links`
 

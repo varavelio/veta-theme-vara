@@ -333,9 +333,11 @@ test("opens a sidebar group that contains the active page", () => {
   assert.equal(resolveSidebarGroupOpen("false", true, false), true);
 });
 
-test("keeps the active sidebar group closed when all groups default to collapsed", () => {
-  assert.equal(resolveSidebarGroupOpen(null, true, false, false), false);
-  assert.equal(resolveSidebarGroupOpen("true", true, false, false), true);
+test("opens the active sidebar group even when groups default to collapsed", () => {
+  assert.equal(resolveSidebarGroupOpen(null, true, false, true), true);
+  assert.equal(resolveSidebarGroupOpen("false", true, false, true), true);
+  assert.equal(resolveSidebarGroupOpen("true", true, false, true), true);
+  assert.equal(resolveSidebarGroupOpen(null, true, false), true);
 });
 
 test("uses the configured sidebar group default when no storage exists", () => {

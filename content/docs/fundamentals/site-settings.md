@@ -99,7 +99,7 @@ docs_header_links:
 | Setting                  | Default | Description                                                                                                                                                     |
 | ------------------------ | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `docs_sidebar_sections`  | `[]`    | Creates or extends sidebar sections. Sections merge with the generated ones by stable `id`; links with matching `href` values are merged instead of duplicated. |
-| `docs_sidebar_collapsed` | `false` | Collapse sidebar groups by default. The visitor's open/closed state is remembered.                                                                              |
+| `docs_sidebar_collapsed` | `false` | Collapse sidebar groups by default. Groups on the active path still open. The visitor's open/closed state is remembered.                                        |
 
 The sidebar is built from your documentation pages. The first segment of each permalink below the docs root becomes a section, and deeper pages nest as links at any depth.
 
@@ -109,6 +109,7 @@ docs_sidebar_sections:
     title: "Guide"
     icon: "book-open-text"
     weight: 10
+    collapsed: true
     links:
       - title: "Introduction"
         href: "/docs/guide/introduction/"
@@ -116,7 +117,19 @@ docs_sidebar_sections:
         href: "/docs/guide/contributing/"
 ```
 
-The stable `id` is the first permalink segment below the docs root. Use it to reorder a generated section or to attach extra links to it.
+The stable `id` is the first permalink segment below the docs root. Use it to reorder a generated section or to attach extra links to it. Set `collapsed: true` on a section to collapse only that group by default; unset sections follow `docs_sidebar_collapsed`.
+
+Collapse a single section from its index page instead:
+
+```md
+---
+title: "Guide"
+weight: 10
+sidebar_collapsed: true
+---
+```
+
+A page with `sidebar_collapsed: true` starts collapsed, `false` starts expanded, and an unset value follows `docs_sidebar_sections` and then `docs_sidebar_collapsed`. Nested pages support the same field.
 
 ### Search and LLM output
 

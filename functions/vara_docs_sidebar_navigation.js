@@ -31,6 +31,7 @@ function resolveDocsSidebarNavigation(pages, rootPermalink, configuredSections, 
     const id = relativeSegments[0];
     sections.set(id, {
       active: samePermalink(page.permalink, currentPermalink),
+      collapsed: normalizeCollapsed(page.sidebar_collapsed),
       href: hasContent(page) ? String(page.permalink) : "",
       icon: normalizeText(page.icon),
       id,
@@ -51,6 +52,7 @@ function resolveDocsSidebarNavigation(pages, rootPermalink, configuredSections, 
     linkNodes.set(permalink, {
       active: samePermalink(permalink, currentPermalink),
       children: [],
+      collapsed: normalizeCollapsed(page.sidebar_collapsed),
       external: false,
       href: hasContent(page) ? permalink : "",
       icon: normalizeText(page.icon),
@@ -184,6 +186,7 @@ function mergeConfiguredSections(sections, configuredSections, currentPermalink)
 
       section = {
         active: false,
+        collapsed: null,
         href: "",
         icon: "",
         id,
@@ -200,6 +203,7 @@ function mergeConfiguredSections(sections, configuredSections, currentPermalink)
     }
     if (hasOwn(configured, "icon")) section.icon = normalizeText(configured.icon);
     if (hasOwn(configured, "weight")) section.weight = normalizeWeight(configured.weight);
+    if (hasOwn(configured, "collapsed")) section.collapsed = normalizeCollapsed(configured.collapsed);
 
     mergeConfiguredLinks(section.links, configured.links, currentPermalink);
   }
@@ -223,6 +227,7 @@ function mergeConfiguredLinks(links, configuredLinks, currentPermalink) {
       if (hasOwn(configured, "icon")) existing.icon = normalizeText(configured.icon);
       if (hasOwn(configured, "new_tab")) existing.new_tab = Boolean(configured.new_tab);
       if (hasOwn(configured, "weight")) existing.weight = normalizeWeight(configured.weight);
+      if (hasOwn(configured, "collapsed")) existing.collapsed = normalizeCollapsed(configured.collapsed);
       existing.active = samePermalink(existing.href || href, currentPermalink);
       continue;
     }
@@ -230,6 +235,7 @@ function mergeConfiguredLinks(links, configuredLinks, currentPermalink) {
     links.push({
       active: samePermalink(href, currentPermalink),
       children: [],
+      collapsed: normalizeCollapsed(configured.collapsed),
       external: isExternalHref(href),
       href,
       icon: normalizeText(configured.icon),
@@ -317,6 +323,17 @@ function hasContent(page) {
 
 function normalizeText(value) {
   return value === undefined || value === null ? "" : String(value).trim();
+}
+
+function normalizeCollapsed(value) {
+  if (value === undefined || value === null || value === "") return null;
+  if (typeof value === "boolean") return value;
+
+  const normalized = String(value).trim().toLowerCase();
+  if (normalized === "true") return true;
+  if (normalized === "false") return false;
+
+  return null;
 }
 
 function normalizeWeight(value) {

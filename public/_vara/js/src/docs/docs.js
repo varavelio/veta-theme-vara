@@ -422,7 +422,7 @@ function registerAlpineVarapressDocs(tocAvailable) {
         this.readStoredOpen(),
         Boolean(this.$el.querySelector("[aria-current=\"page\"]")),
         !collapsedByDefault,
-        !collapsedByDefault,
+        true,
       );
     },
 
