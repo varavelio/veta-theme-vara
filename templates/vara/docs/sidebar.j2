@@ -1,7 +1,7 @@
 {% macro sidebar_link(link, collapsed) %}
   {% if link.children|length > 0 %}
     <div x-data='varaSidebarGroup("{{ link.storage_id }}", {{ link.collapsed|default:collapsed|lower }})' class="flex flex-col space-y-1">
-      <div class="flex items-center gap-1">
+      <div class="tree-line-h flex items-center gap-1">
         {% if link.href %}
           <a href="{% if link.external %}{{ link.href }}{% else %}{{ url(link.href) }}{% endif %}" {% if link.new_tab %}target="_blank" rel="noopener noreferrer"{% endif %} class="flex min-w-0 flex-1 items-center gap-2 rounded-md border border-transparent p-2 text-sm font-medium transition-colors{% if link.active %} bg-info/10 text-info{% else %} text-content/70 hover:bg-base-300 hover:text-content{% endif %}" {% if link.active %}aria-current="page"{% endif %}>
             {% if link.icon %}{{ vara_icon(link.icon, "size-4 shrink-0")|safe }}{% endif %}
@@ -11,7 +11,7 @@
             <span class="transition-transform duration-200" x-bind:class="open && 'rotate-90'">{{ vara_icon("chevron-right", "size-4")|safe }}</span>
           </button>
         {% else %}
-          <button type="button" x-on:click="toggle()" class="flex w-full cursor-pointer items-center gap-2 rounded-md border border-transparent p-2 text-left text-sm font-medium text-content/70 transition-colors hover:bg-base-300 hover:text-content" x-bind:aria-expanded="open.toString()">
+          <button type="button" x-on:click="toggle()" class="tree-line-h flex w-full cursor-pointer items-center gap-2 rounded-md border border-transparent p-2 text-left text-sm font-medium text-content/70 transition-colors hover:bg-base-300 hover:text-content" x-bind:aria-expanded="open.toString()">
             {% if link.icon %}{{ vara_icon(link.icon, "size-4 shrink-0")|safe }}{% endif %}
             <span class="flex-1 truncate">{{ link.title }}</span>
             <span class="shrink-0 transition-transform duration-200" x-bind:class="open && 'rotate-90'">{{ vara_icon("chevron-right", "size-4")|safe }}</span>
@@ -20,12 +20,12 @@
       </div>
       <div x-show="open" x-transition class="tree-line-v after:h-[calc(100%-1.125rem)] mt-1 ml-4 flex flex-col space-y-1 pl-3.5">
         {% for child in link.children %}
-          <div class="tree-line-h min-w-0">{{ sidebar_link(child, collapsed) }}</div>
+          <div class="min-w-0">{{ sidebar_link(child, collapsed) }}</div>
         {% endfor %}
       </div>
     </div>
   {% else %}
-    <a href="{% if link.external %}{{ link.href }}{% else %}{{ url(link.href) }}{% endif %}" {% if link.new_tab %}target="_blank" rel="noopener noreferrer"{% endif %} class="flex items-center gap-2 rounded-md border border-transparent p-2 text-sm font-medium transition-colors{% if link.active %} bg-info/10 text-info{% else %} text-content/70 hover:bg-base-300 hover:text-content{% endif %}" {% if link.active %}aria-current="page"{% endif %}>
+    <a href="{% if link.external %}{{ link.href }}{% else %}{{ url(link.href) }}{% endif %}" {% if link.new_tab %}target="_blank" rel="noopener noreferrer"{% endif %} class="tree-line-h flex items-center gap-2 rounded-md border border-transparent p-2 text-sm font-medium transition-colors{% if link.active %} bg-info/10 text-info{% else %} text-content/70 hover:bg-base-300 hover:text-content{% endif %}" {% if link.active %}aria-current="page"{% endif %}>
       {% if link.icon %}{{ vara_icon(link.icon, "size-4 shrink-0")|safe }}{% endif %}
       <span class="flex-1 truncate">{{ link.title }}</span>
       {% if link.new_tab %}{{ vara_icon("external-link", "size-3.5 shrink-0 text-content-muted")|safe }}{% endif %}
@@ -66,7 +66,7 @@
     {% if section.links|length > 0 %}
       <div x-show="open" x-transition class="tree-line-v after:h-[calc(100%-1.125rem)] mt-1 ml-4 flex flex-col space-y-1 pl-3.5">
         {% for link in section.links %}
-          <div class="tree-line-h min-w-0">{{ sidebar_link(link, docs_sidebar_collapsed) }}</div>
+          <div class="min-w-0">{{ sidebar_link(link, docs_sidebar_collapsed) }}</div>
         {% endfor %}
       </div>
     {% endif %}
@@ -81,14 +81,14 @@
       <span class="flex-none transition-transform duration-200" x-bind:class="open && 'rotate-90'">{{ vara_icon("chevron-right", "size-4 shrink-0")|safe }}</span>
     </button>
     <div x-show="open" x-transition class="tree-line-v after:h-[calc(100%-1.125rem)] mt-1 ml-4 flex flex-col space-y-1 pl-3.5">
-      <div class="tree-line-h min-w-0">
-        <a href="{{ url(docs_root_permalink + 'llms.txt') }}" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 rounded-md border border-transparent p-2 text-sm font-medium text-content/70 transition-colors hover:bg-base-300 hover:text-content">
+      <div class="min-w-0">
+        <a href="{{ url(docs_root_permalink + 'llms.txt') }}" target="_blank" rel="noopener noreferrer" class="tree-line-h flex items-center gap-2 rounded-md border border-transparent p-2 text-sm font-medium text-content/70 transition-colors hover:bg-base-300 hover:text-content">
           <span class="flex-1 truncate">llms.txt</span>
           {{ vara_icon("external-link", "size-3.5 shrink-0 text-content-muted")|safe }}
         </a>
       </div>
-      <div class="tree-line-h min-w-0">
-        <a href="{{ url(docs_root_permalink + 'llms-full.txt') }}" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 rounded-md border border-transparent p-2 text-sm font-medium text-content/70 transition-colors hover:bg-base-300 hover:text-content">
+      <div class="min-w-0">
+        <a href="{{ url(docs_root_permalink + 'llms-full.txt') }}" target="_blank" rel="noopener noreferrer" class="tree-line-h flex items-center gap-2 rounded-md border border-transparent p-2 text-sm font-medium text-content/70 transition-colors hover:bg-base-300 hover:text-content">
           <span class="flex-1 truncate">llms-full.txt</span>
           {{ vara_icon("external-link", "size-3.5 shrink-0 text-content-muted")|safe }}
         </a>
