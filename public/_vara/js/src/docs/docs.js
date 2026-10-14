@@ -6,7 +6,7 @@ const BACK_TO_TOP_SCROLL_THRESHOLD = 300;
 /**
  * Shared sidebar scroll storage so position survives navigation between pages.
  */
-const SIDEBAR_SCROLL_STORAGE_KEY = "varapress.sidebar.scroll";
+const SIDEBAR_SCROLL_STORAGE_KEY = "vara.sidebar.scroll";
 
 export function slugifyTocHeading(value) {
   return String(value || "")
@@ -412,10 +412,10 @@ function initHashNavigation() {
   window.addEventListener("hashchange", () => scrollToHash(location.hash));
 }
 
-function registerAlpineVarapressDocs(tocAvailable) {
-  Alpine.data("varapressSidebarGroup", (id, collapsedByDefault = false) => ({
+function registerAlpineVaraDocs(tocAvailable) {
+  Alpine.data("varaSidebarGroup", (id, collapsedByDefault = false) => ({
     open: !collapsedByDefault,
-    storageKey: `varapress.sidebar.${id}`,
+    storageKey: `vara.sidebar.${id}`,
 
     init() {
       this.open = resolveSidebarGroupOpen(
@@ -448,7 +448,7 @@ function registerAlpineVarapressDocs(tocAvailable) {
     },
   }));
 
-  Alpine.data("varapressDocs", () => ({
+  Alpine.data("varaDocs", () => ({
     /** @type {boolean} Whether the mobile sidebar drawer is open. */
     sidebarOpen: false,
 
@@ -508,9 +508,9 @@ function registerAlpineVarapressDocs(tocAvailable) {
     },
 
     initSidebarScroll(root) {
-      if (!root || root.dataset.varapressSidebarScrollReady === "true") return;
+      if (!root || root.dataset.varaSidebarScrollReady === "true") return;
 
-      root.dataset.varapressSidebarScrollReady = "true";
+      root.dataset.varaSidebarScrollReady = "true";
 
       const savedScrollTop = this.readSidebarScrollTop(SIDEBAR_SCROLL_STORAGE_KEY);
 
@@ -660,6 +660,6 @@ export function initDocs() {
   initTocHighlight();
   initHashNavigation();
   document.addEventListener("alpine:init", () => {
-    registerAlpineVarapressDocs(tocAvailable);
+    registerAlpineVaraDocs(tocAvailable);
   });
 }

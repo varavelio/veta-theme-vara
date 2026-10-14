@@ -15,7 +15,7 @@ export function resolveFaqInitialOpen(openFirst, firstItemId) {
 
 export function registerVaraFaq() {
   document.addEventListener("alpine:init", () => {
-    Alpine.data("varapressFaq", (openFirst = "false") => ({
+    Alpine.data("varaFaq", (openFirst = "false") => ({
       openItem: null,
 
       init() {

@@ -14,7 +14,7 @@
           {% if props.description %}<p class="text-base leading-7 text-content-muted desk:text-lg">{{ props.description }}</p>{% endif %}
         </div>
       {% endif %}
-      <div class="w-full overflow-hidden rounded-lg border border-base-400 bg-base-200" x-data="varapressFaq('{{ open_first }}')">
+      <div class="w-full overflow-hidden rounded-lg border border-base-400 bg-base-200" x-data="varaFaq('{{ open_first }}')">
         {{ props.content|safe }}
       </div>
     </div>
