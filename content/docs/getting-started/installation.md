@@ -7,7 +7,7 @@ icon: "download"
 
 # Installation
 
-## 1. Add the theme
+## Add the theme
 
 Declare the theme in your `veta.yaml`. Remote themes use the `owner/repository@ref` form:
 
@@ -23,7 +23,7 @@ theme:
   source: "varavelio/veta-theme-vara@vx.x.x" # Replace with your desired version
 ```
 
-## 2. Configure the stylesheet
+## Configure the stylesheet
 
 Veta ships Tailwind CSS as part of the binary, so you don't need to install anything extra. Just point Veta at the theme's stylesheet in your `veta.yaml`:
 
@@ -49,7 +49,7 @@ To add your own styles, create `public/styles.css` and import the theme's styles
 
 Vara always reads from `public/styles.css`. When that file doesn't exist, the theme's bundled version is used as-is.
 
-## 3. Add your site settings
+## Add your site settings
 
 Create a `data/site.yaml` with at least a title and description:
 
@@ -61,7 +61,7 @@ site_url: "https://example.com"
 
 The theme reads these values for the document title, meta description, and header branding. See [Site settings](../fundamentals/site-settings/) for the full list.
 
-## 4. Verify
+## Verify
 
 Run the development server:
 

@@ -15,7 +15,7 @@ A landing page is a stack of sections, and most sections accept the same surface
 
 Everything lives in `content/index.md`. Build the page top to bottom.
 
-### 1. Header
+### Header
 
 The header carries the brand, navigation, and a primary action:
 
@@ -29,7 +29,7 @@ The header carries the brand, navigation, and a primary action:
 />
 ```
 
-### 2. Hero
+### Hero
 
 The hero is the first thing visitors see. Give it a headline, one clear sentence, and a pair of actions:
 
@@ -51,7 +51,7 @@ The hero is the first thing visitors see. Give it a headline, one clear sentence
 />
 ```
 
-### 3. Features
+### Features
 
 Summarize what makes the product worth trying:
 
@@ -73,7 +73,7 @@ Summarize what makes the product worth trying:
 />
 ```
 
-### 4. Stats
+### Stats
 
 Specific numbers build trust:
 
@@ -91,7 +91,7 @@ Specific numbers build trust:
 />
 ```
 
-### 5. A content split
+### A content split
 
 Use a split when a workflow or a benefit deserves more room:
 
@@ -112,7 +112,7 @@ Use a split when a workflow or a benefit deserves more room:
 />
 ```
 
-### 6. FAQ
+### FAQ
 
 Address the questions that stop people from signing up:
 
@@ -137,7 +137,7 @@ Address the questions that stop people from signing up:
 </vara-faq>
 ```
 
-### 7. Call to action
+### Call to action
 
 Close the page with one clear next step:
 
@@ -153,7 +153,7 @@ Close the page with one clear next step:
 />
 ```
 
-### 8. Footer
+### Footer
 
 End with the footer so every page has a consistent exit:
 

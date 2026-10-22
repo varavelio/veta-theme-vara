@@ -9,7 +9,7 @@ icon: "zap"
 
 This guide creates a project with a landing page at `/` and a small documentation site at `/docs/`.
 
-## 1. Create the landing page generator
+## Create the landing page generator
 
 Create `pages/pages.js` to render `content/index.md` with the `vara-landing` template:
 
@@ -29,7 +29,7 @@ export default function({ data, files, parse }) {
 }
 ```
 
-## 2. Write the landing page
+## Write the landing page
 
 Create `content/index.md` and compose it with Vara components:
 
@@ -49,7 +49,7 @@ description: "A short description of the project."
 />
 ```
 
-## 3. Create the documentation generator
+## Create the documentation generator
 
 Create `pages/docs.js` to turn every Markdown file under `content/docs/` into a page using the `vara-docs` template:
 
@@ -73,7 +73,7 @@ export default function({ files, parse }) {
 
 This generator is intentionally short. The theme's reference generator goes further: it skips pages with `draft: true` in their frontmatter and passes `disable_search` through so a page can opt out of the index. See [Page generators](../fundamentals/page-generators/) for the full set of fields a docs page can carry.
 
-## 4. Add a documentation page
+## Add a documentation page
 
 Create `content/docs/getting-started/hello.md`:
 
@@ -101,7 +101,7 @@ weight: 0
 The documentation for my project lives here.
 ```
 
-## 5. Configure the site
+## Configure the site
 
 Add a `data/site.yaml`:
 
@@ -111,7 +111,7 @@ description: "A short description of the project."
 site_url: "https://example.com"
 ```
 
-## 6. Run it
+## Run it
 
 ```sh
 veta dev
