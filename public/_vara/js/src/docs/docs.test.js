@@ -99,15 +99,27 @@ test("warns when a hash anchor matches no heading", () => {
   assert.equal(
     scrollToHash("#gone", {
       document: { getElementById: () => null },
-      logger: { warn(message) { warnings.push(message); } },
+      logger: {
+        warn(message) {
+          warnings.push(message);
+        },
+      },
     }),
     false,
   );
-  assert.deepEqual(warnings, ['[Vara] No heading found for anchor "#gone".']);
+  assert.deepEqual(warnings, ["[Vara] No heading found for anchor \"#gone\"."]);
   assert.equal(
     scrollToHash("", {
-      document: { getElementById: () => { throw new Error("should not look up empty hashes"); } },
-      logger: { warn() { throw new Error("should not warn without an anchor"); } },
+      document: {
+        getElementById: () => {
+          throw new Error("should not look up empty hashes");
+        },
+      },
+      logger: {
+        warn() {
+          throw new Error("should not warn without an anchor");
+        },
+      },
     }),
     false,
   );
