@@ -101,20 +101,32 @@ function initTableOfContents() {
 
   document.querySelectorAll("[data-toc-links]").forEach((nav) => {
     const isMobile = nav.dataset.tocLinks === "mobile";
+    let group = null;
 
     for (const item of items) {
       const link = document.createElement("a");
       link.href = `#${item.id}`;
-      link.className = `block py-0.5 text-sm text-content-muted transition-colors hover:text-content toc-link${
-        item.level === 3 ? " pl-3" : ""
-      }`;
+      link.className =
+        "block py-0.5 text-sm text-content-muted transition-colors hover:text-content toc-link" +
+        (item.level === 3 ? " pl-3" : "");
       link.textContent = item.title;
       link.addEventListener("click", (event) => {
         event.preventDefault();
         navigateToHeading(item.id);
       });
       if (isMobile) link.setAttribute("x-on:click", "tocOpen = false");
-      nav.append(link);
+
+      if (item.level === 3) {
+        if (!group) {
+          group = document.createElement("div");
+          group.className = "ml-2 space-y-1 border-l border-base-400";
+          nav.append(group);
+        }
+        group.append(link);
+      } else {
+        group = null;
+        nav.append(link);
+      }
     }
   });
 
