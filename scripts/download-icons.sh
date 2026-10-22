@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e
 
-LUCIDE_VERSION="1.28.0"
-SIMPLE_ICONS_VERSION="16.27.1"
+LUCIDE_VERSION="1.61.0"
+SIMPLE_ICONS_VERSION="16.35.0"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ICONS_DIR="$SCRIPT_DIR/../templates/vara/icons"
