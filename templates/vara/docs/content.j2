@@ -19,7 +19,7 @@
       <span
         class="inline-flex shrink-0 items-center gap-1.5 font-medium text-content"
         x-data
-        x-init="$nextTick(() => $el.scrollIntoView({ block: 'nearest', inline: 'end' }))"
+        x-init="$nextTick(() => { const nav = $el.closest('nav'); if (nav) nav.scrollLeft = nav.scrollWidth; })"
       >
         {{ page.title }}
       </span>

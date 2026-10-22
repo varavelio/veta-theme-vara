@@ -57,11 +57,16 @@ export function resolveHashId(hash) {
 
 export function scrollToHash(hash, options = {}) {
   const documentRef = options.document ?? globalThis.document;
+  const logger = options.logger ?? globalThis.console;
   const id = resolveHashId(hash);
   const heading = id ? documentRef?.getElementById(id) : null;
-  if (!heading) return false;
+  if (!heading) {
+    if (id) logger?.warn?.(`[Vara] No heading found for anchor "#${id}".`);
+    return false;
+  }
 
-  const scroll = () => heading.scrollIntoView({ behavior: "smooth", block: "start" });
+  const behavior = options.behavior ?? "smooth";
+  const scroll = () => heading.scrollIntoView({ behavior, block: "start" });
   if (options.defer) {
     const requestFrame = options.requestAnimationFrame ?? globalThis.requestAnimationFrame;
     requestFrame(scroll);
@@ -446,8 +451,8 @@ export function resolveSidebarScrollTop(storedValue) {
 }
 
 function initHashNavigation() {
-  scrollToHash(location.hash, { defer: true });
-  window.addEventListener("hashchange", () => scrollToHash(location.hash));
+  scrollToHash(location.hash, { defer: true, behavior: "auto" });
+  window.addEventListener("hashchange", () => scrollToHash(location.hash, { behavior: "auto" }));
 }
 
 function registerAlpineVaraDocs(tocAvailable) {

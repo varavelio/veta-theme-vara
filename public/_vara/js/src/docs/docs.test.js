@@ -87,9 +87,48 @@ test("smoothly scrolls to a heading after it is available", () => {
   assert.equal(
     scrollToHash("#missing", {
       document: { getElementById: () => null },
+      logger: { warn() {} },
     }),
     false,
   );
+});
+
+test("warns when a hash anchor matches no heading", () => {
+  const warnings = [];
+
+  assert.equal(
+    scrollToHash("#gone", {
+      document: { getElementById: () => null },
+      logger: { warn(message) { warnings.push(message); } },
+    }),
+    false,
+  );
+  assert.deepEqual(warnings, ['[Vara] No heading found for anchor "#gone".']);
+  assert.equal(
+    scrollToHash("", {
+      document: { getElementById: () => { throw new Error("should not look up empty hashes"); } },
+      logger: { warn() { throw new Error("should not warn without an anchor"); } },
+    }),
+    false,
+  );
+});
+
+test("passes a custom scroll behavior through to the heading", () => {
+  const calls = [];
+  const heading = {
+    scrollIntoView(options) {
+      calls.push(options);
+    },
+  };
+
+  assert.equal(
+    scrollToHash("#next-steps", {
+      document: { getElementById: () => heading },
+      behavior: "auto",
+    }),
+    true,
+  );
+  assert.deepEqual(calls, [{ behavior: "auto", block: "start" }]);
 });
 
 test("can defer initial hash scrolling until the next animation frame", () => {
