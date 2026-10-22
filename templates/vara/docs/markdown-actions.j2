@@ -36,7 +36,7 @@
     x-transition:leave-end="opacity-0 translate-y-1"
     x-on:click.outside="open = false"
     x-on:keydown.home.prevent="$refs.chatgpt.focus()"
-    x-on:keydown.end.prevent="$refs.download.focus()"
+    x-on:keydown.end.prevent="$refs.copyMarkdown.focus()"
     class="absolute right-0 z-50 mt-2 max-h-[70dvh] w-72 max-w-[calc(100vw-2rem)] origin-top-right overflow-auto rounded-lg border border-base-400 bg-base-100 p-1 shadow-sm"
     role="menu"
     aria-label="Ask AI and Markdown actions"
@@ -51,7 +51,7 @@
       x-bind:href="askAiUrl('chatgpt', $root.dataset.markdownUrl)"
       x-on:click="open = false"
       x-on:keydown.arrow-down.prevent="$refs.claude.focus()"
-      x-on:keydown.arrow-up.prevent="$refs.download.focus()"
+      x-on:keydown.arrow-up.prevent="$refs.copyMarkdown.focus()"
       class="flex items-center gap-2.5 rounded-md px-2.5 py-2 text-sm font-medium text-content outline-none transition-colors hover:bg-base-200 focus:bg-base-200"
       target="_blank"
       rel="noopener noreferrer"
@@ -114,7 +114,7 @@
       x-ref="deepseek"
       x-bind:href="askAiUrl('deepseek', $root.dataset.markdownUrl)"
       x-on:click="open = false"
-      x-on:keydown.arrow-down.prevent="$refs.copyPrompt.disabled ? $refs.copyMarkdown.focus() : $refs.copyPrompt.focus()"
+      x-on:keydown.arrow-down.prevent="$refs.copyPrompt.disabled ? $refs.copyMarkdownUrl.focus() : $refs.copyPrompt.focus()"
       x-on:keydown.arrow-up.prevent="$refs.perplexity.focus()"
       class="flex items-center gap-2.5 rounded-md px-2.5 py-2 text-sm font-medium text-content outline-none transition-colors hover:bg-base-200 focus:bg-base-200"
       target="_blank"
@@ -133,7 +133,7 @@
       class="flex w-full cursor-pointer items-center gap-2.5 rounded-md px-2.5 py-2 text-left text-sm font-medium text-content outline-none transition-colors hover:bg-base-200 focus:bg-base-200 disabled:cursor-wait disabled:opacity-70"
       x-bind:disabled="promptCopyUi.disabled"
       x-on:click="copyAskAiPrompt($root.dataset.markdownUrl)"
-      x-on:keydown.arrow-down.prevent="$refs.copyMarkdown.focus()"
+      x-on:keydown.arrow-down.prevent="$refs.copyMarkdownUrl.focus()"
       x-on:keydown.arrow-up.prevent="$refs.deepseek.focus()"
       role="menuitem"
     >
@@ -149,29 +149,29 @@
     <div class="my-1 border-t border-base-400" role="separator"></div>
 
     <button
-      x-ref="copyMarkdown"
+      x-ref="copyMarkdownUrl"
       type="button"
       class="flex w-full cursor-pointer items-center gap-2.5 rounded-md px-2.5 py-2 text-left text-sm font-medium text-content outline-none transition-colors hover:bg-base-200 focus:bg-base-200 disabled:cursor-wait disabled:opacity-70"
-      x-bind:disabled="markdownCopyUi.disabled"
-      x-on:click="copyMarkdown($root.dataset.markdownUrl)"
+      x-bind:disabled="markdownUrlCopyUi.disabled"
+      x-on:click="copyMarkdownUrl($root.dataset.markdownUrl)"
       x-on:keydown.arrow-down.prevent="$refs.view.focus()"
       x-on:keydown.arrow-up.prevent="$refs.copyPrompt.disabled ? $refs.deepseek.focus() : $refs.copyPrompt.focus()"
       role="menuitem"
     >
-      <span class="flex size-5 shrink-0 items-center justify-center" x-show="markdownCopyUi.icon === 'copy'">
-        {{ vara_icon("copy", "size-4 text-content-muted")|safe }}
+      <span class="flex size-5 shrink-0 items-center justify-center" x-show="markdownUrlCopyUi.icon === 'copy'">
+        {{ vara_icon("link", "size-4 text-content-muted")|safe }}
       </span>
-      <span class="flex size-5 shrink-0 items-center justify-center" x-show="markdownCopyUi.icon === 'check'">
+      <span class="flex size-5 shrink-0 items-center justify-center" x-show="markdownUrlCopyUi.icon === 'check'">
         {{ vara_icon("check", "size-4 text-success")|safe }}
       </span>
-      <span aria-live="polite" x-text="markdownCopyUi.label">Copy Markdown</span>
+      <span aria-live="polite" x-text="markdownUrlCopyUi.label">Copy Markdown URL</span>
     </button>
     <a
       x-ref="view"
       href="{{ markdown_url }}"
       x-on:click="open = false"
       x-on:keydown.arrow-down.prevent="$refs.download.focus()"
-      x-on:keydown.arrow-up.prevent="$refs.copyMarkdown.disabled ? ($refs.copyPrompt.disabled ? $refs.deepseek.focus() : $refs.copyPrompt.focus()) : $refs.copyMarkdown.focus()"
+      x-on:keydown.arrow-up.prevent="$refs.copyMarkdownUrl.disabled ? ($refs.copyPrompt.disabled ? $refs.deepseek.focus() : $refs.copyPrompt.focus()) : $refs.copyMarkdownUrl.focus()"
       class="flex items-center gap-2.5 rounded-md px-2.5 py-2 text-sm font-medium text-content outline-none transition-colors hover:bg-base-200 focus:bg-base-200"
       target="_blank"
       rel="noopener noreferrer"
@@ -180,13 +180,13 @@
       <span class="flex size-5 shrink-0 items-center justify-center">
         {{ vara_icon("eye", "size-4 text-content-muted")|safe }}
       </span>
-      <span>View Markdown</span>
+      <span>View Markdown URL</span>
     </a>
     <a
       x-ref="download"
       href="{{ markdown_url }}"
       x-on:click="open = false"
-      x-on:keydown.arrow-down.prevent="$refs.chatgpt.focus()"
+      x-on:keydown.arrow-down.prevent="$refs.copyMarkdown.focus()"
       x-on:keydown.arrow-up.prevent="$refs.view.focus()"
       class="flex items-center gap-2.5 rounded-md px-2.5 py-2 text-sm font-medium text-content outline-none transition-colors hover:bg-base-200 focus:bg-base-200"
       download
@@ -197,5 +197,23 @@
       </span>
       <span>Download Markdown</span>
     </a>
+    <button
+      x-ref="copyMarkdown"
+      type="button"
+      class="flex w-full cursor-pointer items-center gap-2.5 rounded-md px-2.5 py-2 text-left text-sm font-medium text-content outline-none transition-colors hover:bg-base-200 focus:bg-base-200 disabled:cursor-wait disabled:opacity-70"
+      x-bind:disabled="markdownCopyUi.disabled"
+      x-on:click="copyMarkdown($root.dataset.markdownUrl)"
+      x-on:keydown.arrow-down.prevent="$refs.chatgpt.focus()"
+      x-on:keydown.arrow-up.prevent="$refs.download.focus()"
+      role="menuitem"
+    >
+      <span class="flex size-5 shrink-0 items-center justify-center" x-show="markdownCopyUi.icon === 'copy'">
+        {{ vara_icon("copy", "size-4 text-content-muted")|safe }}
+      </span>
+      <span class="flex size-5 shrink-0 items-center justify-center" x-show="markdownCopyUi.icon === 'check'">
+        {{ vara_icon("check", "size-4 text-success")|safe }}
+      </span>
+      <span aria-live="polite" x-text="markdownCopyUi.label">Copy Markdown</span>
+    </button>
   </div>
 </div>

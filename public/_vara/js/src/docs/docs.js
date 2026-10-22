@@ -282,6 +282,22 @@ export function resolveMarkdownCopyUi(status) {
   return { disabled: false, icon: "copy", label: "Copy Markdown" };
 }
 
+export function resolveMarkdownUrlCopyUi(status) {
+  if (status === "loading") {
+    return { disabled: true, icon: "copy", label: "Copying Markdown URL" };
+  }
+
+  if (status === "copied") {
+    return { disabled: false, icon: "check", label: "Copied Markdown URL" };
+  }
+
+  if (status === "error") {
+    return { disabled: false, icon: "copy", label: "Could not copy" };
+  }
+
+  return { disabled: false, icon: "copy", label: "Copy Markdown URL" };
+}
+
 export function resolvePromptCopyUi(status) {
   if (status === "loading") {
     return { disabled: true, icon: "copy", label: "Copying Prompt" };
@@ -323,6 +339,17 @@ export async function copyAskAiPromptToClipboard(markdownUrl, options = {}) {
   if (!clipboard?.writeText) throw new Error("Clipboard is not available.");
 
   await clipboard.writeText(resolveAskAiPrompt(markdownUrl, options.baseUrl));
+}
+
+export function resolveMarkdownUrl(markdownUrl, baseUrl = globalThis.location?.href) {
+  return new URL(markdownUrl, baseUrl).href;
+}
+
+export async function copyMarkdownUrlToClipboard(markdownUrl, options = {}) {
+  const clipboard = options.clipboard ?? globalThis.navigator?.clipboard;
+  if (!clipboard?.writeText) throw new Error("Clipboard is not available.");
+
+  await clipboard.writeText(resolveMarkdownUrl(markdownUrl, options.baseUrl));
 }
 
 export function resolveBackToTopState({
@@ -464,11 +491,18 @@ function registerAlpineVaraDocs(tocAvailable) {
     /** @type {"idle" | "loading" | "copied" | "error"} Current Markdown copy status. */
     markdownCopyStatus: "idle",
 
+    /** @type {"idle" | "loading" | "copied" | "error"} Current Markdown URL copy status. */
+    markdownUrlCopyStatus: "idle",
+
     /** @type {"idle" | "loading" | "copied" | "error"} Current prompt copy status. */
     promptCopyStatus: "idle",
 
     get markdownCopyUi() {
       return resolveMarkdownCopyUi(this.markdownCopyStatus);
+    },
+
+    get markdownUrlCopyUi() {
+      return resolveMarkdownUrlCopyUi(this.markdownUrlCopyStatus);
     },
 
     get promptCopyUi() {
@@ -478,6 +512,7 @@ function registerAlpineVaraDocs(tocAvailable) {
     backToTopRoot: null,
     backToTopFrame: null,
     markdownCopyResetTimer: null,
+    markdownUrlCopyResetTimer: null,
     promptCopyResetTimer: null,
     backToTopProgrammaticScroll: false,
     sidebarScrollBeforeUnloadReady: false,
@@ -585,6 +620,21 @@ function registerAlpineVaraDocs(tocAvailable) {
       return resolveAskAiUrl(provider, markdownUrl);
     },
 
+    async copyMarkdownUrl(markdownUrl) {
+      if (this.markdownUrlCopyStatus === "loading") return;
+
+      this.markdownUrlCopyStatus = "loading";
+
+      try {
+        await copyMarkdownUrlToClipboard(markdownUrl);
+        this.markdownUrlCopyStatus = "copied";
+      } catch (_error) {
+        this.markdownUrlCopyStatus = "error";
+      }
+
+      this.resetMarkdownUrlCopyStatusSoon();
+    },
+
     async copyAskAiPrompt(markdownUrl) {
       if (this.promptCopyStatus === "loading") return;
 
@@ -605,6 +655,14 @@ function registerAlpineVaraDocs(tocAvailable) {
 
       this.markdownCopyResetTimer = setTimeout(() => {
         this.markdownCopyStatus = "idle";
+      }, 2200);
+    },
+
+    resetMarkdownUrlCopyStatusSoon() {
+      if (this.markdownUrlCopyResetTimer) clearTimeout(this.markdownUrlCopyResetTimer);
+
+      this.markdownUrlCopyResetTimer = setTimeout(() => {
+        this.markdownUrlCopyStatus = "idle";
       }, 2200);
     },
 
