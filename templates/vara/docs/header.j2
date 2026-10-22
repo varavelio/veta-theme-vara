@@ -1,6 +1,5 @@
 {% import "../macros/theme-picker.j2" theme_picker %}
 {% import "../macros/github-button.j2" github_button %}
-{% import "../macros/kbd.j2" kbd %}
 
 <header class="h-14 shrink-0 border-b border-base-400 bg-base-100">
   <div class="mx-auto flex h-full max-w-[80rem] items-center justify-between gap-2 px-4 desk:gap-3">
@@ -61,7 +60,10 @@
         >
           {{ vara_icon("search", "size-4 shrink-0")|safe }}
           <span class="min-w-0 flex-1 truncate text-left">Search documentation</span>
-          {{ kbd("Ctrl K", "sm", "shrink-0") }}
+          <span class="flex shrink-0 items-center gap-1" x-data="{ isMac: /mac|iphone|ipad/i.test(navigator.userAgentData ? navigator.userAgentData.platform : navigator.platform || '') }">
+            <kbd class="inline-flex h-5 shrink-0 items-center justify-center rounded-sm border border-b-2 border-base-400 bg-base-200 px-1.5 font-mono text-[10px] font-medium text-content-muted"><span x-text="isMac ? '⌘' : 'Ctrl'"></span></kbd>
+            <kbd class="inline-flex h-5 shrink-0 items-center justify-center rounded-sm border border-b-2 border-base-400 bg-base-200 px-1.5 font-mono text-[10px] font-medium text-content-muted">K</kbd>
+          </span>
         </button>
       </div>
     {% endif %}
