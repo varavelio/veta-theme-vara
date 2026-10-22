@@ -4,6 +4,8 @@
 
 {% block head_assets %}
   {# Static hosts serve this page from any missing URL depth, so theme assets resolve absolutely from `site_url` instead of Veta's relative `url()`. #}
+  <link rel="preconnect" href="https://fonts.bunny.net">
+  <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Geist+Mono:ital,wght@0,100..900;1,100..900&family=Geist:ital,wght@0,100..900;1,100..900&display=swap">
   <link rel="stylesheet" href="{{ vara_absolute_url(stylesheet_path) }}">
   <script src="{{ vara_absolute_url(head_script_path) }}"></script>
 {% endblock %}

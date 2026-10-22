@@ -50,6 +50,8 @@
     {# depth (such as the 404 fallback) override this block and resolve the paths #}
     {# with `vara_absolute_url`. #}
     {% block head_assets %}
+      <link rel="preconnect" href="https://fonts.bunny.net">
+      <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Geist+Mono:ital,wght@0,100..900;1,100..900&family=Geist:ital,wght@0,100..900;1,100..900&display=swap">
       <link rel="stylesheet" href="{{ url(stylesheet_path) }}">
       <script src="{{ url(head_script_path) }}"></script>
     {% endblock %}

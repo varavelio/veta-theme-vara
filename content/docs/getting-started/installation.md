@@ -69,7 +69,7 @@ Run the development server:
 veta dev
 ```
 
-Open the URL Veta prints. You should see the theme's base styles applied - self-hosted fonts, light and dark mode, and the default neutral palette.
+Open the URL Veta prints. You should see the theme's base styles applied: fonts, light and dark mode, and the default neutral palette.
 
 ## Next steps
 

@@ -25,7 +25,7 @@ The theme stays out of your content. You decide what the site contains; Vara dec
 
 - **Page templates** for landing pages, documentation pages, the not-found page, an XML sitemap, a search index, and LLM-friendly Markdown output.
 - **A focused component collection** for documentation content and landing-page sections.
-- **A visual system** with light and dark mode, a theme picker, self-hosted fonts, and bundled icons.
+- **A visual system** with light and dark mode, a theme picker, fonts, and bundled icons.
 - **Client-side features** such as full-text documentation search and on-demand syntax highlighting.
 
 ## What Vara does not provide

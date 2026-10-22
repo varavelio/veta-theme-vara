@@ -46,7 +46,7 @@ Landing pages get a theme picker through the `<vara-header>` component, and docu
 
 ## Typography
 
-Vara ships with the Geist Sans and Geist Mono variable fonts, self-hosted under `public/_vara/fonts/` so no external requests are needed. Sans is used for interface and content text; mono is used for code, keyboard keys, and metrics.
+Vara loads the Geist and Geist Mono variable fonts from Bunny (`fonts.bunny.net`) in `head_assets`. Sans is used for interface and content text; mono is used for code, keyboard keys, and metrics.
 
 Add a `font-sans` or `font-mono` override in your stylesheet to change the families site-wide.
 

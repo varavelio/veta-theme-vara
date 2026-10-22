@@ -61,7 +61,6 @@ You override defaults with your own `data/site.yaml` in the project. See [Site s
 
 - `_vara/css/` - the Tailwind CSS base stylesheet and theme styles.
 - `_vara/js/` - the JavaScript bundles (head, landing, docs, and docs search).
-- `_vara/fonts/` - the self-hosted Geist fonts.
 
 All theme-owned assets live under `public/_vara/` so they never collide with your own files. Your project's `public/` directory is composed alongside the theme's.
 
