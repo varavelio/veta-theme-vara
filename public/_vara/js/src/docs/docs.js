@@ -106,9 +106,8 @@ function initTableOfContents() {
     for (const item of items) {
       const link = document.createElement("a");
       link.href = `#${item.id}`;
-      link.className =
-        "block py-0.5 text-sm text-content-muted transition-colors hover:text-content toc-link" +
-        (item.level === 3 ? " pl-3" : "");
+      link.className = "block py-0.5 text-sm text-content-muted transition-colors hover:text-content toc-link"
+        + (item.level === 3 ? " pl-3" : "");
       link.textContent = item.title;
       link.addEventListener("click", (event) => {
         event.preventDefault();
