@@ -34,7 +34,7 @@ export default function() {
     docs_shiki_custom_languages: [
       {
         id: "vdl",
-        url: "https://cdn.jsdelivr.net/gh/varavelio/vdl@e0b51b/integrations/syntax/textmate/vdl.tmLanguage.json",
+        url: "https://cdn.jsdelivr.net/gh/varavelio/vdl@v0.5.0/integrations/syntax/textmate/vdl.tmLanguage.json",
       },
     ],
   };
