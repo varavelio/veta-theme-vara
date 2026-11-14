@@ -59,7 +59,7 @@
     {% block head_extra %}
     {% endblock %}
   </head>
-  <body class="w-dvw h-dvh overflow-hidden bg-base-100 text-content">
+  <body class="{% block body_layout %}w-dvw h-dvh overflow-hidden{% endblock %} bg-base-100 text-content">
     {% block body %}
     {% endblock %}
   </body>

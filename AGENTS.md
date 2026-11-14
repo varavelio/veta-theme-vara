@@ -58,6 +58,7 @@ You MUST follow the following instructions:
 - Before modifying or adding any JavaScript under `public/_vara/js/`, read `public/_vara/js/README.md` first. It explains the directory layout, bundling rules, and the role of each module.
 - Keep Shiki loading-state, theme, code-block, and copy-button styles centralized in `public/_vara/css/shiki.css`.
 - JS source modules under `public/_vara/js/src/` use modern ES syntax (esbuild handles transpilation).
+- Landing pages use native document scrolling through the base `body_layout` block; keep the fixed-height, internal-scroll shell for documentation.
 - `vara-landing` loads the `landing` bundle, which starts Alpine and registers shared theme controls for interactive public components.
 - JS source inside `pages/*.js`, `data/*.js`, `filters/*.js`, `functions/*.js` are constrained by Goja and are synchronous only.
 

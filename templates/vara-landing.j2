@@ -4,8 +4,8 @@
   <script src="{{ url('/_vara/js/build/landing.js') }}" defer></script>
 {% endblock %}
 
+{% block body_layout %}w-full min-h-dvh{% endblock %}
+
 {% block body %}
-  <div class="size-full overflow-y-auto">
-    {{ page.content | safe }}
-  </div>
+  {{ page.content | safe }}
 {% endblock %}
